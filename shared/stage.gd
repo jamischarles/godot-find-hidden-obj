@@ -343,6 +343,7 @@ func on_match_found(animal1, animal2: TextureButton):
 	## Right rail button. Disable and fade out
 	animal2.disabled = true
 	animal2.set_modulate(Color(1,1,1,.1))
+	animal2.get_parent().move_child(animal2, animal2.get_parent().get_child_count()) # move to end
 	
 	# update score
 	current_score += 1
