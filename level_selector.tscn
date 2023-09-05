@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4k8eyst13hus"]
+
+[ext_resource type="Script" path="res://level_selector.gd" id="1_gcarg"]
+[ext_resource type="Texture2D" uid="uid://dhu4xid23kdj2" path="res://03/img.png" id="2_c64sw"]
+[ext_resource type="Texture2D" uid="uid://bxcbclxdd7q14" path="res://02/img.jpg" id="3_2jsel"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnbiw"]
+atlas = ExtResource("2_c64sw")
+region = Rect2(0, 0, 3224, 1041.5)
+
+[node name="Level Selector" type="Node2D"]
+script = ExtResource("1_gcarg")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="01" type="TextureButton" parent="Control"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 0
+offset_left = 642.0
+offset_top = 143.0
+offset_right = 3865.0
+offset_bottom = 1184.0
+scale = Vector2(0.25, 0.25)
+texture_normal = SubResource("AtlasTexture_qnbiw")
+
+[node name="02" type="TextureButton" parent="Control"]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 0
+offset_left = 642.0
+offset_top = 475.0
+offset_right = 3865.0
+offset_bottom = 1516.0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("3_2jsel")
+stretch_mode = 6

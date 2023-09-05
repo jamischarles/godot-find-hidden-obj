@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpbg0x84dqq3s"]
+
+[ext_resource type="Script" path="res://shared/click_zone.gd" id="1_mdacg"]
+
+[node name="click_zone" type="Area2D"]
+script = ExtResource("1_mdacg")
+metadata/_edit_group_ = true
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

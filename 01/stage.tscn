@@ -1,0 +1,486 @@
+[gd_scene load_steps=40 format=3 uid="uid://dp7eehrtrasqq"]
+
+[ext_resource type="Script" path="res://shared/stage.gd" id="1_eemjn"]
+[ext_resource type="Texture2D" uid="uid://m2qg26uu37p5" path="res://01/img.png" id="2_mujqn"]
+[ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="3_46k56"]
+[ext_resource type="Script" path="res://shared/ClickCircle.gd" id="4_8pdgr"]
+[ext_resource type="Script" path="res://shared/right_rail.gd" id="5_pxkns"]
+[ext_resource type="Theme" uid="uid://hslhklg2eq2f" path="res://theme_selected_button.tres" id="7_4k4jw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
+bg_color = Color(0.913725, 0.231373, 0.909804, 1)
+border_width_top = 8
+border_width_bottom = 21
+
+[sub_resource type="Theme" id="Theme_q0v7x"]
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_b17r5")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phqrl"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(856, 0, 2144, 2144)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cfcpk"]
+radius = 122.919
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_quk22"]
+radius = 99.0195
+height = 588.151
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l0hu1"]
+radius = 37.6959
+height = 297.222
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_swvgn"]
+radius = 72.0069
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q8wlk"]
+radius = 45.8936
+height = 155.876
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t7rto"]
+radius = 71.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g03ka"]
+radius = 54.0093
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h277t"]
+radius = 58.9752
+height = 287.937
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgilj"]
+radius = 58.9752
+height = 216.315
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rkooc"]
+radius = 175.011
+
+[sub_resource type="Theme" id="Theme_vxi50"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_t2m7m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2euh"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(112, 384, 232, 240)
+
+[sub_resource type="Theme" id="Theme_i7h4l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dspjj"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(376, 360, 416, 544)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1rlss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dfqo"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(136, 632, 312, 176)
+
+[sub_resource type="Gradient" id="Gradient_0qm5h"]
+offsets = PackedFloat32Array(0, 0.0415385, 0.661538, 0.863077, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0415385, 0.0415385, 0.0415385, 1, 0.661538, 0.661538, 0.661538, 1, 0.861538, 0.861538, 0.861538, 1, 1, 1, 1, 1)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o3fuq"]
+color_ramp = SubResource("Gradient_0qm5h")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbhst"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(128, 864, 248, 496)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ci7j3"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(432, 928, 288, 280)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84brq"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(472, 1240, 272, 168)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgyan"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(96, 1416, 240, 144)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbanr"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(360, 1456, 192, 120)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5tjv"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(568, 1464, 184, 200)
+
+[sub_resource type="Theme" id="Theme_b5lut"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bavwx"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(80, 1640, 232, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1uwb7"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(328, 1648, 160, 304)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65onw"]
+atlas = ExtResource("2_mujqn")
+region = Rect2(520, 1704, 272, 376)
+
+[sub_resource type="Theme" id="Theme_pvjlc"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_eemjn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+theme = SubResource("Theme_q0v7x")
+scroll_horizontal_custom_step = -0.72
+scroll_deadzone = 200
+
+[node name="Canvas_with_clickzones" type="Control" parent="HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(2144, 2144)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones"]
+layout_mode = 0
+offset_right = 3000.0
+offset_bottom = 2143.0
+texture = SubResource("AtlasTexture_phqrl")
+stretch_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="click_zone_container" type="Control" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones"]
+anchors_preset = 0
+
+[node name="tablet" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(1581, 865)
+shape_name = "elephant"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/tablet"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_cfcpk")
+metadata/_edit_lock_ = true
+
+[node name="knight" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(1885, 1725)
+rotation = 0.0289113
+shape_name = "giraffe"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/knight"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_quk22")
+metadata/_edit_lock_ = true
+
+[node name="sword" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(732, 421)
+rotation = -1.1937
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/sword"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_l0hu1")
+metadata/_edit_lock_ = true
+
+[node name="sarcophagus" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(224, 978)
+rotation = 0.0164997
+shape_name = "giraffe"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/sarcophagus"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_quk22")
+metadata/_edit_lock_ = true
+
+[node name="painting" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(2036, 177)
+shape_name = "cow"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/painting"]
+modulate = Color(1, 0.54902, 1, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_swvgn")
+metadata/_edit_lock_ = true
+
+[node name="axe" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(762, 327)
+rotation = -1.1937
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/axe"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_q8wlk")
+metadata/_edit_lock_ = true
+
+[node name="bones" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(1247, 1483)
+shape_name = "deer"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/bones"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_t7rto")
+metadata/_edit_lock_ = true
+
+[node name="lamp" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(616, 1049)
+shape_name = "lion"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/lamp"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_g03ka")
+metadata/_edit_lock_ = true
+
+[node name="egg" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(472, 1014)
+rotation = -0.0290304
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/egg"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_q8wlk")
+metadata/_edit_lock_ = true
+
+[node name="bust" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(1133, 337)
+rotation = -0.0290304
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/bust"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_h277t")
+metadata/_edit_lock_ = true
+
+[node name="urn" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(1565, 1123)
+rotation = -0.0290304
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/urn"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_jgilj")
+metadata/_edit_lock_ = true
+
+[node name="portrait" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_46k56")]
+position = Vector2(120, 273)
+shape_name = "cow"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/portrait"]
+modulate = Color(1, 0.54902, 1, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_rkooc")
+metadata/_edit_lock_ = true
+
+[node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones"]
+script = ExtResource("4_8pdgr")
+
+[node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(200, 200)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 8
+horizontal_scroll_mode = 0
+script = ExtResource("5_pxkns")
+
+[node name="legend_for_hidden_objects" type="VBoxContainer" parent="HBoxContainer/right_rail"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="tablet" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_vxi50")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_u2euh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="knight" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_i7h4l")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_dspjj")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="sword" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+texture_filter = 1
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("7_4k4jw")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_1dfqo")
+texture_pressed = SubResource("NoiseTexture2D_o3fuq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="sarcophagus" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_wbhst")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="painting" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_ci7j3")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="axe" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_84brq")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="bones" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_qgyan")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="lamp" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_rbanr")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="egg" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_t5tjv")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="bust" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_b5lut")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_bavwx")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="urn" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_b5lut")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_1uwb7")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="portrait" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_b5lut")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_t2m7m")
+texture_normal = SubResource("AtlasTexture_65onw")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2000.0
+offset_bottom = -1000.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="score_label" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 58.0
+offset_right = -78.0
+offset_bottom = 164.0
+grow_horizontal = 0
+theme = SubResource("Theme_pvjlc")
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 75
+text = "5/10"
+
+[node name="Home" type="Button" parent="HUD"]
+layout_mode = 1
+offset_right = 87.0
+offset_bottom = 63.0
+theme_override_font_sizes/font_size = 20
+text = "Home"
+
+[connection signal="gui_input" from="HBoxContainer/ScrollContainer/Canvas_with_clickzones" to="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
+[connection signal="area_entered" from="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" to="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" method="_on_area_entered"]
+[connection signal="button_up" from="HUD/Home" to="." method="_on_home_button_up"]
+
+[editable path="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/tablet"]

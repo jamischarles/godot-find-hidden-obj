@@ -1,0 +1,843 @@
+[gd_scene load_steps=38 format=3 uid="uid://drfbbiw0imshk"]
+
+[ext_resource type="Texture2D" uid="uid://bxcbclxdd7q14" path="res://02/img.jpg" id="2_wivgu"]
+[ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="3_o8y5v"]
+[ext_resource type="Script" path="res://shared/ClickCircle.gd" id="4_t0u6h"]
+[ext_resource type="Script" path="res://shared/right_rail.gd" id="5_jdqap"]
+[ext_resource type="Texture2D" uid="uid://dhu4xid23kdj2" path="res://03/img.png" id="6_davyj"]
+[ext_resource type="Theme" uid="uid://hslhklg2eq2f" path="res://theme_selected_button.tres" id="7_5ii7n"]
+
+[sub_resource type="GDScript" id="GDScript_4ux0o"]
+script/source = "extends Node
+
+# TODO: make this auto increment? Use another node id?
+
+
+# FIFO array limit 2
+# todo: add the shape idx too, because we don't want to allow clicking the same item twice for a match.
+# clamp this 
+var last_2_zones_clicked: Array[Dictionary] = []
+var current_score = 0 # how many have been solved so far?
+#@onready var total_match_sets: int = $click_zone_container.get_child_count() / 2 #expect click_zones / 2
+var total_match_sets = 10
+
+# quality assertions. Can we make these dev only?!?
+# OR should I use these to verify match?
+var assert_verify_matches = {} # [name]: [count]. Then assert that each is exactly two.
+
+
+# from canvas
+var selected_animal: Area2D
+
+# from right rail
+var selected_animal2: TextureButton
+
+# tracks our touch target on big image
+var canvas_click_circle: Polygon2D
+
+
+@onready var animalsBtnGroup: ButtonGroup = $HBoxContainer/right_rail/legend_for_hidden_objects.get_child(0).button_group
+@onready var clickZoneContainer = $HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container
+
+
+# Simplest shape solution...
+# Draw a few polygons that have the 3-4 shapes I care about 
+# circle etc... Then duplicate those whenever I need a new kind of shape.
+# then use programming to create the collisionshape and place it based on that...
+# Then we could have the same solution for all kinds of shapes.
+
+# Next steps....
+# 1. add all animals
+# 2. test build on ipad
+# 3. Commit and push to GH
+# 4. Add hint
+# 5. add click target feedback? just on screen. and on legend item...
+
+
+
+# 1. Handle \"matchIsFound\"
+#	X- disable collision zones
+#	X- mark them as grayed out
+#	- keep count of matches \"3/5\"
+#	X- fix positioning bug
+
+
+# Once I have a stable build, commit and push to github...
+
+# 2. Add support for other shapes
+#  X- circle
+#  X- capsule
+#  - square (LATER)
+
+#LATER
+
+
+
+
+# 1. Use a nicer image (no watermark)
+# 2. lay out the template / hints
+# 3. Create a scene for \"clickzone\".
+# 4. Create each as an instance, then allow a separate polygon to be defined 
+# ^ fix the signals (automagically?) for that... similar to how we do it with the gems?
+# 5. copy from shape to collision with code
+# 6. add code to black out the legend and matched pair
+# ?7. create a copy in the legend, and hook them both up
+# 8. write logic that says they must be clicked next to each other (make that obvious in the UI)
+
+
+
+
+# Cleanup...
+# Consider mirror nodes? that we can move around with exact same shape?
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+#	TODO: automagically copy the polygon for collision detection
+#	https://ask.godotengine.org/10501/polygon2d-coordinates-to-collisionpolygon2d
+
+	animalsBtnGroup.connect(\"changed\", on_button_group_change)
+	
+	$HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle.connect(\"found_hidden_object_on_canvas\", on_canvas_shape_found)
+	# connect to all click zones so we can act on them from here?
+	# do we need to?
+	# yes let's try this for now. We can change later...
+	# Can I auto assign all the children in the container to the group? Or maybe just use this to get all the children...
+	#var guards = get_tree().get_nodes_in_group(\"click_zone_group\")
+	
+	
+#	print(\"##animalsBtnGroup\", animalsBtnGroup)
+	
+	
+#	var clickZones =$HBoxContainer/ScrollContainer/click_zone_container.get_children()
+#	var clickZones =$HBoxContainer/ScrollContainer/Control.get_children()
+	var clickZones =$HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container.get_children()
+	
+#	var clickZones = []
+	#for clickZone in clickZones:
+	for i in len(clickZones):
+	
+		
+		var clickZone = clickZones[i]
+		print('x', clickZone.get_class())
+		if clickZone.get_class() != \"Area2D\": continue
+
+		# 1) verify there's a shape. Create a matching collision shape
+		var shape = clickZone.get_child(0) # assume only one shape child
+#		print('type', shape.type)
+
+
+
+		
+		# TODO: support othere shapes as well...
+		if shape.get_class() == \"Polygon2D\":
+			var polygon = shape.get_polygon()
+			var matching_click_target = CollisionPolygon2D.new()
+			clickZone.add_child(matching_click_target)
+			
+			matching_click_target.set_polygon(polygon)
+			
+		
+			
+			#matching_click_target.shape.set_polygon(polygon)
+		elif shape.get_class() == \"CollisionShape2D\":
+			var polygon: PackedVector2Array
+#			print('shape', shape.get_shape())
+#			print('shape2', shape.get_shape().get_rect())
+#			var otherShape = shape.get_shape().get_rect()
+			
+			var collisionShape = shape.get_shape()
+			
+			
+			var radius = collisionShape.radius
+#			var position = collisionShape.get_rect().position
+			var position = clickZone.position
+			
+			
+			if collisionShape.get_class() == \"CircleShape2D\":
+				# we want to explicitly set x,y to zero, because the parent controls the positioning
+				polygon = generate_circle_polygon(radius, 40, Vector2(0,0))
+				
+			elif collisionShape.get_class() == \"CapsuleShape2D\":
+				var height = collisionShape.height
+				polygon = generate_capsule_polygon(radius, 40, height)
+				
+			
+			print('pos0', clickZone.position)
+			print('pos1', shape.position)
+			print('pos2', collisionShape.get_rect().position)
+			
+#			print('shapeClass', shape.get_shape().get_class())
+#			print('shapeClass', shape.get_shape().height)
+#			print('shapeClass', shape.get_shape().radius)
+#			print('shapeClass', )
+			
+			# TODO: check for capsule, square, circle...
+			
+#			if 
+			
+			
+			
+			
+			# 40pt min for smooth circle?
+#			var polygon: PackedVector2Array = generate_circle_polygon(radius, 40, position)
+#			var polygon: PackedVector2Array = generate_circle_polygon(radius, 40, Vector2(0,0))
+			
+			var visible_shape = Polygon2D.new()
+#			visible_shape.draw_colored_polygon()
+			
+			clickZone.add_child(visible_shape)
+#			visible_shape.draw_circle(Vector2(500,200), 500, Color(1,1,1,1))
+#			visible_shape.draw_circle(Vector2(800,500), 500, Color(1,1,1,1))
+			print('drawing circle', visible_shape)
+			visible_shape.set_polygon(polygon)
+#			visible_shape.draw_colored_polygon(polygon, Color(1,1,1,1))
+			
+			
+			
+			print('visible?', visible_shape.is_visible_in_tree())
+#			visible_shape.position = Vector2(200, 300)
+			print('pos', visible_shape.position)
+			# with circle I guess you only need x,y and radius
+#			CircleShape2D
+			
+			# what about capsule and square?
+			#CapsuleShape2D
+			# x,y, radius, height
+
+			# rect: x,y, size: width,height			
+#			RectangleShape2D
+
+			
+			# f
+			
+#			
+			
+			
+			var matching_click_target = CollisionPolygon2D.new()
+			clickZone.add_child(matching_click_target)
+			
+#			matching_click_target.set_polygon(shape.get_shape())
+			
+#			shape.get_shape().draw()
+			
+		
+		# if node is Node
+		
+#		print('shape', shape.polygon) # maybe what we need to copy?
+#		print('shape1', shape.get_shape())
+#		print('shape2', shape.get_polygon())
+
+
+		# Verify that each collision shape has position of 0,0
+		# we need to use parent for positioining so clickzones line up with visual part
+		assert( int(shape.position.x) == 0 && int(shape.position.y) == 0, \"ERROR: Each child CollisionShape MUST be 0,0 to avoid clickZone drift: %s, shape name:%s\" % [shape.position, clickZone.name]);
+
+		# 2) verify each shape has a name
+		# throw when shape_names aren't assigned for each click zone
+		# https://ask.godotengine.org/54948/throw-exception-or-error
+		# confusing because eval is opposite for err
+#		var name = clickZone.shape_name
+#		assert( name != \"\", \"ERROR: You must give each clickZone a shape_name value.\");
+		
+		## TODO: extract this into fn
+		if assert_verify_matches.has(name):
+			assert_verify_matches[name] += 1
+		else:
+			assert_verify_matches[name] = 1
+		
+		# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
+		# we can create a dictionary and count that each one has 2
+		
+		print(\"i\", i)
+		print('nodeNUm', clickZone.get_instance_id())
+		clickZone.shape_uid = i
+		
+		# listen to click for each click shape
+#		clickZone.connect('click_shape_clicked', on_shape_clicked)
+		
+		# hide all the click zones so they are invisble
+
+		# set alpha to 0 so click zones are invisible to user but still active
+		clickZone.set_modulate(Color(1, 1, 1, 0))
+		
+	# assert that each clickZone has exactly one match (by name)
+	# TODO: Fix this for right rail
+#	for zone in assert_verify_matches:
+#		assert(assert_verify_matches[zone] == 2, \"ClickZone mismatch: %s has %s\" % [zone, assert_verify_matches[zone]])
+
+
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+# Any time we click on a shape, or a right rail button we want to compare for a match
+func compare_for_match(selected_animal1, selected_animal2):
+	print('eval for match: ', selected_animal1, selected_animal2)
+	
+	# ensure we have 2 animals selected we can compare
+	if !selected_animal || !selected_animal2: return
+
+	
+#	get which animal button is pressed
+	
+	# get selected right rail animal
+	
+	print(\"COMPARE:\", selected_animal, selected_animal2)
+	
+	
+	if selected_animal1.name == selected_animal2.name:
+#		print('MATCH!!!!!!!!', shape_name)
+#		on_match_found(firstClick.id, secondClick.id)
+		
+		
+		## disable and color canvas collision shape click_zone
+		on_match_found(selected_animal1, selected_animal2)
+		
+		
+	
+	
+	
+	# get current active click target on canvas (with circle)
+
+# when a shape on the canvas is clicked, run the comparison
+#func on_shape_clicked(shape_name: String, shape: Area2D):
+#	selected_animal = shape
+#	compare_for_match(shape, animalsBtnGroup.get_pressed_button())
+	
+		
+#whenever the right rail selectino changes it'll get updated in selected_animal2
+func on_button_group_change():
+	print('button group changed!!')
+	selected_animal2 = animalsBtnGroup.get_pressed_button()
+	compare_for_match(selected_animal, selected_animal2)
+#	print('selectedAnimal2: ', selected_animal2)
+
+
+func on_canvas_shape_found(shape: Area2D):
+#	print('animal', animal)
+	selected_animal = shape
+	compare_for_match(shape, animalsBtnGroup.get_pressed_button())
+
+# on match found
+func on_match_found(animal1, animal2: TextureButton):
+#	var firstNode = instance_from_id(firstUid)
+	
+	# canvas click zone. Gray out, then disable
+	animal1.set_modulate(Color(.36, .36, .36, .74))
+	# functionally - disable clicks
+	animal1.set_pickable(false) # bubbles up from collisionlayer. Nice!
+	
+	
+	## Right rail button. Disable and fade out
+	animal2.disabled = true
+	animal2.set_modulate(Color(1,1,1,.1))
+	
+	# update score
+	current_score += 1
+	$HUD/score_label.set_text(\"%s / %s\" % [current_score, total_match_sets])
+	
+	
+	
+
+		# destroy the old one, create the new...
+		# or do we just emulate and have the parent draw?
+#		Yes. let's do that...
+	
+	
+func destroy_and_spawn_click_circle(x:float,y:float):
+#	
+	# destroy the old circle if it exists
+	if canvas_click_circle: canvas_click_circle.queue_free()
+	
+	print('destroy: ', x,y)
+#	var clickCircle: Area2D = Area2D.new()
+#	var collision: CollisionShape2D = CollisionShape2D.new()
+#	var shape: CircleShape2D = CircleShape2D.new()
+#	shape.radius = 70
+#
+#
+#
+#	clickCircle.add_child(collision)
+##	collision.shape.set(\"shape\", \"CircleShape2D\")
+#	collision.shape = shape
+
+	# circle polygon
+#	_draw(x,y)
+	
+	# TODO: Add tweening
+	
+	
+	
+#func _on_click_zone_input_event(viewport, event, shape_idx):
+##	https://docs.godotengine.org/en/4.1/tutorials/inputs/inputevent.html
+#	if event is InputEvent:
+#		if event.is_pressed():
+#			print(\"event\", event)
+#			print('shape# ', shape_idx)
+#			print('SKUNK')
+#	if event.pressed: 
+#		print(\"view\", viewport)
+	
+#		print(\"shape_idx\", shape_idx)
+#		print('click!')
+	# Q: Can we use the ID to tie the source and matched animal together?
+
+# UTILS ---------------
+
+
+# interesting!!!
+# @desc something
+# TODO: add assertion for num_sides
+# if num_sides is < 3 (triangle) then it won't show up. 4 is square. interesting...
+# https://ask.godotengine.org/81776/how-to-shape-polygon2d-into-a-circle
+func generate_circle_polygon(radius: float, num_sides: int, pos: Vector2) -> PackedVector2Array:
+	var angle_delta: float = (PI * 2) / num_sides
+	var vector: Vector2 = Vector2(radius, 0)
+	var polygon: PackedVector2Array
+	
+	for _i in num_sides:
+		polygon.append(vector + pos)
+		vector = vector.rotated(angle_delta)
+		
+	return polygon
+	
+
+# Capsule
+# A capsule is a circle, cut in half, with a rectangle shoved in the middle
+# https://github.com/godotengine/godot-proposals/issues/3495#issuecomment-960461612
+func generate_capsule_polygon(radius: float, num_sides_for_ends: int, height: float) -> PackedVector2Array:
+	var polygon: PackedVector2Array
+	
+	var i_divisor: = float(num_sides_for_ends - 1)
+	
+#	https://www.mathsisfun.com/polar-cartesian-coordinates.html
+	
+	for i in num_sides_for_ends:
+		polygon.append(polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, height / 2))
+	for i in num_sides_for_ends:
+		polygon.append(-polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, -height / 2))
+	
+	return polygon
+
+
+# https://stackoverflow.com/questions/76698768/how-to-use-polygon2d-node-in-godot-to-create-a-regular-polygon
+# https://www.mathsisfun.com/polar-cartesian-coordinates.html
+func polar2cartesian(r, theta):
+	var x = r * cos(theta)
+	var y = r * sin(theta)
+	return Vector2(x, y)
+
+
+# back to level select screen
+func _on_home_button_up():
+	pass # Replace with function body.
+"
+
+[sub_resource type="Theme" id="Theme_pvjlc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
+bg_color = Color(0.913725, 0.231373, 0.909804, 1)
+border_width_top = 8
+border_width_bottom = 21
+
+[sub_resource type="Theme" id="Theme_q0v7x"]
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_b17r5")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cfcpk"]
+radius = 71.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8dcjo"]
+radius = 94.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_swvgn"]
+radius = 72.0069
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t7rto"]
+radius = 109.165
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g03ka"]
+radius = 89.1403
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6q6xg"]
+radius = 74.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_quk22"]
+radius = 46.8226
+height = 232.359
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l0hu1"]
+radius = 46.8226
+height = 223.64
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ryk0"]
+radius = 42.45
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_citwc"]
+radius = 54.7446
+
+[sub_resource type="Theme" id="Theme_vxi50"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_awh86"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5moy"]
+atlas = ExtResource("2_wivgu")
+region = Rect2(338.378, 585.835, 44.8889, 33.3333)
+
+[sub_resource type="Theme" id="Theme_i7h4l"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dspjj"]
+atlas = ExtResource("6_davyj")
+region = Rect2(237.6, 1207.05, 201, 173)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1rlss"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1dfqo"]
+atlas = ExtResource("6_davyj")
+region = Rect2(434.88, 1175.03, 244, 206)
+
+[sub_resource type="Gradient" id="Gradient_0qm5h"]
+offsets = PackedFloat32Array(0, 0.0415385, 0.661538, 0.863077, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0415385, 0.0415385, 0.0415385, 1, 0.661538, 0.661538, 0.661538, 1, 0.861538, 0.861538, 0.861538, 1, 1, 1, 1, 1)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o3fuq"]
+color_ramp = SubResource("Gradient_0qm5h")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbhst"]
+atlas = ExtResource("6_davyj")
+region = Rect2(695.64, 1199.46, 210, 193)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ci7j3"]
+atlas = ExtResource("6_davyj")
+region = Rect2(898.24, 1181.75, 236, 210)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84brq"]
+atlas = ExtResource("6_davyj")
+region = Rect2(1135.2, 1187.47, 236, 223)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgyan"]
+atlas = ExtResource("6_davyj")
+region = Rect2(1380.2, 1162.75, 258, 218)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbanr"]
+atlas = ExtResource("6_davyj")
+region = Rect2(1644.72, 1066.61, 249, 335)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5tjv"]
+atlas = ExtResource("6_davyj")
+region = Rect2(1853.64, 1142.48, 130, 246)
+
+[sub_resource type="Theme" id="Theme_b5lut"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dckjc"]
+atlas = ExtResource("6_davyj")
+region = Rect2(1975.44, 1073.18, 188, 311)
+
+[node name="Node" type="Node"]
+script = SubResource("GDScript_4ux0o")
+
+[node name="HUD" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="score_label" type="Label" parent="HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 58.0
+offset_right = -78.0
+offset_bottom = 164.0
+grow_horizontal = 0
+theme = SubResource("Theme_pvjlc")
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 75
+text = "5/10"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+theme = SubResource("Theme_q0v7x")
+scroll_horizontal_custom_step = -0.72
+scroll_deadzone = 200
+
+[node name="Canvas_with_clickzones" type="Control" parent="HBoxContainer/ScrollContainer"]
+custom_minimum_size = Vector2(2350, 1836)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones"]
+layout_mode = 0
+offset_right = 2358.0
+offset_bottom = 1840.0
+texture = ExtResource("2_wivgu")
+
+[node name="click_zone_container" type="Control" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones" groups=["click_zone_group"]]
+custom_minimum_size = Vector2(2350, 1836)
+anchors_preset = 0
+
+[node name="elephant" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(672, 432)
+shape_name = "elephant"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/elephant"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_cfcpk")
+metadata/_edit_lock_ = true
+
+[node name="hippo" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(2434, 400)
+shape_name = "hippo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/hippo"]
+modulate = Color(1, 0.0392157, 1, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_8dcjo")
+metadata/_edit_lock_ = true
+
+[node name="cow" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(1738, 534)
+shape_name = "cow"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/cow"]
+modulate = Color(1, 0.54902, 1, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_swvgn")
+metadata/_edit_lock_ = true
+
+[node name="bread" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(122, 776)
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/bread"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_t7rto")
+metadata/_edit_lock_ = true
+
+[node name="lion" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(1879, 250)
+shape_name = "lion"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/lion"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_g03ka")
+metadata/_edit_lock_ = true
+
+[node name="pig" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(1540, 970)
+shape_name = "pig"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/pig"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_6q6xg")
+metadata/_edit_lock_ = true
+
+[node name="giraffe" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(1093, 130)
+rotation = 0.23911
+shape_name = "giraffe"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/giraffe"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_quk22")
+metadata/_edit_lock_ = true
+
+[node name="fish" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(559, 89)
+rotation = 0.23911
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/fish"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_l0hu1")
+metadata/_edit_lock_ = true
+
+[node name="sheep" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(329, 189)
+rotation = 0.23911
+shape_name = "sheep"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/sheep"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_0ryk0")
+metadata/_edit_lock_ = true
+
+[node name="turtle" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("3_o8y5v")]
+position = Vector2(2887, 191)
+rotation = 0.23911
+shape_name = "turtle"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/turtle"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_citwc")
+metadata/_edit_lock_ = true
+
+[node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/Canvas_with_clickzones"]
+script = ExtResource("4_t0u6h")
+
+[node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(200, 200)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 8
+horizontal_scroll_mode = 0
+script = ExtResource("5_jdqap")
+
+[node name="animals_container" type="VBoxContainer" parent="HBoxContainer/right_rail"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="bread" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_vxi50")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_i5moy")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="turtle" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_i7h4l")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_dspjj")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="hippo" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+texture_filter = 1
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("7_5ii7n")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_1dfqo")
+texture_pressed = SubResource("NoiseTexture2D_o3fuq")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="pig" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_wbhst")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="cow" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_ci7j3")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="elephant" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_84brq")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="lion" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_qgyan")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="deer" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_rbanr")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="fish" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_t5tjv")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="giraffe" type="TextureButton" parent="HBoxContainer/right_rail/animals_container"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+mouse_filter = 1
+theme = SubResource("Theme_b5lut")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_awh86")
+texture_normal = SubResource("AtlasTexture_dckjc")
+texture_pressed = SubResource("NoiseTexture2D_1rlss")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="gui_input" from="HBoxContainer/ScrollContainer/Canvas_with_clickzones" to="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
+[connection signal="area_entered" from="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" to="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" method="_on_area_entered"]
+
+[editable path="HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container/elephant"]

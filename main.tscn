@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcwq2l4moui7b"]
+
+[ext_resource type="Script" path="res://home.gd" id="1_xbqrb"]
+
+[node name="Home" type="Node2D"]
+script = ExtResource("1_xbqrb")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Play" type="Button" parent="Container"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 972.0
+offset_top = 107.0
+offset_right = 1140.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 80
+text = "Play"
+
+[connection signal="button_up" from="Container/Play" to="." method="_on_play_button_up"]

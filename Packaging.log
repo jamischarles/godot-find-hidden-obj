@@ -1,0 +1,175 @@
+2023-08-18 16:24:18 +0000 [MT] Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x15b67fdd0; archive(resolved)="<IDEArchive: 0x600003132940>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team(resolved)="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	Chain (13, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x15b67fdd0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionProcessingPipelineContext: 0x15b67b8d0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b680320; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b673c70; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b671f70; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b76ec80; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15c966ac0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b675dd0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b6735f0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="<IDEProvisioningBasicTeam: 0x6000014f5be0; teamID='BZL36C25J5', teamName='(null)'>">
+	<IDEDistributionContext: 0x15b66f370; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="(null)">
+	<IDEDistributionContext: 0x15c86a0b0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="(null)">
+	<IDEDistributionContext: 0x15b66ac40; archive = "<IDEArchive: 0x600003132940>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x6000017c08c0>", team="(null)">
+	<IDEDistributionContext: 0x12c808ab0; archive = "<IDEArchive: 0x600003132940>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x15b67fdd0>
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionCreateDestRootStep
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionCopyItemStep
+2023-08-18 16:24:18 +0000 [MT] Running /usr/bin/ditto '-V' '/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app' '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app'
+2023-08-18 16:24:18 +0000  >>> Copying /Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app 
+2023-08-18 16:24:18 +0000  copying file ./_CodeSignature/CodeResources ... 
+2023-08-18 16:24:18 +0000  6128 bytes for ./_CodeSignature/CodeResources
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-1100-Portrait-2436h@3x.png ... 
+2023-08-18 16:24:18 +0000  71185 bytes for ./LaunchImage-1100-Portrait-2436h@3x.png
+2023-08-18 16:24:18 +0000  copying file ./en.lproj/InfoPlist.strings ... 
+2023-08-18 16:24:18 +0000  42 bytes for ./en.lproj/InfoPlist.strings
+2023-08-18 16:24:18 +0000  copying file ./AppIcon60x60@2x.png ... 
+2023-08-18 16:24:18 +0000  8994 bytes for ./AppIcon60x60@2x.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-1100-Landscape-2436h@3x.png ... 
+2023-08-18 16:24:18 +0000  108440 bytes for ./LaunchImage-1100-Landscape-2436h@3x.png
+copying file ./LaunchImage-800-667h@2x.png ... 
+2023-08-18 16:24:18 +0000  33052 bytes for ./LaunchImage-800-667h@2x.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-700-Portrait~ipad.png ... 
+2023-08-18 16:24:18 +0000  33936 bytes for ./LaunchImage-700-Portrait~ipad.png
+2023-08-18 16:24:18 +0000  copying file ./Assets.car ... 
+2023-08-18 16:24:18 +0000  415352 bytes for ./Assets.car
+2023-08-18 16:24:18 +0000  copying file ./AppIcon76x76@2x~ipad.png ... 
+2023-08-18 16:24:18 +0000  13121 bytes for ./AppIcon76x76@2x~ipad.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-800-Portrait-736h@3x.png ... 
+2023-08-18 16:24:18 +0000  81050 bytes for ./LaunchImage-800-Portrait-736h@3x.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-700@2x.png ... 
+2023-08-18 16:24:18 +0000  25343 bytes for ./LaunchImage-700@2x.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-700-568h@2x.png ... 
+2023-08-18 16:24:18 +0000  26112 bytes for ./LaunchImage-700-568h@2x.png
+2023-08-18 16:24:18 +0000  copying file ./Find Hidden Image.pck ... 
+2023-08-18 16:24:18 +0000  3687680 bytes for ./Find Hidden Image.pck
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-700-Landscape@2x~ipad.png ... 
+2023-08-18 16:24:18 +0000  179186 bytes for ./LaunchImage-700-Landscape@2x~ipad.png
+copying file ./Find Hidden Image ... 
+2023-08-18 16:24:18 +0000  54746128 bytes for ./Find Hidden Image
+copying file ./embedded.mobileprovision ... 
+2023-08-18 16:24:18 +0000  12348 bytes for ./embedded.mobileprovision
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-800-Landscape-736h@3x.png ... 
+2023-08-18 16:24:18 +0000  126112 bytes for ./LaunchImage-800-Landscape-736h@3x.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-700-Portrait@2x~ipad.png ... 
+2023-08-18 16:24:18 +0000  112178 bytes for ./LaunchImage-700-Portrait@2x~ipad.png
+2023-08-18 16:24:18 +0000  copying file ./LaunchImage-700-Landscape~ipad.png ... 
+2023-08-18 16:24:18 +0000  51362 bytes for ./LaunchImage-700-Landscape~ipad.png
+2023-08-18 16:24:18 +0000  copying file ./Info.plist ... 
+2023-08-18 16:24:18 +0000  2075 bytes for ./Info.plist
+2023-08-18 16:24:18 +0000  copying file ./PkgInfo ... 
+2023-08-18 16:24:18 +0000  8 bytes for ./PkgInfo
+2023-08-18 16:24:18 +0000 [MT] /usr/bin/ditto exited with 0
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionEmbedProfileStep
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionInfoPlistStep
+2023-08-18 16:24:18 +0000 [MT] Skipping step: IDEDistributionInfoPlistStep because it said so
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionAppThinningPlistStep
+2023-08-18 16:24:18 +0000 [MT] Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionCompileBitcodeStep
+2023-08-18 16:24:18 +0000 [MT] Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionCodeSlimmingStep
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionCopyBCSymbolMapsStep
+2023-08-18 16:24:18 +0000 [MT] Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionSymbolsStep
+2023-08-18 16:24:18 +0000 [MT] Skipping step: IDEDistributionSymbolsStep because it said so
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionAppThinningStep
+2023-08-18 16:24:18 +0000 [MT] Skipping step: IDEDistributionAppThinningStep because it said so
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionArchThinningStep
+2023-08-18 16:24:18 +0000 [MT] Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app/Find Hidden Image' '-verify_arch' 'arm64e'
+2023-08-18 16:24:18 +0000 [MT] /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2023-08-18 16:24:18 +0000 [MT] Skipping architecture thinning for item "Find Hidden Image" because arch "arm64e" wasn't found
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionODRStep
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionStripXattrsStep
+2023-08-18 16:24:18 +0000 [MT] Running /usr/bin/xattr '-crs' '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app'
+2023-08-18 16:24:18 +0000 [MT] /usr/bin/xattr exited with 0
+2023-08-18 16:24:18 +0000 [MT] Processing step: IDEDistributionCodesignStep
+2023-08-18 16:24:18 +0000 [MT] Entitlements for <IDEDistributionItem: 0x600003137ea0; bundleID='com.tinygames.matchymatch', path='<DVTFilePath:0x600003e09490:'/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600003656850; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000022b9080; name='Apple Development: Jamis Charles (7EN69JWXSN)', hash='49067F1B2A06C2562402BC397E76C9EBEB4D5C85', serialNumber='6AC913D9C7BFEBCE6D531C7B9C0680D1', certificateKinds='(
+	"1.2.840.113635.100.6.1.12",
+	"1.2.840.113635.100.6.1.2"
+), issueDate='2023-08-18 15:59:05 +0000''>', entitlements='{
+	"application-identifier" = "BZL36C25J5.com.tinygames.matchymatch";
+	"com.apple.developer.team-identifier" = BZL36C25J5;
+	"get-task-allow" = 1;
+}', teamID='BZL36C25J5', identifier='com.tinygames.matchymatch', executablePath='<DVTFilePath:0x600003e0f8e0:'/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app/Find Hidden Image'>', hardenedRuntime='0'>'>: {
+	"application-identifier" = "BZL36C25J5.com.tinygames.matchymatch";
+	"com.apple.developer.team-identifier" = BZL36C25J5;
+	"get-task-allow" = 1;
+}
+2023-08-18 16:24:18 +0000 [MT] Entitlements for <IDEDistributionItem: 0x600003137ea0; bundleID='com.tinygames.matchymatch', path='<DVTFilePath:0x600003e09490:'/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600003656850; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000022a40b0; name='Apple Development: Jamis Charles (7EN69JWXSN)', hash='49067F1B2A06C2562402BC397E76C9EBEB4D5C85', serialNumber='6AC913D9C7BFEBCE6D531C7B9C0680D1', certificateKinds='(
+	"1.2.840.113635.100.6.1.12",
+	"1.2.840.113635.100.6.1.2"
+), issueDate='2023-08-18 15:59:05 +0000''>', entitlements='{
+	"application-identifier" = "BZL36C25J5.com.tinygames.matchymatch";
+	"com.apple.developer.team-identifier" = BZL36C25J5;
+	"get-task-allow" = 1;
+}', teamID='BZL36C25J5', identifier='com.tinygames.matchymatch', executablePath='<DVTFilePath:0x600003e0f8e0:'/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app/Find Hidden Image'>', hardenedRuntime='0'>'> are: {
+	"application-identifier" = "BZL36C25J5.com.tinygames.matchymatch";
+	"com.apple.developer.team-identifier" = BZL36C25J5;
+	"get-task-allow" = 1;
+}
+2023-08-18 16:24:18 +0000 [MT] Writing entitlements for <IDEDistributionItem: 0x600003137ea0; bundleID='com.tinygames.matchymatch', path='<DVTFilePath:0x600003e09490:'/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x600003656850; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x6000022a4840; name='Apple Development: Jamis Charles (7EN69JWXSN)', hash='49067F1B2A06C2562402BC397E76C9EBEB4D5C85', serialNumber='6AC913D9C7BFEBCE6D531C7B9C0680D1', certificateKinds='(
+	"1.2.840.113635.100.6.1.12",
+	"1.2.840.113635.100.6.1.2"
+), issueDate='2023-08-18 15:59:05 +0000''>', entitlements='{
+	"application-identifier" = "BZL36C25J5.com.tinygames.matchymatch";
+	"com.apple.developer.team-identifier" = BZL36C25J5;
+	"get-task-allow" = 1;
+}', teamID='BZL36C25J5', identifier='com.tinygames.matchymatch', executablePath='<DVTFilePath:0x600003e0f8e0:'/Users/jacharles/dev_games/poc_find_hidden_image/Find Hidden Image.xcarchive/Products/Applications/Find Hidden Image.app/Find Hidden Image'>', hardenedRuntime='0'>'> to: /var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/entitlements~~~95afwD
+2023-08-18 16:24:18 +0000 [MT] Running /usr/bin/codesign '-vvv' '--force' '--sign' '49067F1B2A06C2562402BC397E76C9EBEB4D5C85' '--entitlements' '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/entitlements~~~95afwD' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app'
+2023-08-18 16:24:19 +0000  /var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app: replacing existing signature
+2023-08-18 16:24:19 +0000  /var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app: signed app bundle with Mach-O thin (arm64) [com.tinygames.matchymatch]
+2023-08-18 16:24:19 +0000 [MT] /usr/bin/codesign exited with 0
+2023-08-18 16:24:19 +0000 [MT] Processing step: IDEDistributionZipODRItemStep
+2023-08-18 16:24:19 +0000 [MT] Skipping step: IDEDistributionZipODRItemStep because it said so
+2023-08-18 16:24:19 +0000 [MT] Processing step: IDEDistributionCreateIPAStep
+2023-08-18 16:24:19 +0000 [MT] Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root' '/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Packages/Find Hidden Image.ipa'
+2023-08-18 16:24:19 +0000  >>> Copying /var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root 
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/_CodeSignature/CodeResources ... 
+2023-08-18 16:24:19 +0000  6128 bytes for ./Payload/Find Hidden Image.app/_CodeSignature/CodeResources
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-1100-Portrait-2436h@3x.png ... 
+2023-08-18 16:24:19 +0000  71185 bytes for ./Payload/Find Hidden Image.app/LaunchImage-1100-Portrait-2436h@3x.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/en.lproj/InfoPlist.strings ... 
+2023-08-18 16:24:19 +0000  42 bytes for ./Payload/Find Hidden Image.app/en.lproj/InfoPlist.strings
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/AppIcon60x60@2x.png ... 
+2023-08-18 16:24:19 +0000  8994 bytes for ./Payload/Find Hidden Image.app/AppIcon60x60@2x.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-1100-Landscape-2436h@3x.png ... 
+2023-08-18 16:24:19 +0000  108440 bytes for ./Payload/Find Hidden Image.app/LaunchImage-1100-Landscape-2436h@3x.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-800-667h@2x.png ... 
+2023-08-18 16:24:19 +0000  33052 bytes for ./Payload/Find Hidden Image.app/LaunchImage-800-667h@2x.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-700-Portrait~ipad.png ... 
+2023-08-18 16:24:19 +0000  33936 bytes for ./Payload/Find Hidden Image.app/LaunchImage-700-Portrait~ipad.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/Assets.car ... 
+2023-08-18 16:24:19 +0000  415352 bytes for ./Payload/Find Hidden Image.app/Assets.car
+copying file ./Payload/Find Hidden Image.app/AppIcon76x76@2x~ipad.png ... 
+2023-08-18 16:24:19 +0000  13121 bytes for ./Payload/Find Hidden Image.app/AppIcon76x76@2x~ipad.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-800-Portrait-736h@3x.png ... 
+2023-08-18 16:24:19 +0000  81050 bytes for ./Payload/Find Hidden Image.app/LaunchImage-800-Portrait-736h@3x.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-700@2x.png ... 
+2023-08-18 16:24:19 +0000  25343 bytes for ./Payload/Find Hidden Image.app/LaunchImage-700@2x.png
+copying file ./Payload/Find Hidden Image.app/LaunchImage-700-568h@2x.png ... 
+2023-08-18 16:24:19 +0000  26112 bytes for ./Payload/Find Hidden Image.app/LaunchImage-700-568h@2x.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/Find Hidden Image.pck ... 
+2023-08-18 16:24:19 +0000  3687680 bytes for ./Payload/Find Hidden Image.app/Find Hidden Image.pck
+copying file ./Payload/Find Hidden Image.app/LaunchImage-700-Landscape@2x~ipad.png ... 
+2023-08-18 16:24:19 +0000  179186 bytes for ./Payload/Find Hidden Image.app/LaunchImage-700-Landscape@2x~ipad.png
+2023-08-18 16:24:19 +0000  copying file ./Payload/Find Hidden Image.app/Find Hidden Image ... 
+2023-08-18 16:24:20 +0000  54746128 bytes for ./Payload/Find Hidden Image.app/Find Hidden Image
+copying file ./Payload/Find Hidden Image.app/embedded.mobileprovision ... 
+2023-08-18 16:24:20 +0000  12348 bytes for ./Payload/Find Hidden Image.app/embedded.mobileprovision
+copying file ./Payload/Find Hidden Image.app/LaunchImage-800-Landscape-736h@3x.png ... 
+2023-08-18 16:24:20 +0000  126112 bytes for ./Payload/Find Hidden Image.app/LaunchImage-800-Landscape-736h@3x.png
+2023-08-18 16:24:20 +0000  copying file ./Payload/Find Hidden Image.app/LaunchImage-700-Portrait@2x~ipad.png ... 
+2023-08-18 16:24:20 +0000  112178 bytes for ./Payload/Find Hidden Image.app/LaunchImage-700-Portrait@2x~ipad.png
+copying file ./Payload/Find Hidden Image.app/LaunchImage-700-Landscape~ipad.png ... 
+2023-08-18 16:24:20 +0000  51362 bytes for ./Payload/Find Hidden Image.app/LaunchImage-700-Landscape~ipad.png
+copying file ./Payload/Find Hidden Image.app/Info.plist ... 
+2023-08-18 16:24:20 +0000  2075 bytes for ./Payload/Find Hidden Image.app/Info.plist
+copying file ./Payload/Find Hidden Image.app/PkgInfo ... 
+2023-08-18 16:24:20 +0000  8 bytes for ./Payload/Find Hidden Image.app/PkgInfo
+2023-08-18 16:24:20 +0000 [MT] /usr/bin/ditto exited with 0
+2023-08-18 16:24:20 +0000 [MT] Processing step: IDEDistributionAppStoreInformationStep
+2023-08-18 16:24:20 +0000 [MT] Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2023-08-18 16:24:20 +0000 [MT] Processing step: IDEDistributionGenerateProcessedDistributionItems
+2023-08-18 16:24:20 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x600003e06fb0:'/var/folders/t7/7t051twj3hs7t_wxrt8x5gzc0000gq/T/XcodeDistPipeline.~~~kdX85X/Root/Payload/Find Hidden Image.app'>
+2023-08-18 16:24:20 +0000 [MT] Processing step: IDEDistributionCreateManifestStep
