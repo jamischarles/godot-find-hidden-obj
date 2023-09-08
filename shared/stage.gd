@@ -27,7 +27,7 @@ var canvas_click_circle: Polygon2D
 
 
 @onready var legend_button_group: ButtonGroup = $HBoxContainer/right_rail.get("legend_button_group")
-@onready var clickZoneContainer = $HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container
+@onready var clickZoneContainer = $HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container
 
 
 # Simplest shape solution...
@@ -88,7 +88,7 @@ func _ready():
 	legend_button_group.connect("changed", on_button_group_change)
 	print('legend_button_group', legend_button_group)
 	
-	$HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)
+	$HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)
 	# connect to all click zones so we can act on them from here?
 	# do we need to?
 	# yes let's try this for now. We can change later...
@@ -101,7 +101,7 @@ func _ready():
 	
 #	var clickZones =$HBoxContainer/ScrollContainer/click_zone_container.get_children()
 #	var clickZones =$HBoxContainer/ScrollContainer/Control.get_children()
-	var clickZones =$HBoxContainer/ScrollContainer/Canvas_with_clickzones/click_zone_container.get_children()
+	var clickZones =$HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container.get_children()
 	
 #	var clickZones = []
 	#for clickZone in clickZones:
