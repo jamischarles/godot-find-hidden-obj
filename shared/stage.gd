@@ -17,10 +17,10 @@ var assert_verify_matches = {} # [name]: [count]. Then assert that each is exact
 
 
 # from canvas
-var selected_animal: Area2D
+var selected_canvas_shapes_ref: Array[Area2D]
 
 # from right rail
-var selected_animal2: TextureButton
+var selected_obj_ref2: TextureButton
 
 # tracks our touch target on big image
 var canvas_click_circle: Polygon2D
@@ -88,7 +88,7 @@ func _ready():
 	legend_button_group.connect("changed", on_button_group_change)
 	print('legend_button_group', legend_button_group)
 	
-	$HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle.connect("found_hidden_object_on_canvas", on_canvas_shape_found)
+	$HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)
 	# connect to all click zones so we can act on them from here?
 	# do we need to?
 	# yes let's try this for now. We can change later...
@@ -283,27 +283,23 @@ func _process(delta):
 
 
 # Any time we click on a shape, or a right rail button we want to compare for a match
-func compare_for_match(selected_animal1, selected_animal2):
-	print('eval for match: ', selected_animal1, selected_animal2)
+func compare_for_match(selected_object1, selected_object2):
+	print('eval for match: ', selected_object1, selected_object2)
 	
-	# ensure we have 2 animals selected we can compare
-	if !selected_animal || !selected_animal2: return
+	# ensure we have 2 objects selected we can compare
+	if !selected_object1 || !selected_object2: return
 
 	
 #	get which animal button is pressed
 	
 	# get selected right rail animal
 	
-	print("COMPARE:", selected_animal, selected_animal2)
+	print("COMPARE:", selected_object1, selected_object2)
 	
 	
-	if selected_animal1.name == selected_animal2.name:
-#		print('MATCH!!!!!!!!', shape_name)
-#		on_match_found(firstClick.id, secondClick.id)
-		
-		
+	if selected_object1.name == selected_object2.name:	
 		## disable and color canvas collision shape click_zone
-		on_match_found(selected_animal1, selected_animal2)
+		on_match_found(selected_object1, selected_object2)
 		
 		
 	
@@ -317,18 +313,23 @@ func compare_for_match(selected_animal1, selected_animal2):
 #	compare_for_match(shape, animalsBtnGroup.get_pressed_button())
 	
 		
-#whenever the right rail selectino changes it'll get updated in selected_animal2
+#whenever the right rail selection changes it'll get updated in selected_object2
 func on_button_group_change():
 	print('button group changed!!')
-	selected_animal2 = legend_button_group.get_pressed_button()
-	compare_for_match(selected_animal, selected_animal2)
+	selected_obj_ref2 = legend_button_group.get_pressed_button()
+	
+	## TODO: Simplify and reuse
+	
+	for shape in selected_canvas_shapes_ref:
+		compare_for_match(shape, selected_obj_ref2)
 #	print('selectedAnimal2: ', selected_animal2)
 
-
-func on_canvas_shape_found(shape: Area2D):
-#	print('animal', animal)
-	selected_animal = shape
-	compare_for_match(shape, legend_button_group.get_pressed_button())
+#whenever overlapping shapes are found in canvas pass array of overlapping shapes
+func on_canvas_shapes_found(shapes: Array[Area2D]):
+	selected_canvas_shapes_ref = shapes
+	# compare each overlapping shape passed in (from click circle)
+	for shape in shapes:
+		compare_for_match(shape, legend_button_group.get_pressed_button())
 
 # on match found
 func on_match_found(animal1, animal2: TextureButton):
@@ -342,7 +343,7 @@ func on_match_found(animal1, animal2: TextureButton):
 	
 	## Right rail button. Disable and fade out
 	animal2.disabled = true
-	animal2.set_modulate(Color(1,1,1,.1))
+	animal2.set_modulate(Color(1,1,1,.2))
 	animal2.get_parent().move_child(animal2, animal2.get_parent().get_child_count()) # move to end
 	
 	# update score
@@ -357,12 +358,12 @@ func on_match_found(animal1, animal2: TextureButton):
 #		Yes. let's do that...
 	
 	
-func destroy_and_spawn_click_circle(x:float,y:float):
-#	
-	# destroy the old circle if it exists
-	if canvas_click_circle: canvas_click_circle.queue_free()
-	
-	print('destroy: ', x,y)
+#func destroy_and_spawn_click_circle(x:float,y:float):
+##	
+#	# destroy the old circle if it exists
+#	if canvas_click_circle: canvas_click_circle.queue_free()
+#
+#	print('destroy: ', x,y)
 #	var clickCircle: Area2D = Area2D.new()
 #	var collision: CollisionShape2D = CollisionShape2D.new()
 #	var shape: CircleShape2D = CircleShape2D.new()

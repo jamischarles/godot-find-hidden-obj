@@ -10,6 +10,8 @@ extends ScrollContainer
 # right rail buttons. For easy access
 @onready var legend_button_group: ButtonGroup = $legend_for_hidden_objects.get_children()[0].button_group
 
+var lastSelectedButton: TextureButton
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var legend_buttons = $legend_for_hidden_objects.get_children()
@@ -28,7 +30,51 @@ func _process(delta):
 	pass
 	
 	## Q: Do we need to add the button back?
+	## TODO: Break this up and make it more declarative...?
 func on_button_pressed():
+	## destroy the panel child of the previously selected button
+	## removes the "selected" border
+	var oldPanel = lastSelectedButton.get_child(0) if lastSelectedButton else null
+	if oldPanel: oldPanel.queue_free()
+	
+	## change the button style to a "pressed" state
+	var button = legend_button_group.get_pressed_button()
+	lastSelectedButton = button
+	
+	
+	print('pressed!', button)
+
+	var panel = Panel.new()
+	
+#	panel.draw_style_box(StyleBoxFlat.new(), button.get_rect())
+	button.add_child(panel)
+	
+	var box = StyleBoxFlat.new()
+#	box.bg_color = Color(0.0666666701436, 0.66274511814117, 0.839215695858)
+	
+#	panel.add_theme_stylebox_override("test", box)
+	panel["theme_override_styles/panel"] = box
+	
+	box.set_border_width_all(15)
+	box.border_color = Color(0.0666666701436, 0.66274511814117, 0.839215695858, .5)
+#	box.border_width_left = 11
+#	box.border_width_top = 11
+#	box.border_width_right = 11
+#	box.border_width_bottom = 11
+	
+#	box.border_blend = true
+
+	
+	box.set_draw_center(false)
+	
+	# didn't render at all until I did this...
+	panel.set_size(button.get_size())
+	
+#	box._draw()
+#	panel.panel = box
+	
+	
+	
 #	print("animalName: ", name)
 #	print("animalName2: ", btnGroup.get_pressed_button())
 	## TODO: implement my own comparision logic for this?!?

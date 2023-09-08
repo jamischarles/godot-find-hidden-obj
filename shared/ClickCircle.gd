@@ -1,6 +1,6 @@
 extends Area2D
 
-signal found_hidden_object_on_canvas
+signal found_hidden_objects_on_canvas
 
 var canvas_click_circle: Polygon2D
 
@@ -29,7 +29,9 @@ func _draw():
 	# solid circle
 #	draw_circle(pos, 50, Color.DARK_RED)
 	
-	draw_polyline(polygon, Color(Color.LIGHT_GRAY, .5), 8.0, true)
+	# Matches color in right_rail.gd
+#	draw_polyline(polygon, Color(Color.LIGHT_GRAY, .5), 8.0, true)
+	draw_polyline(polygon, Color(0.0666666701436, 0.66274511814117, 0.839215695858, .5), 8.0, true)
 	
 	# move collision shape to new circle position
 	click_circle_collision_shape.set_polygon(polygon)
@@ -65,6 +67,11 @@ func generate_circle_polygon(radius: float, num_sides: int, pos: Vector2) -> Pac
 
 
 func _on_area_entered(area):
-	print("##COLLISION", area.name)
-	emit_signal("found_hidden_object_on_canvas", area)
+	print('##COLLISION', get_overlapping_areas())
+	# Q: We somehow need to store BOTH, then clear it
+#	print("ENTER@@@", area)
+#	print("##COLLISION", area.name)
+	
+	# send the overlapping areas of the click_circle as an array 
+	emit_signal("found_hidden_objects_on_canvas", get_overlapping_areas())
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dp7eehrtrasqq"]
+[gd_scene load_steps=40 format=3 uid="uid://dp7eehrtrasqq"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_eemjn"]
 [ext_resource type="Texture2D" uid="uid://m2qg26uu37p5" path="res://01/img.png" id="2_mujqn"]
@@ -65,24 +65,33 @@ bg_color = Color(1, 1, 1, 1)
 atlas = ExtResource("2_mujqn")
 region = Rect2(112, 384, 232, 240)
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_86rsj"]
+texture = ExtResource("2_mujqn")
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b8hlc"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 30.0
+content_margin_bottom = 30.0
+
 [sub_resource type="Theme" id="Theme_i7h4l"]
+default_base_scale = 0.5
+Button/constants/h_separation = 2
+Button/constants/outline_size = 8
+Button/styles/normal = SubResource("StyleBoxTexture_86rsj")
+Button/styles/pressed = SubResource("StyleBoxEmpty_b8hlc")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dspjj"]
 atlas = ExtResource("2_mujqn")
 region = Rect2(376, 360, 416, 544)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1rlss"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_1dfqo"]
 atlas = ExtResource("2_mujqn")
 region = Rect2(136, 632, 312, 176)
-
-[sub_resource type="Gradient" id="Gradient_0qm5h"]
-offsets = PackedFloat32Array(0, 0.0415385, 0.661538, 0.863077, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.0415385, 0.0415385, 0.0415385, 1, 0.661538, 0.661538, 0.661538, 1, 0.861538, 0.861538, 0.861538, 1, 1, 1, 1, 1)
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o3fuq"]
-color_ramp = SubResource("Gradient_0qm5h")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wbhst"]
 atlas = ExtResource("2_mujqn")
@@ -319,7 +328,6 @@ theme = SubResource("Theme_i7h4l")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_dspjj")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -333,7 +341,6 @@ theme = ExtResource("7_4k4jw")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_1dfqo")
-texture_pressed = SubResource("NoiseTexture2D_o3fuq")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -343,9 +350,9 @@ custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 mouse_filter = 1
 toggle_mode = true
+button_pressed = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_wbhst")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -357,7 +364,6 @@ mouse_filter = 1
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_ci7j3")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -369,7 +375,6 @@ mouse_filter = 1
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_84brq")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -381,7 +386,6 @@ mouse_filter = 1
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_qgyan")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -393,7 +397,6 @@ mouse_filter = 1
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_rbanr")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -405,7 +408,6 @@ mouse_filter = 1
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_t5tjv")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -418,7 +420,6 @@ theme = SubResource("Theme_b5lut")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_bavwx")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -431,7 +432,6 @@ theme = SubResource("Theme_b5lut")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_1uwb7")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -444,7 +444,6 @@ theme = SubResource("Theme_b5lut")
 toggle_mode = true
 button_group = SubResource("ButtonGroup_t2m7m")
 texture_normal = SubResource("AtlasTexture_65onw")
-texture_pressed = SubResource("NoiseTexture2D_1rlss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -482,6 +481,10 @@ offset_right = 87.0
 offset_bottom = 63.0
 theme_override_font_sizes/font_size = 20
 text = "Home"
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="gui_input" from="HBoxContainer/ScrollContainer/Canvas_with_clickzones" to="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
 [connection signal="area_entered" from="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" to="HBoxContainer/ScrollContainer/Canvas_with_clickzones/ClickCircle" method="_on_area_entered"]
