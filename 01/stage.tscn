@@ -1,8 +1,11 @@
-[gd_scene load_steps=40 format=3 uid="uid://dp7eehrtrasqq"]
+[gd_scene load_steps=51 format=3 uid="uid://dp7eehrtrasqq"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_eemjn"]
 [ext_resource type="Texture2D" uid="uid://m2qg26uu37p5" path="res://01/img.png" id="2_mujqn"]
+[ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_ygdlw"]
 [ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="3_46k56"]
+[ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="3_e0t4a"]
+[ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="3_oc8hj"]
 [ext_resource type="Script" path="res://shared/ClickCircle.gd" id="4_8pdgr"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="5_pxkns"]
 [ext_resource type="Theme" uid="uid://hslhklg2eq2f" path="res://theme_selected_button.tres" id="7_4k4jw"]
@@ -14,6 +17,27 @@ border_width_bottom = 21
 
 [sub_resource type="Theme" id="Theme_q0v7x"]
 HScrollBar/styles/scroll = SubResource("StyleBoxFlat_b17r5")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pdm0"]
+atlas = ExtResource("3_oc8hj")
+region = Rect2(36, 2, 24, 29)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_edxm7"]
+texture = SubResource("AtlasTexture_5pdm0")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3dbj"]
+atlas = ExtResource("3_oc8hj")
+region = Rect2(35, 35, 25, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uj1uk"]
+texture = SubResource("AtlasTexture_c3dbj")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmfsv"]
+atlas = ExtResource("3_oc8hj")
+region = Rect2(36, 69, 24, 25)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qu750"]
+texture = SubResource("AtlasTexture_tmfsv")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_phqrl"]
 atlas = ExtResource("2_mujqn")
@@ -131,6 +155,11 @@ region = Rect2(328, 1648, 160, 304)
 atlas = ExtResource("2_mujqn")
 region = Rect2(520, 1704, 272, 376)
 
+[sub_resource type="Theme" id="Theme_kxan1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_osqc8"]
+bg_color = Color(0.0117647, 0.694118, 0.631373, 1)
+
 [sub_resource type="Theme" id="Theme_pvjlc"]
 
 [node name="Node" type="Node"]
@@ -158,17 +187,35 @@ scroll_deadzone = 200
 layout_mode = 2
 
 [node name="left_rail_notch_buffer" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
+z_index = 1000
 custom_minimum_size = Vector2(100, 2.08165e-12)
 layout_mode = 2
 
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer"]
+layout_mode = 0
+offset_right = 111.0
+offset_bottom = 971.0
+texture = ExtResource("2_ygdlw")
+region_rect = Rect2(350, 31, 37, 98)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
 [node name="Home" type="Button" parent="HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer"]
 layout_mode = 2
-offset_left = 3.0
-offset_top = 88.0
+offset_left = 32.0
+offset_top = 38.0
 offset_right = 98.0
-offset_bottom = 138.0
+offset_bottom = 79.0
 theme_override_font_sizes/font_size = 30
-text = "Home"
+theme_override_styles/normal = SubResource("StyleBoxTexture_edxm7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uj1uk")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qu750")
+icon = ExtResource("3_e0t4a")
+icon_alignment = 1
 
 [node name="Canvas_with_clickzones" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(2144, 2144)
@@ -320,7 +367,7 @@ clip_contents = true
 custom_minimum_size = Vector2(250, 200)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
+theme_override_constants/separation = 10
 
 [node name="tablet" type="TextureButton" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
 clip_contents = true
@@ -462,7 +509,7 @@ texture_normal = SubResource("AtlasTexture_65onw")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HUD" type="Control" parent="."]
+[node name="level_complete_panel" type="Control" parent="."]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -474,7 +521,46 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="score_label" type="Label" parent="HUD"]
+[node name="Panel" type="Panel" parent="level_complete_panel"]
+custom_minimum_size = Vector2(1500, 1500)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 102.0
+offset_top = -1.0
+offset_right = 1602.0
+offset_bottom = 1499.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_kxan1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_osqc8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="level_complete_panel/Panel"]
+layout_mode = 0
+offset_left = 391.0
+offset_top = 126.0
+offset_right = 1238.0
+offset_bottom = 319.0
+theme_override_font_sizes/normal_font_size = 120
+theme_override_font_sizes/bold_font_size = 60
+text = "Level is DONE"
+
+[node name="btn_level_select" type="Button" parent="level_complete_panel/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 410.0
+offset_right = 110.0
+offset_bottom = 537.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Next"
+
+[node name="score_label" type="Label" parent="level_complete_panel"]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -494,5 +580,6 @@ text = "5/10"
 [connection signal="button_up" from="HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer/Home" to="." method="_on_home_button_up"]
 [connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones" to="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
 [connection signal="area_entered" from="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" to="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" method="_on_area_entered"]
+[connection signal="button_up" from="level_complete_panel/Panel/btn_level_select" to="." method="_on_btn_level_select_button_up"]
 
 [editable path="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/tablet"]

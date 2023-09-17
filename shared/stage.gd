@@ -6,10 +6,10 @@ extends Node
 # FIFO array limit 2
 # todo: add the shape idx too, because we don't want to allow clicking the same item twice for a match.
 # clamp this 
-var last_2_zones_clicked: Array[Dictionary] = []
-var current_score = 0 # how many have been solved so far?
+#var last_2_zones_clicked: Array[Dictionary] = []
+#var current_score = 0 # how many have been solved so far?
 #@onready var total_match_sets: int = $click_zone_container.get_child_count() / 2 #expect click_zones / 2
-var total_match_sets = 10
+#var total_match_sets = 10
 
 # quality assertions. Can we make these dev only?!?
 # OR should I use these to verify match?
@@ -346,10 +346,19 @@ func on_match_found(animal1, animal2: TextureButton):
 	animal2.set_modulate(Color(1,1,1,.2))
 	animal2.get_parent().move_child(animal2, animal2.get_parent().get_child_count()) # move to end
 	
-	# update score
-	current_score += 1
-	$HUD/score_label.set_text("%s / %s" % [current_score, total_match_sets])
-	
+	# Verify we have no more sets to match
+	# ie: Is the level done?
+#	current_score += 1
+#	$HUD/score_label.set_text("%s / %s" % [current_score, total_match_sets])
+	var right_rail_buttons = $HBoxContainer/right_rail/legend_for_hidden_objects.get_children()
+	for btn in right_rail_buttons:
+		print("name", btn.name)
+		if !btn.is_disabled():
+			return
+			
+	end_level()
+#	for i in len(right_rail_buttons):
+#		var btn = right_rail_buttons[i]
 	
 	
 
@@ -357,6 +366,10 @@ func on_match_found(animal1, animal2: TextureButton):
 		# or do we just emulate and have the parent draw?
 #		Yes. let's do that...
 	
+	
+	
+func end_level():
+	$level_complete_panel.visible = true # show the 
 	
 #func destroy_and_spawn_click_circle(x:float,y:float):
 ##	
@@ -444,3 +457,7 @@ func polar2cartesian(r, theta):
 # Go back to level_select screen
 func _on_home_button_up():
 	get_tree().change_scene_to_file("res://level_selector.tscn" )
+
+
+func _on_btn_level_select_button_up():
+	_on_home_button_up()

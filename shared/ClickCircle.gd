@@ -42,13 +42,34 @@ func _draw():
 # draw circles and create collision areas from here...
 # why don't we use a polygon? Or an area2d with attached circle shape?
 # hm... either would work...
+# senses movement. If it's a swipe/move, then we do nothign...
+var clickStartPos
 func _on_canvas_with_clickzones_gui_input(event):
-	if event.get_class() == "InputEventScreenTouch" && event.is_pressed():
-		click_circle_pos = event.get_position()
-#		print('click_input', event)
-#		print('click_input2', event.get_position())
-		queue_redraw()
+	print('event', event)
+	if event.get_class() == "InputEventScreenTouch":
+	
+		if event.is_pressed():
+			clickStartPos = event.get_position()
+#			print('###DOWN')
+			
+		else:	
+#			print('###UP')
+			click_circle_pos = event.get_position()
+			if click_circle_pos == clickStartPos:
+				queue_redraw()
+#				print('SAME POS')
+
+			# if CLICK DRAG do nothing. 
+			else:
+				pass
+#				print('new pos')
+	#		print('click_input', event)
+			# compare the release position to the click position
+			
+	#		print('click_input2', event.get_position())
+			
 #		destroy_and_spawn_click_circle(event.get_position().x, event.get_position().y)
+
 		
 
 
