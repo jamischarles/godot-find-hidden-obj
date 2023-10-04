@@ -1,0 +1,77 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbkcfq5kkafli"]
+
+[ext_resource type="Texture2D" uid="uid://ddnhsdwup6kuc" path="res://00/src/img.png" id="1_d1h0q"]
+[ext_resource type="Script" path="res://00_tools/get_image_coords.gd" id="1_vkhnq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ashr3"]
+atlas = ExtResource("1_d1h0q")
+region = Rect2(2.08165e-12, 2.08165e-12, 2999, 975)
+
+[node name="get_image_coords" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 2999.0
+offset_bottom = 1350.0
+texture = SubResource("AtlasTexture_ashr3")
+stretch_mode = 4
+metadata/_edit_lock_ = true
+
+[node name="click_zones" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_vkhnq")
+dest_folder = "05"
+metadata/_edit_lock_ = true
+
+[node name="sheep" type="Polygon2D" parent="click_zones"]
+position = Vector2(321, 190)
+color = Color(1, 1, 1, 0.5)
+polygon = PackedVector2Array(-24, -28, 12, -28, 32, 1, 7, 27, -16, 14, -25, 3)
+
+[node name="turtle" type="Polygon2D" parent="click_zones"]
+position = Vector2(1462, -393)
+color = Color(1, 1, 1, 0.5)
+polygon = PackedVector2Array(1219, 568, 1209, 587, 1213, 602, 1266, 607, 1295, 571, 1274, 544, 1255, 532, 1229, 539)
+
+[node name="hippo" type="Polygon2D" parent="click_zones"]
+position = Vector2(1687, -430)
+color = Color(1, 1, 1, 0.5)
+polygon = PackedVector2Array(556, 822, 533, 827, 528, 840, 538, 862, 578, 863, 581, 856, 633, 868, 664, 843, 665, 808, 648, 789, 618, 783, 583, 791, 566, 804)
+
+[node name="button_images" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="sheep" type="ReferenceRect" parent="button_images"]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 1096.0
+offset_right = 230.0
+offset_bottom = 1290.0
+border_width = 2.4
+
+[node name="turtle" type="ReferenceRect" parent="button_images"]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 1142.0
+offset_right = 410.0
+offset_bottom = 1313.0
+border_width = 2.4
+
+[node name="hippo" type="ReferenceRect" parent="button_images"]
+layout_mode = 0
+offset_left = 411.0
+offset_top = 1109.0
+offset_right = 643.0
+offset_bottom = 1304.0
+border_width = 2.4

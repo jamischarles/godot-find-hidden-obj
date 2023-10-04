@@ -1,14 +1,17 @@
 [gd_scene load_steps=12 format=3 uid="uid://bcwq2l4moui7b"]
 
 [ext_resource type="Script" path="res://home.gd" id="1_xbqrb"]
-[ext_resource type="Texture2D" uid="uid://bxcbclxdd7q14" path="res://02/img.jpg" id="2_4h0l7"]
-[ext_resource type="Texture2D" uid="uid://m2qg26uu37p5" path="res://01/img.png" id="2_a4qgv"]
+[ext_resource type="Texture2D" uid="uid://q6sjqkh0gvfj" path="res://05/src/img.png" id="2_b05a7"]
 [ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="2_dpqt5"]
 [ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="3_xgd6p"]
-[ext_resource type="Texture2D" uid="uid://bi71kesufoxke" path="res://02/img.png" id="4_bb2vc"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="5_y7veb"]
 [ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="9_eoqg1"]
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="9_j3yvo"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jnypx"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0iuur"]
+load_path = "res://.godot/imported/img.png-dbcd5c2a989ca86914a9daa47fd9c093.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x33pu"]
 atlas = ExtResource("9_j3yvo")
@@ -29,22 +32,22 @@ offset_bottom = 551.0
 
 [node name="Img3" type="Sprite2D" parent="Backdrop"]
 position = Vector2(1297, 504)
-texture = ExtResource("2_4h0l7")
+texture = SubResource("CompressedTexture2D_jnypx")
 
 [node name="Img" type="Sprite2D" parent="Backdrop"]
 position = Vector2(1234, -198)
 scale = Vector2(0.290947, 0.290947)
-texture = ExtResource("2_a4qgv")
+texture = ExtResource("2_b05a7")
 
 [node name="Img4" type="Sprite2D" parent="Backdrop"]
 position = Vector2(240.967, 500.125)
 scale = Vector2(0.367592, 0.367592)
-texture = ExtResource("2_a4qgv")
+texture = ExtResource("2_b05a7")
 
 [node name="Img2" type="Sprite2D" parent="Backdrop"]
 position = Vector2(361, -198)
 scale = Vector2(0.42025, 0.42025)
-texture = ExtResource("4_bb2vc")
+texture = SubResource("CompressedTexture2D_0iuur")
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(1976, 1300)
@@ -89,6 +92,7 @@ metadata/_edit_group_ = true
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Title"]
 visible = false
+layout_mode = 0
 offset_left = 442.0
 offset_top = 369.0
 offset_right = 1166.0
@@ -103,6 +107,7 @@ axis_stretch_horizontal = 2
 axis_stretch_vertical = 1
 
 [node name="NinePatchRect3" type="NinePatchRect" parent="Title"]
+layout_mode = 0
 offset_left = 442.0
 offset_top = 369.0
 offset_right = 1166.0
@@ -118,6 +123,7 @@ axis_stretch_vertical = 1
 
 [node name="NinePatchRect2" type="NinePatchRect" parent="Title"]
 visible = false
+layout_mode = 0
 offset_left = 315.0
 offset_top = 342.0
 offset_right = 1558.0

@@ -10,7 +10,7 @@ extends ScrollContainer
 # right rail buttons. For easy access
 @onready var legend_button_group: ButtonGroup = $legend_for_hidden_objects.get_children()[0].button_group
 
-var lastSelectedButton: TextureButton
+var lastSelectedButton: Button
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

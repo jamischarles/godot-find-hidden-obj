@@ -1,12 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://d4k8eyst13hus"]
 
 [ext_resource type="Script" path="res://level_selector.gd" id="1_gcarg"]
-[ext_resource type="Texture2D" uid="uid://m2qg26uu37p5" path="res://01/img.png" id="2_v2xvp"]
-[ext_resource type="Texture2D" uid="uid://bxcbclxdd7q14" path="res://02/img.jpg" id="3_2jsel"]
+[ext_resource type="Texture2D" uid="uid://q6sjqkh0gvfj" path="res://05/src/img.png" id="2_npj8m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qnbiw"]
-atlas = ExtResource("2_v2xvp")
+atlas = ExtResource("2_npj8m")
 region = Rect2(856, 0, 2144, 1200)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0iuur"]
+load_path = "res://.godot/imported/img.png-dbcd5c2a989ca86914a9daa47fd9c093.ctex"
 
 [node name="Level Selector" type="Node2D"]
 script = ExtResource("1_gcarg")
@@ -36,5 +38,5 @@ offset_top = 475.0
 offset_right = 3865.0
 offset_bottom = 1516.0
 scale = Vector2(0.25, 0.25)
-texture_normal = ExtResource("3_2jsel")
+texture_normal = SubResource("CompressedTexture2D_0iuur")
 stretch_mode = 6

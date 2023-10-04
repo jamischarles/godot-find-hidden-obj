@@ -3,6 +3,13 @@
 ## Current UI
 ![Screenshot of app](./screenshot.png?raw=true "Title")
 
+
+## After adding new image to a numbered folder...
+* Scene -> Create inherited scene
+* Right click -> editable children  
+Now you can make just the changes you need and those are saved locally.
+Godot is AMAZING!
+
 ## Process for adding a new image...
 1. duplicate the numbered folder. Increment number
 2. Replace img.png with the new image. Ensure you are using an atlasImage if you don't want to use the whole image. Then select the region you want.

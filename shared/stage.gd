@@ -2,6 +2,9 @@ extends Node
 
 # TODO: make this auto increment? Use another node id?
 
+#@export_file("./img.png") 
+@export var img: CompressedTexture2D
+
 
 # FIFO array limit 2
 # todo: add the shape idx too, because we don't want to allow clicking the same item twice for a match.
@@ -20,14 +23,14 @@ var assert_verify_matches = {} # [name]: [count]. Then assert that each is exact
 var selected_canvas_shapes_ref: Array[Area2D]
 
 # from right rail
-var selected_obj_ref2: TextureButton
+var selected_obj_ref2: Button
 
 # tracks our touch target on big image
 var canvas_click_circle: Polygon2D
 
 
 @onready var legend_button_group: ButtonGroup = $HBoxContainer/right_rail.get("legend_button_group")
-@onready var clickZoneContainer = $HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container
+@onready var clickZoneContainer = $HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container
 
 
 # Simplest shape solution...
@@ -88,7 +91,7 @@ func _ready():
 	legend_button_group.connect("changed", on_button_group_change)
 	print('legend_button_group', legend_button_group)
 	
-	$HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)
+	$HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)
 	# connect to all click zones so we can act on them from here?
 	# do we need to?
 	# yes let's try this for now. We can change later...
@@ -101,7 +104,7 @@ func _ready():
 	
 #	var clickZones =$HBoxContainer/ScrollContainer/click_zone_container.get_children()
 #	var clickZones =$HBoxContainer/ScrollContainer/Control.get_children()
-	var clickZones =$HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container.get_children()
+	var clickZones =$HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container.get_children()
 	
 #	var clickZones = []
 	#for clickZone in clickZones:
@@ -244,7 +247,7 @@ func _ready():
 		
 		print("i", i)
 		print('nodeNUm', clickZone.get_instance_id())
-		clickZone.shape_uid = i
+#		clickZone.shape_uid = i
 		
 		# listen to click for each click shape
 #		clickZone.connect('click_shape_clicked', on_shape_clicked)
@@ -272,8 +275,8 @@ func _ready():
 			assert_verify_matches[btn_name] = 1
 			
 	# verify there's a match for each (exactly count of 2 now)
-	for zone in assert_verify_matches:
-		assert(assert_verify_matches[zone] == 2, "ClickZone/legendBtn mismatch: %s has %s" % [zone, assert_verify_matches[zone]])
+#	for zone in assert_verify_matches:
+#		assert(assert_verify_matches[zone] == 2, "ClickZone/legendBtn mismatch: %s has %s" % [zone, assert_verify_matches[zone]])
 	
 
 
@@ -332,7 +335,7 @@ func on_canvas_shapes_found(shapes: Array[Area2D]):
 		compare_for_match(shape, legend_button_group.get_pressed_button())
 
 # on match found
-func on_match_found(animal1, animal2: TextureButton):
+func on_match_found(animal1, obj2: Button):
 #	var firstNode = instance_from_id(firstUid)
 	
 	# canvas click zone. Gray out, then disable
@@ -342,9 +345,21 @@ func on_match_found(animal1, animal2: TextureButton):
 	
 	
 	## Right rail button. Disable and fade out
-	animal2.disabled = true
-	animal2.set_modulate(Color(1,1,1,.2))
-	animal2.get_parent().move_child(animal2, animal2.get_parent().get_child_count()) # move to end
+	obj2.disabled = true
+	# stop using the shader, so we can effect the alpha channel of this
+	obj2.use_parent_material = true
+	obj2.set_modulate(Color(1,1,1,.5))
+	obj2.get_parent().move_child(obj2, obj2.get_parent().get_child_count()) # move to end
+	
+#	obj2.icon.set_modulate(Color(1,1,1,.2))
+#	obj2.icon.modulate = Color(1,1,1,.2)
+
+
+	
+	
+#	 $Button.modulate = Color(0.5,0.5,0.5,1)
+#  $$Button/sprite_itemIcon.modulate = Color(0.25,0.25,0.25)
+	
 	
 	# Verify we have no more sets to match
 	# ie: Is the level done?

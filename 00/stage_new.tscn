@@ -1,0 +1,592 @@
+[gd_scene load_steps=49 format=3 uid="uid://cksvbgxcaen7i"]
+
+[ext_resource type="Script" path="res://shared/stage.gd" id="1_vbhep"]
+[ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_2gobx"]
+[ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="3_8328u"]
+[ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="4_j8vim"]
+[ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_nwh3t"]
+[ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="7_twvel"]
+[ext_resource type="Script" path="res://shared/ClickCircle.gd" id="9_otxsc"]
+[ext_resource type="Script" path="res://shared/right_rail.gd" id="10_6cqgc"]
+[ext_resource type="Shader" path="res://shared/right_rail_buttons.gdshader" id="11_nlksq"]
+[ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="12_ie0ts"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
+bg_color = Color(0.913725, 0.231373, 0.909804, 1)
+border_width_top = 8
+border_width_bottom = 21
+
+[sub_resource type="Theme" id="Theme_p4p8b"]
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_b17r5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jt6b8"]
+texture = ExtResource("3_8328u")
+region_rect = Rect2(352, 354, 32, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3dbj"]
+atlas = ExtResource("4_j8vim")
+region = Rect2(35, 35, 25, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_raqh3"]
+texture = SubResource("AtlasTexture_c3dbj")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmfsv"]
+atlas = ExtResource("4_j8vim")
+region = Rect2(36, 69, 24, 25)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a6bil"]
+texture = SubResource("AtlasTexture_tmfsv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48iop"]
+region = Rect2(856, 0, 2144, 2144)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ohnjs"]
+radius = 43.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_exkap"]
+radius = 99.0195
+height = 588.151
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ta7dv"]
+radius = 37.6959
+height = 297.222
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jfons"]
+radius = 72.0069
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m3ah1"]
+radius = 45.8936
+height = 155.876
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vmdx5"]
+radius = 71.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0djg"]
+radius = 54.0093
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2jxmw"]
+radius = 58.9752
+height = 287.937
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_srwew"]
+radius = 58.9752
+height = 216.315
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_20nof"]
+radius = 175.011
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy5jl"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_inwhd"]
+LineEdit/colors/selection_color = Color(0.709804, 0.411765, 0.27451, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ay0m"]
+shader = ExtResource("11_nlksq")
+shader_parameter/blue = 1.0
+shader_parameter/red = -6.25
+shader_parameter/green = 1.0
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_x733v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_le4pi"]
+region = Rect2(105, 382, 253, 236)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjmib"]
+region = Rect2(380, 342, 400, 556)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0qyk"]
+region = Rect2(138, 627, 322, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlw47"]
+region = Rect2(117, 846, 283, 508)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtkvt"]
+region = Rect2(445, 930, 288, 262)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k24s"]
+region = Rect2(463, 1241, 282, 162)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80v86"]
+region = Rect2(87, 1424, 255, 138)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgxva"]
+bg_color = Color(0.858824, 0.4, 0.768627, 0.52549)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mngf5"]
+region = Rect2(373, 1446, 183, 139)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyu5e"]
+region = Rect2(578, 1455, 152, 199)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jltfa"]
+region = Rect2(69, 1644, 262, 416)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48844"]
+region = Rect2(344, 1647, 138, 294)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uoce1"]
+region = Rect2(507, 1713, 297, 356)
+
+[sub_resource type="Theme" id="Theme_820n0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1kf4"]
+bg_color = Color(0.0117647, 0.694118, 0.631373, 1)
+
+[sub_resource type="Theme" id="Theme_k5e1q"]
+
+[node name="Stage2" type="Node"]
+script = ExtResource("1_vbhep")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+theme = SubResource("Theme_p4p8b")
+scroll_horizontal_custom_step = -0.72
+scroll_deadzone = 200
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="left_rail_notch_buffer" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
+z_index = 1000
+custom_minimum_size = Vector2(100, 2.08165e-12)
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer"]
+visible = false
+layout_mode = 0
+offset_right = 111.0
+offset_bottom = 971.0
+texture = ExtResource("2_2gobx")
+region_rect = Rect2(350, 31, 37, 98)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer"]
+layout_mode = 0
+offset_right = 111.0
+offset_bottom = 971.0
+texture = ExtResource("3_8328u")
+region_rect = Rect2(608, 32, 32, 96)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Home" type="Button" parent="HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer"]
+layout_mode = 2
+offset_left = 32.0
+offset_top = 38.0
+offset_right = 78.0
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_jt6b8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_raqh3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_a6bil")
+icon = ExtResource("5_nwh3t")
+icon_alignment = 1
+
+[node name="Canvas_with_clickzones" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
+custom_minimum_size = Vector2(2144, 2144)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones"]
+layout_mode = 0
+offset_right = 3000.0
+offset_bottom = 2143.0
+texture = SubResource("AtlasTexture_48iop")
+stretch_mode = 2
+
+[node name="click_zone_container" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones"]
+anchors_preset = 0
+
+[node name="tablet" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(1581, 865)
+shape_name = "elephant"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/tablet"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_ohnjs")
+metadata/_edit_lock_ = true
+
+[node name="knight" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(1885, 1725)
+rotation = 0.0289113
+shape_name = "giraffe"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/knight"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_exkap")
+metadata/_edit_lock_ = true
+
+[node name="sword" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(732, 421)
+rotation = -1.1937
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/sword"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_ta7dv")
+metadata/_edit_lock_ = true
+
+[node name="sarcophagus" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(224, 978)
+rotation = 0.0164997
+shape_name = "giraffe"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/sarcophagus"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_exkap")
+metadata/_edit_lock_ = true
+
+[node name="painting" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(2036, 177)
+shape_name = "cow"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/painting"]
+modulate = Color(1, 0.54902, 1, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_jfons")
+metadata/_edit_lock_ = true
+
+[node name="axe" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(762, 327)
+rotation = -1.1937
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/axe"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_m3ah1")
+metadata/_edit_lock_ = true
+
+[node name="bones" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(1247, 1483)
+shape_name = "deer"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/bones"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_vmdx5")
+metadata/_edit_lock_ = true
+
+[node name="lamp" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(616, 1049)
+shape_name = "lion"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/lamp"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CircleShape2D_e0djg")
+metadata/_edit_lock_ = true
+
+[node name="egg" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(472, 1014)
+rotation = -0.0290304
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/egg"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_m3ah1")
+metadata/_edit_lock_ = true
+
+[node name="bust" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(1133, 337)
+rotation = -0.0290304
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/bust"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_2jxmw")
+metadata/_edit_lock_ = true
+
+[node name="urn" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(1565, 1123)
+rotation = -0.0290304
+shape_name = "fish"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/urn"]
+modulate = Color(1, 0.54902, 1, 1)
+shape = SubResource("CapsuleShape2D_srwew")
+metadata/_edit_lock_ = true
+
+[node name="portrait" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_twvel")]
+position = Vector2(120, 273)
+shape_name = "cow"
+
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/portrait"]
+modulate = Color(1, 0.54902, 1, 1)
+position = Vector2(2.08165e-12, 2.08165e-12)
+shape = SubResource("CircleShape2D_20nof")
+metadata/_edit_lock_ = true
+
+[node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones"]
+script = ExtResource("9_otxsc")
+
+[node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(200, 200)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_styles/panel = SubResource("StyleBoxFlat_iy5jl")
+horizontal_scroll_mode = 0
+script = ExtResource("10_6cqgc")
+
+[node name="legend_for_hidden_objects" type="VBoxContainer" parent="HBoxContainer/right_rail"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_inwhd")
+theme_override_constants/separation = 16
+
+[node name="tablet" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_le4pi")
+icon_alignment = 1
+
+[node name="knight" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_hjmib")
+icon_alignment = 1
+expand_icon = true
+
+[node name="sword" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_n0qyk")
+icon_alignment = 1
+expand_icon = true
+
+[node name="sarcophagus" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_wlw47")
+icon_alignment = 1
+expand_icon = true
+
+[node name="painting" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_rtkvt")
+icon_alignment = 1
+expand_icon = true
+
+[node name="axe" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_3k24s")
+icon_alignment = 1
+expand_icon = true
+
+[node name="bones" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_80v86")
+icon_alignment = 1
+expand_icon = true
+
+[node name="lamp" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+modulate = Color(0.411765, 0.411765, 0.411765, 0.494118)
+self_modulate = Color(1, 0.501961, 1, 0.580392)
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_colors/icon_disabled_color = Color(0.670588, 0.458824, 0.878431, 1)
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vgxva")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_mngf5")
+icon_alignment = 1
+expand_icon = true
+
+[node name="egg" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_jyu5e")
+icon_alignment = 1
+expand_icon = true
+
+[node name="bust" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_jltfa")
+icon_alignment = 1
+expand_icon = true
+
+[node name="urn" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_48844")
+icon_alignment = 1
+expand_icon = true
+
+[node name="portrait" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
+material = SubResource("ShaderMaterial_1ay0m")
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+theme = ExtResource("12_ie0ts")
+theme_override_constants/outline_size = 0
+theme_override_constants/h_separation = 0
+toggle_mode = true
+button_group = SubResource("ButtonGroup_x733v")
+icon = SubResource("AtlasTexture_uoce1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="level_complete_panel" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2000.0
+offset_bottom = -1000.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="level_complete_panel"]
+custom_minimum_size = Vector2(1500, 1500)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 102.0
+offset_top = -1.0
+offset_right = 1602.0
+offset_bottom = 1499.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_820n0")
+theme_override_styles/panel = SubResource("StyleBoxFlat_b1kf4")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="level_complete_panel/Panel"]
+layout_mode = 0
+offset_left = 391.0
+offset_top = 126.0
+offset_right = 1238.0
+offset_bottom = 319.0
+theme_override_font_sizes/normal_font_size = 120
+theme_override_font_sizes/bold_font_size = 60
+text = "Level is DONE"
+
+[node name="btn_level_select" type="Button" parent="level_complete_panel/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -110.0
+offset_top = 410.0
+offset_right = 110.0
+offset_bottom = 537.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "Next"
+
+[node name="score_label" type="Label" parent="level_complete_panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 58.0
+offset_right = -78.0
+offset_bottom = 164.0
+grow_horizontal = 0
+theme = SubResource("Theme_k5e1q")
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 75
+text = "5/10"
+
+[node name="@Node2D@89568" type="Node2D" parent="."]
+
+[connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones" to="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" method="_on_canvas_with_clickzones_gui_input" flags=18]
+[connection signal="area_entered" from="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" to="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" method="_on_area_entered" flags=18]
+
+[editable path="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/tablet"]

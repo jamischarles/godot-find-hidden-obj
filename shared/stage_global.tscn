@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="3_i1wer"]
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="4_ymu1o"]
 [ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_gkmd4"]
-[ext_resource type="Texture2D" uid="uid://m2qg26uu37p5" path="res://01/raw_img.png" id="6_hagwh"]
+[ext_resource type="Texture2D" uid="uid://ddnhsdwup6kuc" path="res://00/src/img.png" id="6_devoo"]
 [ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="7_djjl8"]
 [ext_resource type="Script" path="res://shared/ClickCircle.gd" id="8_5dyrg"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_r5k4n"]
@@ -39,8 +39,8 @@ region = Rect2(36, 69, 24, 25)
 texture = SubResource("AtlasTexture_tmfsv")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_48iop"]
-atlas = ExtResource("6_hagwh")
-region = Rect2(856, 0, 2144, 2144)
+atlas = ExtResource("6_devoo")
+region = Rect2(2, 2, 2997, 973)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ohnjs"]
 radius = 43.0
@@ -92,54 +92,42 @@ shader_parameter/green = 1.0
 [sub_resource type="ButtonGroup" id="ButtonGroup_bu0n0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_le4pi"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(105, 382, 253, 236)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hjmib"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(380, 342, 400, 556)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_n0qyk"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(138, 627, 322, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wlw47"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(117, 846, 283, 508)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rtkvt"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(445, 930, 288, 262)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3k24s"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(463, 1241, 282, 162)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_80v86"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(87, 1424, 255, 138)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vgxva"]
 bg_color = Color(0.858824, 0.4, 0.768627, 0.52549)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mngf5"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(373, 1446, 183, 139)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jyu5e"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(578, 1455, 152, 199)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jltfa"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(69, 1644, 262, 416)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_48844"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(344, 1647, 138, 294)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uoce1"]
-atlas = ExtResource("6_hagwh")
 region = Rect2(507, 1713, 297, 356)
 
 [sub_resource type="Theme" id="Theme_820n0"]
@@ -218,139 +206,139 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_a6bil")
 icon = ExtResource("5_gkmd4")
 icon_alignment = 1
 
-[node name="Canvas_with_clickzones" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="CanvasContainer" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer"]
 custom_minimum_size = Vector2(2144, 2144)
 layout_mode = 2
 mouse_filter = 1
 
-[node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones"]
+[node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
 layout_mode = 0
 offset_right = 3000.0
-offset_bottom = 2143.0
+offset_bottom = 1369.0
 texture = SubResource("AtlasTexture_48iop")
 stretch_mode = 2
 
-[node name="click_zone_container" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones"]
+[node name="click_zone_container" type="Control" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
 anchors_preset = 0
 
-[node name="tablet" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="tablet" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(1581, 865)
 shape_name = "elephant"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/tablet"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/tablet"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CircleShape2D_ohnjs")
 metadata/_edit_lock_ = true
 
-[node name="knight" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="knight" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(1885, 1725)
 rotation = 0.0289113
 shape_name = "giraffe"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/knight"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/knight"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_exkap")
 metadata/_edit_lock_ = true
 
-[node name="sword" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="sword" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(732, 421)
 rotation = -1.1937
 shape_name = "fish"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/sword"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/sword"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_ta7dv")
 metadata/_edit_lock_ = true
 
-[node name="sarcophagus" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="sarcophagus" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(224, 978)
 rotation = 0.0164997
 shape_name = "giraffe"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/sarcophagus"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/sarcophagus"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_exkap")
 metadata/_edit_lock_ = true
 
-[node name="painting" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="painting" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(2036, 177)
 shape_name = "cow"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/painting"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/painting"]
 modulate = Color(1, 0.54902, 1, 1)
 position = Vector2(2.08165e-12, 2.08165e-12)
 shape = SubResource("CircleShape2D_jfons")
 metadata/_edit_lock_ = true
 
-[node name="axe" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="axe" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(762, 327)
 rotation = -1.1937
 shape_name = "fish"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/axe"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/axe"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_m3ah1")
 metadata/_edit_lock_ = true
 
-[node name="bones" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="bones" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(1247, 1483)
 shape_name = "deer"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/bones"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/bones"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CircleShape2D_vmdx5")
 metadata/_edit_lock_ = true
 
-[node name="lamp" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="lamp" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(616, 1049)
 shape_name = "lion"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/lamp"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/lamp"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CircleShape2D_e0djg")
 metadata/_edit_lock_ = true
 
-[node name="egg" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="egg" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(472, 1014)
 rotation = -0.0290304
 shape_name = "fish"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/egg"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/egg"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_m3ah1")
 metadata/_edit_lock_ = true
 
-[node name="bust" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="bust" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(1133, 337)
 rotation = -0.0290304
 shape_name = "fish"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/bust"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/bust"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_2jxmw")
 metadata/_edit_lock_ = true
 
-[node name="urn" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="urn" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(1565, 1123)
 rotation = -0.0290304
 shape_name = "fish"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/urn"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/urn"]
 modulate = Color(1, 0.54902, 1, 1)
 shape = SubResource("CapsuleShape2D_srwew")
 metadata/_edit_lock_ = true
 
-[node name="portrait" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container" instance=ExtResource("7_djjl8")]
+[node name="portrait" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container" instance=ExtResource("7_djjl8")]
 position = Vector2(120, 273)
 shape_name = "cow"
 
-[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/portrait"]
+[node name="CollisionShape2d" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/portrait"]
 modulate = Color(1, 0.54902, 1, 1)
 position = Vector2(2.08165e-12, 2.08165e-12)
 shape = SubResource("CircleShape2D_20nof")
 metadata/_edit_lock_ = true
 
-[node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones"]
+[node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
 script = ExtResource("8_5dyrg")
 
 [node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
@@ -598,7 +586,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 75
 text = "5/10"
 
-[connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones" to="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
-[connection signal="area_entered" from="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" to="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/ClickCircle" method="_on_area_entered"]
+[connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
+[connection signal="area_entered" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" method="_on_area_entered"]
 
-[editable path="HBoxContainer/ScrollContainer/HBoxContainer/Canvas_with_clickzones/click_zone_container/tablet"]
+[editable path="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/tablet"]

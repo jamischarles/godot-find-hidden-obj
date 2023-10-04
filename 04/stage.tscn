@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://vkjq74hqi7nc"]
+
+[ext_resource type="PackedScene" uid="uid://dp7eehrtrasqq" path="res://shared/stage_global.tscn" id="1_s6cvn"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_nf50f"]
+
+[node name="Stage" instance=ExtResource("1_s6cvn")]
+
+[node name="tablet" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="0"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="knight" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="1"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="sword" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="2"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="sarcophagus" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="3"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="painting" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="4"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="axe" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="5"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="bones" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="6"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="lamp" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="7"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="egg" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="8"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="bust" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="9"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="urn" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="10"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[node name="portrait" parent="HBoxContainer/right_rail/legend_for_hidden_objects" index="11"]
+button_group = SubResource("ButtonGroup_nf50f")
+
+[editable path="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/tablet"]

@@ -6,4 +6,6 @@
 script = ExtResource("1_mdacg")
 metadata/_edit_group_ = true
 
+[node name="testNode" type="Node2D" parent="."]
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]

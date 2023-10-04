@@ -43,9 +43,13 @@ func _draw():
 # why don't we use a polygon? Or an area2d with attached circle shape?
 # hm... either would work...
 # senses movement. If it's a swipe/move, then we do nothign...
+# FIXME: Make it more gracious. Allow some movement.
+
+# TODO: Need to have allowable distance built in
+# obvious scroll attempt should be ignored. But a kid slipping should count as click
 var clickStartPos
 func _on_canvas_with_clickzones_gui_input(event):
-	print('event', event)
+#	print('event', event)
 	if event.get_class() == "InputEventScreenTouch":
 	
 		if event.is_pressed():
