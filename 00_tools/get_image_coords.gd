@@ -262,41 +262,104 @@ func save_shapes_handler():
 # TODO: add assertion for num_sides
 # if num_sides is < 3 (triangle) then it won't show up. 4 is square. interesting...
 # https://ask.godotengine.org/81776/how-to-shape-polygon2d-into-a-circle
-func generate_circle_polygon(radius: float, num_sides: int, pos: Vector2) -> PackedVector2Array:
-	var angle_delta: float = (PI * 2) / num_sides
-	var vector: Vector2 = Vector2(radius, 0)
-	var polygon: PackedVector2Array
-	
-	for _i in num_sides:
-		polygon.append(vector + pos)
-		vector = vector.rotated(angle_delta)
+#func generate_circle_polygon(radius: float, num_sides: int, pos: Vector2) -> PackedVector2Array:
+#	var angle_delta: float = (PI * 2) / num_sides
+#	var vector: Vector2 = Vector2(radius, 0)
+#	var polygon: PackedVector2Array
+#
+#	for _i in num_sides:
+#		polygon.append(vector + pos)
+#		vector = vector.rotated(angle_delta)
+#
+#	return polygon
+#
+#
+## Square...
+#
+## Capsule
+## A capsule is a circle, cut in half, with a rectangle shoved in the middle
+## https://github.com/godotengine/godot-proposals/issues/3495#issuecomment-960461612
+#func generate_capsule_polygon(radius: float, num_sides_for_ends: int, height: float) -> PackedVector2Array:
+#	var polygon: PackedVector2Array
+#
+#	var i_divisor: = float(num_sides_for_ends - 1)
+#
+##	https://www.mathsisfun.com/polar-cartesian-coordinates.html
+#
+#	for i in num_sides_for_ends:
+#		polygon.append(polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, height / 2))
+#	for i in num_sides_for_ends:
+#		polygon.append(-polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, -height / 2))
+#
+#	return polygon
+#
+#
+## https://stackoverflow.com/questions/76698768/how-to-use-polygon2d-node-in-godot-to-create-a-regular-polygon
+## https://www.mathsisfun.com/polar-cartesian-coordinates.html
+#func polar2cartesian(r, theta):
+#	var x = r * cos(theta)
+#	var y = r * sin(theta)
+#	return Vector2(x, y)
+#
+
+
+###################### assertion code
+# node name
+#		var name = clickZone.get_name()
+#
+#		# add up the canvas clickzones
+#		if assert_verify_matches.has(name):
+#			assert_verify_matches[name] += 1
+#		else:
+#			assert_verify_matches[name] = 1
+#
+#		# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
+#		# we can create a dictionary and count that each one has 2
+#
+#		print("i", i)
+#		print('nodeNUm', clickZone.get_instance_id())
+
+#
+#RIFY: there should be exactly one of each currently in the clickzones
+#	for zone in assert_verify_matches:
+#		assert(assert_verify_matches[zone] == 1, "ClickZones: %s has %s" % [zone, assert_verify_matches[zone]])
+
+#	# count the right_rail button node names,
+#	var legendButtons = $HBoxContainer/right_rail/legend_for_hidden_objects.get_children()
+#	for btn in legendButtons:
+#		var btn_name = btn.get_name()
+#		## TODO: Reuse this? in fn?
+#		if assert_verify_matches.has(btn_name):
+#			assert_verify_matches[btn_name] += 1
+#		else:
+#			assert_verify_matches[btn_name] = 1
+#
+
+# Verify that each collision shape has position of 0,0
+		# we need to use parent for positioining so clickzones line up with visual part
+#		assert( int(shape.position.x) == 0 && int(shape.position.y) == 0, "ERROR: Each child CollisionShape MUST be 0,0 to avoid clickZone drift: %s, shape name:%s" % [shape.position, clickZone.name]);
+
+		# 2) verify each shape has a name
+		# throw when shape_names aren't assigned for each click zone
+		# https://ask.godotengine.org/54948/throw-exception-or-error
+		# confusing because eval is opposite for err
+#		var name = clickZone.shape_name
+#		assert( name != "", "ERROR: You must give each clickZone a shape_name value.");
 		
-	return polygon
-	
-	
-# Square...
+		
+#		clickZone.shape_uid = i
+		
+		# listen to click for each click shape
+#		clickZone.connect('click_shape_clicked', on_shape_clicked)
+		
+		# hide all the click zones so they are invisble
 
-# Capsule
-# A capsule is a circle, cut in half, with a rectangle shoved in the middle
-# https://github.com/godotengine/godot-proposals/issues/3495#issuecomment-960461612
-func generate_capsule_polygon(radius: float, num_sides_for_ends: int, height: float) -> PackedVector2Array:
-	var polygon: PackedVector2Array
-	
-	var i_divisor: = float(num_sides_for_ends - 1)
-	
-#	https://www.mathsisfun.com/polar-cartesian-coordinates.html
-	
-	for i in num_sides_for_ends:
-		polygon.append(polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, height / 2))
-	for i in num_sides_for_ends:
-		polygon.append(-polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, -height / 2))
-	
-	return polygon
+		# set alpha to 0 so click zones are invisible to user but still active
+#		clickZone.set_modulate(Color(1, 1, 1, 0))
+		
 
 
-# https://stackoverflow.com/questions/76698768/how-to-use-polygon2d-node-in-godot-to-create-a-regular-polygon
-# https://www.mathsisfun.com/polar-cartesian-coordinates.html
-func polar2cartesian(r, theta):
-	var x = r * cos(theta)
-	var y = r * sin(theta)
-	return Vector2(x, y)
+
+
+# UTILS ---------------
+
