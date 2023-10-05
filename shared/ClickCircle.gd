@@ -50,16 +50,32 @@ func _draw():
 var clickStartPos
 func _on_canvas_with_clickzones_gui_input(event):
 #	print('event', event)
+
+	# we COULD use this to listen for dragging, but we'd still need the distance logic we have 
+	# below. Not sure this simplifies anything
+#	if event.get_class() == "InputEventScreenDrag":
+#		print("DRAG")
+#
+	## The drag sensitivity here should match the sensitivity on the scrolling 
+	## (scroll deadzone on the ScrollContainer) node...
+
 	if event.get_class() == "InputEventScreenTouch":
+#		print("TOUCH")
 	
 		if event.is_pressed():
 			clickStartPos = event.get_position()
 #			print('###DOWN')
 			
 		else:	
-#			print('###UP')
-			click_circle_pos = event.get_position()
-			if click_circle_pos == clickStartPos:
+#			print('###Touch RELEASE')
+			var clickEndPos = event.get_position()
+			
+			# move the feedback circle
+			click_circle_pos = clickEndPos
+			
+			
+			if !isEventDrag(clickStartPos, clickEndPos):
+				# if touch and NOT drag, then move the touch effect
 				queue_redraw()
 #				print('SAME POS')
 
@@ -75,7 +91,12 @@ func _on_canvas_with_clickzones_gui_input(event):
 #		destroy_and_spawn_click_circle(event.get_position().x, event.get_position().y)
 
 		
-
+# if within deadzone, then consider it a touch (with a little movement) vs a drag
+func isEventDrag(startPos: Vector2, endPos: Vector2):
+	var drag_distance = startPos.distance_to(endPos)
+	# FIXME: Maybe we pull that value so they are always the same...
+	# this number (100) lines up PERFECTLY with "scroll_deadzone" on ScrollContainer
+	return drag_distance > 100
 
 
 func generate_circle_polygon(radius: float, num_sides: int, pos: Vector2) -> PackedVector2Array:

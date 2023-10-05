@@ -17,6 +17,7 @@ func _process(delta):
 
 
 ## Fixme: This will probably be replace with collision detection when we draf the click target
+## Q: Are we even using this?!?
 func _on_input_event(viewport, event, shape_idx):
 	# basic filtering to avoid sending ALL events through
 	if event is InputEvent:

@@ -112,7 +112,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 9.0
 theme = SubResource("Theme_p4p8b")
 scroll_horizontal_custom_step = -0.72
-scroll_deadzone = 200
+scroll_deadzone = 100
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ScrollContainer"]
 layout_mode = 2
