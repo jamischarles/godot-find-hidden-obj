@@ -7,6 +7,12 @@ extends Node
 func _ready():
 	$HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)
 	
+	var clickZones = $HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container.get_children()
+	# set alpha to 0 so click zones are invisible to user but still active
+	# FIXME: Should I just set this in a shared style?!?
+	for clickZone in clickZones:
+		clickZone.set_modulate(Color(1, 1, 1, 0))
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
