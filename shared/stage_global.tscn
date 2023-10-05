@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://dp7eehrtrasqq"]
+[gd_scene load_steps=48 format=3 uid="uid://dp7eehrtrasqq"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_e8tmr"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_q7abq"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="7_djjl8"]
 [ext_resource type="Script" path="res://shared/ClickCircle.gd" id="8_5dyrg"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_r5k4n"]
-[ext_resource type="Shader" path="res://shared/right_rail_buttons.gdshader" id="10_6hvwm"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="11_h0cvc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
@@ -82,12 +81,6 @@ bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Theme" id="Theme_inwhd"]
 LineEdit/colors/selection_color = Color(0.709804, 0.411765, 0.27451, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ay0m"]
-shader = ExtResource("10_6hvwm")
-shader_parameter/blue = 1.0
-shader_parameter/red = -6.25
-shader_parameter/green = 1.0
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_bu0n0"]
 
@@ -360,24 +353,24 @@ theme = SubResource("Theme_inwhd")
 theme_override_constants/separation = 16
 
 [node name="tablet" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_le4pi")
 icon_alignment = 1
 
 [node name="knight" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_hjmib")
@@ -385,12 +378,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="sword" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_n0qyk")
@@ -398,12 +391,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="sarcophagus" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_wlw47")
@@ -411,12 +404,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="painting" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_rtkvt")
@@ -424,12 +417,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="axe" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_3k24s")
@@ -437,12 +430,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="bones" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_80v86")
@@ -452,7 +445,6 @@ expand_icon = true
 [node name="lamp" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
 modulate = Color(0.411765, 0.411765, 0.411765, 0.494118)
 self_modulate = Color(1, 0.501961, 1, 0.580392)
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
@@ -460,6 +452,7 @@ theme_override_colors/icon_disabled_color = Color(0.670588, 0.458824, 0.878431, 
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
 theme_override_styles/disabled = SubResource("StyleBoxFlat_vgxva")
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_mngf5")
@@ -467,12 +460,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="egg" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_jyu5e")
@@ -480,12 +473,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="bust" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_jltfa")
@@ -493,12 +486,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="urn" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_48844")
@@ -506,12 +499,12 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="portrait" type="Button" parent="HBoxContainer/right_rail/legend_for_hidden_objects"]
-material = SubResource("ShaderMaterial_1ay0m")
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 2
 theme = ExtResource("11_h0cvc")
 theme_override_constants/outline_size = 0
 theme_override_constants/h_separation = 0
+disabled = true
 toggle_mode = true
 button_group = SubResource("ButtonGroup_bu0n0")
 icon = SubResource("AtlasTexture_uoce1")

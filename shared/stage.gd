@@ -88,7 +88,7 @@ func _ready():
 #	TODO: automagically copy the polygon for collision detection
 #	https://ask.godotengine.org/10501/polygon2d-coordinates-to-collisionpolygon2d
 
-	legend_button_group.connect("changed", on_button_group_change)
+#	legend_button_group.connect("changed", on_button_group_change)
 	print('legend_button_group', legend_button_group)
 	
 	$HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle.connect("found_hidden_objects_on_canvas", on_canvas_shapes_found)

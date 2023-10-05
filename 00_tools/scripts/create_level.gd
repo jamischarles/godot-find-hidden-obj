@@ -205,7 +205,7 @@ func _run():
 #		poly.position = Vector2(clickZone.position)
 
 
-	var btnGroup = ButtonGroup.new()
+#	var btnGroup = ButtonGroup.new()
 	## 
 	for buttonRegionRect in shape_data["buttonRegions"]:
 		# button icon from legend on canvas image
@@ -234,21 +234,28 @@ func _run():
 		# add all to same button because script needs it
 
 
-		btn.button_group = btnGroup
-		btn.toggle_mode = true
+		# not needed if we don't want to click them anymore
+		btn.focus_mode = Control.FOCUS_NONE
+#		btn.button_group = btnGroup
+#		btn.toggle_mode = true
 		
 		btn.theme = load("res://shared/right_rail_button.tres")
 		# shader to make white pixels transparent
-		var shaderMaterial = ShaderMaterial.new()
-		shaderMaterial.shader = load("res://shared/right_rail_buttons.gdshader")
-		btn.material = shaderMaterial
+#		var shaderMaterial = ShaderMaterial.new()
+#		shaderMaterial.shader = load("res://shared/right_rail_buttons.gdshader")
+#		btn.material = shaderMaterial
+
+		
 		
 
 		
 #		btn.set_icon(btnAtlasTexture)
 		btn.icon = btnAtlasTexture
+		btn.flat = true #makes bg white
 		print('###buttonRegionRect: ', buttonRegionRect.name)
 		btn.name = buttonRegionRect.name # bring over the node name (obj name)
+#		btn.disabled = true
+
 #		btn.text = "TEST UBTTON"
 		
 
