@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cjtdblk817334"]
+[gd_scene load_steps=35 format=3 uid="uid://cjtdblk817334"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_7xekt"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_tet03"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="4_yqrxd"]
 [ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_jt18v"]
 [ext_resource type="Texture2D" uid="uid://q6sjqkh0gvfj" path="res://05/src/img.png" id="6_wvw65"]
+[ext_resource type="Script" path="res://shared/TouchFeedback.gd" id="7_4xj3x"]
 [ext_resource type="Script" path="res://shared/ClickCircle.gd" id="7_swc2r"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="8_kbrh7"]
+[ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="8_op5pw"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="10_7we8c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
@@ -260,7 +262,16 @@ polygon = PackedVector2Array(1009, 60, 1012, 65, 1020, 68, 1031, 70, 1030, 83, 1
 [node name="@CollisionPolygon2D@114083" type="CollisionPolygon2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/giraffe"]
 polygon = PackedVector2Array(1009, 60, 1012, 65, 1020, 68, 1031, 70, 1030, 83, 1022, 108, 1016, 130, 1010, 157, 1004, 181, 1001, 199, 999, 209, 1000, 212, 1003, 207, 1003, 202, 1008, 203, 1007, 211, 1009, 214, 1013, 204, 1020, 204, 1030, 206, 1030, 213, 1031, 215, 1034, 208, 1037, 209, 1038, 216, 1040, 216, 1041, 207, 1041, 195, 1039, 186, 1034, 177, 1027, 169, 1028, 164, 1036, 123, 1045, 85, 1049, 68, 1055, 71, 1063, 71, 1068, 69, 1065, 64, 1059, 62, 1054, 63, 1059, 54, 1061, 45, 1060, 39, 1057, 37, 1054, 38, 1052, 42, 1050, 51, 1044, 52, 1044, 42, 1042, 35, 1039, 34, 1038, 38, 1037, 46, 1037, 50, 1022, 52, 1013, 54, 1009, 57)
 
+[node name="TouchFeedback" type="Sprite2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
+modulate = Color(0.647059, 0.00784314, 0.858824, 0.529412)
+position = Vector2(410.306, 258.118)
+scale = Vector2(1.01, 1.01)
+texture = ExtResource("8_op5pw")
+script = ExtResource("7_4xj3x")
+
 [node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
+position = Vector2(349, 219)
+scale = Vector2(0.58, 0.58)
 script = ExtResource("7_swc2r")
 
 [node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
@@ -450,4 +461,5 @@ theme_override_font_sizes/font_size = 75
 text = "5/10"
 
 [connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" method="_on_canvas_with_clickzones_gui_input" flags=18]
+[connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/TouchFeedback" method="_on_canvas_container_gui_input"]
 [connection signal="area_entered" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" method="_on_area_entered" flags=18]

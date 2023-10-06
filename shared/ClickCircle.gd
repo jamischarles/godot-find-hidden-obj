@@ -33,8 +33,29 @@ func _draw():
 #	draw_polyline(polygon, Color(Color.LIGHT_GRAY, .5), 8.0, true)
 	draw_polyline(polygon, Color(0.0666666701436, 0.66274511814117, 0.839215695858, .5), 8.0, true)
 	
+	## TODO: Save this in TIL?
+	## 1) PropertyTweener (pretty simple, and basic. Start, end, time)
+#	var tween = get_tree().create_tween()
+#	tween.tween_property(self, "position", Vector2(200, 100), 1).from(Vector2(100, 100)) #this will move the node from position (100, 100) to (200, 100)
+	
+	# maybe hide, move, fade in with bounce?
+	
 	# move collision shape to new circle position
 	click_circle_collision_shape.set_polygon(polygon)
+	
+	## 2) Tween
+	var tween = get_tree().create_tween()
+#	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(click_circle_collision_shape, "scale", Vector2(0.5,0.5), 3).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(click_circle_collision_shape, "scale", Vector2(100,100), 3).set_trans(Tween.TRANS_BOUNCE)
+#	tween.tween_property(self, "modulate", Color.RED, 0).set_trans(Tween.TRANS_BOUNCE)
+#	tween.tween_property(self, "scale", Vector2(), 1)
+#	tween.tween_property(self, "scale", Vector2(), 1).set_trans(Tween.TRANS_BOUNCE)
+	
+	# don't remove it since we only have one
+#	tween.tween_callback(self.queue_free)
+	
+	
 	
 
 
