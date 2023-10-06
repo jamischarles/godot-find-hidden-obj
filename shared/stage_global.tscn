@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dp7eehrtrasqq"]
+[gd_scene load_steps=49 format=3 uid="uid://dp7eehrtrasqq"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_e8tmr"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_q7abq"]
@@ -7,7 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_gkmd4"]
 [ext_resource type="Texture2D" uid="uid://ddnhsdwup6kuc" path="res://00/src/img.png" id="6_devoo"]
 [ext_resource type="PackedScene" uid="uid://cpbg0x84dqq3s" path="res://shared/click_zone.tscn" id="7_djjl8"]
-[ext_resource type="Script" path="res://shared/ClickCircle.gd" id="8_5dyrg"]
+[ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="8_sfpxq"]
+[ext_resource type="Script" path="res://shared/TouchFeedback.gd" id="9_m2bdv"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_r5k4n"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="11_h0cvc"]
 
@@ -149,7 +150,7 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 9.0
 theme = SubResource("Theme_p4p8b")
 scroll_horizontal_custom_step = -0.72
-scroll_deadzone = 200
+scroll_deadzone = 100
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ScrollContainer"]
 layout_mode = 2
@@ -331,8 +332,12 @@ position = Vector2(2.08165e-12, 2.08165e-12)
 shape = SubResource("CircleShape2D_20nof")
 metadata/_edit_lock_ = true
 
-[node name="ClickCircle" type="Area2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
-script = ExtResource("8_5dyrg")
+[node name="TouchFeedback" type="Sprite2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
+modulate = Color(0.647059, 0.00784314, 0.858824, 0.529412)
+position = Vector2(410.306, 258.118)
+scale = Vector2(1.01, 1.01)
+texture = ExtResource("8_sfpxq")
+script = ExtResource("9_m2bdv")
 
 [node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
 clip_contents = false
@@ -579,7 +584,6 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 75
 text = "5/10"
 
-[connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" method="_on_canvas_with_clickzones_gui_input"]
-[connection signal="area_entered" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/ClickCircle" method="_on_area_entered"]
+[connection signal="gui_input" from="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer" to="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/TouchFeedback" method="_on_canvas_container_gui_input"]
 
 [editable path="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container/tablet"]
