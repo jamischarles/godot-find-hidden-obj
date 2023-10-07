@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://da7e1d2gmy7cc"]
+
+[ext_resource type="Script" path="res://00_tools/scripts/create_level.gd" id="1_lq4gg"]
+
+[node name="create_level" type="Node"]
+script = ExtResource("1_lq4gg")
+
+[node name="@Node2D@29107" type="Node2D" parent="."]
+
+[node name="@Node2D@37104" type="Node2D" parent="."]
+
+[node name="@Node2D@37105" type="Node2D" parent="."]
+
+[node name="@Node2D@37106" type="Node2D" parent="."]
+
+[node name="@Node2D@41643" type="Node2D" parent="."]
+
+[node name="@Node2D@41659" type="Node2D" parent="."]
+
+[node name="@Node2D@41660" type="Node2D" parent="."]

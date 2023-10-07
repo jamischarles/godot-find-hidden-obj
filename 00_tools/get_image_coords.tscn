@@ -7,9 +7,13 @@
 atlas = ExtResource("1_d1h0q")
 region = Rect2(2.08165e-12, 2.08165e-12, 2999, 975)
 
-[node name="get_image_coords" type="Node2D"]
+[node name="get_image_coords" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_vkhnq")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
 texture = SubResource("AtlasTexture_ashr3")
@@ -17,7 +21,7 @@ stretch_mode = 4
 metadata/_edit_lock_ = true
 
 [node name="click_zones" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,8 +29,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_vkhnq")
-dest_folder = "05"
 metadata/_edit_lock_ = true
 
 [node name="sheep" type="Polygon2D" parent="click_zones"]
@@ -73,7 +75,7 @@ color = Color(1, 1, 1, 0.5)
 polygon = PackedVector2Array(1009, 60, 1012, 65, 1020, 68, 1031, 70, 1030, 83, 1022, 108, 1016, 130, 1010, 157, 1004, 181, 1001, 199, 999, 209, 1000, 212, 1003, 207, 1003, 202, 1008, 203, 1007, 211, 1009, 214, 1013, 204, 1020, 204, 1030, 206, 1030, 213, 1031, 215, 1034, 208, 1037, 209, 1038, 216, 1040, 216, 1041, 207, 1041, 195, 1039, 186, 1034, 177, 1027, 169, 1028, 164, 1036, 123, 1045, 85, 1049, 68, 1055, 71, 1063, 71, 1068, 69, 1065, 64, 1059, 62, 1054, 63, 1059, 54, 1061, 45, 1060, 39, 1057, 37, 1054, 38, 1052, 42, 1050, 51, 1044, 52, 1044, 42, 1042, 35, 1039, 34, 1038, 38, 1037, 46, 1037, 50, 1022, 52, 1013, 54, 1009, 57)
 
 [node name="button_images" type="Control" parent="."]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

@@ -333,7 +333,7 @@ shape = SubResource("CircleShape2D_20nof")
 metadata/_edit_lock_ = true
 
 [node name="TouchFeedback" type="Sprite2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
-modulate = Color(0.647059, 0.00784314, 0.858824, 0.529412)
+modulate = Color(0.647059, 0.00784314, 0.858824, 0)
 position = Vector2(410.306, 258.118)
 scale = Vector2(1.01, 1.01)
 texture = ExtResource("8_sfpxq")

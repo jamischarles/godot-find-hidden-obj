@@ -20,7 +20,7 @@ extends EditorScript
 @export var node: Node
 # needed to update the props
 
-var INPUT_FOLDER = "05"
+var INPUT_FOLDER = "02"
 
 # Used to (re-)generate a level
 

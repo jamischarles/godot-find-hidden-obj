@@ -27,8 +27,9 @@ extends Control
 
 #export(Array, AtlasTexture) var textures
 
+## To LOAD shapes from and SAVE shapes and image to
+@export var selected_folder: String
 
-@export var dest_folder: String
 
 ## add a button to add another item
 # TODO: 
@@ -51,6 +52,12 @@ extends Control
 		save_shapes = false
 
 
+
+# global nodes
+@onready var image = $TextureRect
+@onready var clickZones: Array[Node] = $click_zones.get_children()
+@onready var buttonImageRegions: Array[Node] = $button_images.get_children()
+	
 
 
 # Q: Do we set a dirty flag here?
@@ -86,11 +93,12 @@ func _process(delta):
 	# render all the regions on the canvas
 
 # add new polygon on canvas
+## TODO: Turn this into a plugin?!?
 func add_clickzone_handler():
 	var poly = Polygon2D.new()
 	# turn transparency down
 	poly.color.a = .5
-	add_child(poly)
+	$click_zones.add_child(poly)
 	
 	poly.set_name("new_poly")
 	
@@ -122,27 +130,43 @@ func add_clickzone_handler():
 #	EditorPlugin.new().get_editor_interface().set_selection(poly)
 #	self.get_editor_interface().get_selection()
 
+#	var editor = EditorPlugin.get_editor_interface()
+	
+	
 	var editor = EditorPlugin.new().get_editor_interface()
 	print("##", editor)
-#	editor.edit_node(poly)
-#	editor.add_node(poly)
-
-	# change the scene tree selection to new node created
+##	editor.edit_node(poly)
+##	editor.add_node(poly)
+#
+#	# change the scene tree selection to new node created
 	var sel = editor.get_selection()
 	sel.clear()
 	sel.add_node(poly)
-
-#	EditorInterface.
-	print("ADD CLICKZONE")
+#
+##	EditorInterface.
+#	print("ADD CLICKZONE")
 	
+# allows us to load (READ) (and save) shapes from a target folder...	
+# input/output folder should be the same
+# but we can say "LOAD" and "SAVE" separately
+func load_shapes_handler():
+	# load the data file
+	# load the image
+	# deserialize the data from the file and load it into the scene tree
+	# 1) Reproduce the (named) button images (with correct atlas ref)
+	# 2) Reproduce the (named) polygons
+	
+	image = load("res://00/stage.tscn")
+	
+	pass
+	
+# WRITES shapes to disc in the target folder	
+# TODO: Extract all the serialize -> deserialize logic?
 func save_shapes_handler():
 	print("SAVE TO DISK")
 	# gather the data we want to save
 	# create data structure
 	# save it
-	var image = get_parent().get_node("TextureRect")
-	var clickZones: Array[Node] = get_children()
-	var buttonImageRegions: Array[Node] = get_parent().get_node("button_images").get_children()
 	
 	
 	print("###buttonImageRegions", buttonImageRegions)
@@ -151,8 +175,6 @@ func save_shapes_handler():
 	
 #	var data = { "key": "value", "another_key": 123, "lock": Vector2() }
 	
-
-
 	var data = {"imageData": {}, "clickZones": [], "buttonRegions": []}
 	
 #	print('data', data)
@@ -173,7 +195,6 @@ func save_shapes_handler():
 			"pos_y" : zone.position.y,
 			"polygon": zone.get_polygon()
 		})
-		
 		
 		
 		
@@ -210,23 +231,23 @@ func save_shapes_handler():
 	
 	
 	# create folder if it doesn't exist yet
-	DirAccess.make_dir_recursive_absolute("res://%s/src/" % dest_folder)
+	DirAccess.make_dir_recursive_absolute("res://%s/src/" % selected_folder)
 	
 	# save data file with shapes
 #	ResourceSaver.save(packed, "%s/src/shape_data.res" % dest_folder)
-	var save_shapes = FileAccess.open("%s/src/shape_data" % dest_folder, FileAccess.WRITE)
+	var save_shapes = FileAccess.open("%s/src/shape_data" % selected_folder, FileAccess.WRITE)
 	
 	save_shapes.store_var(data, true)
 #	save_shapes.store_pascal_string(data)
-#	ResourceSaver.save(data, "%s/src/shape_data.res" % dest_folder)
+#	ResourceSaver.save(data, "%s/src/shape_data.res" % selected_folder)
 
 	
 	# save/copy image
 #
-	var img_path = get_tree().get_edited_scene_root().get_node("TextureRect").texture.atlas.resource_path
+	var img_path = $TextureRect.texture.atlas.resource_path
 #	DirAccess.copy
 
-#	var dir = DirAccess.open(dest_folder + "/src")
+#	var dir = DirAccess.open(selected_folder + "/src")
 #	var img_content = FileAccess.open(img_path, FileAccess.READ)
 ##	print('img', img_test)
 #	var dest_file = FileAccess.open("res://%s/src/img.png" % dest_folder, FileAccess.WRITE)
@@ -234,7 +255,7 @@ func save_shapes_handler():
 #	dir.copy(img_path,"res://%s/src" % dest_folder);
 
 	## TODO: Move to separate function
-	var res = DirAccess.copy_absolute(img_path, "res://%s/src/img.png" % dest_folder)
+	var res = DirAccess.copy_absolute(img_path, "res://%s/src/img.png" % selected_folder)
 	print('res', res) # code 0 == SUCCESS!!!
 #	var directory = Directory.new()
 #	var dirErr = directory.open(basePath)
