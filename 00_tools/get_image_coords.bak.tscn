@@ -1,27 +1,27 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbkcfq5kkafli"]
+[gd_scene load_steps=5 format=3 uid="uid://gwmxdq22ctwa"]
 
-[ext_resource type="Script" path="res://00_tools/get_image_coords.gd" id="1_vkhnq"]
-[ext_resource type="Texture2D" uid="uid://bwblsu4no4md" path="res://02/src/img.png" id="2_ol1n7"]
+[ext_resource type="Script" path="res://00_tools/get_image_coords.gd" id="1_y5vro"]
+[ext_resource type="Texture2D" uid="uid://bwblsu4no4md" path="res://02/src/img.png" id="2_u2xgi"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vc580"]
-atlas = ExtResource("2_ol1n7")
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ha2k"]
+atlas = ExtResource("2_u2xgi")
 region = Rect2(2.08165e-12, 2.08165e-12, 2999, 975)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fk5dq"]
-atlas = ExtResource("2_ol1n7")
+[sub_resource type="AtlasTexture" id="AtlasTexture_kl2y5"]
+atlas = ExtResource("2_u2xgi")
 region = Rect2(0, 0, 2999, 1350)
 
 [node name="get_image_coords" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_vkhnq")
+script = ExtResource("1_y5vro")
 selected_folder = "02"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_vc580")
+texture = SubResource("AtlasTexture_5ha2k")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
@@ -29,7 +29,7 @@ metadata/_edit_lock_ = true
 layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_fk5dq")
+texture = SubResource("AtlasTexture_kl2y5")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
@@ -86,6 +86,11 @@ polygon = PackedVector2Array(502, 155, 524, 142, 536, 126, 549, 101, 553, 79, 55
 [node name="giraffe" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
 polygon = PackedVector2Array(1009, 60, 1012, 65, 1020, 68, 1031, 70, 1030, 83, 1022, 108, 1016, 130, 1010, 157, 1004, 181, 1001, 199, 999, 209, 1000, 212, 1003, 207, 1003, 202, 1008, 203, 1007, 211, 1009, 214, 1013, 204, 1020, 204, 1030, 206, 1030, 213, 1031, 215, 1034, 208, 1037, 209, 1038, 216, 1040, 216, 1041, 207, 1041, 195, 1039, 186, 1034, 177, 1027, 169, 1028, 164, 1036, 123, 1045, 85, 1049, 68, 1055, 71, 1063, 71, 1068, 69, 1065, 64, 1059, 62, 1054, 63, 1059, 54, 1061, 45, 1060, 39, 1057, 37, 1054, 38, 1052, 42, 1050, 51, 1044, 52, 1044, 42, 1042, 35, 1039, 34, 1038, 38, 1037, 46, 1037, 50, 1022, 52, 1013, 54, 1009, 57)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="button_image_container" type="Control" parent="."]
 layout_mode = 1

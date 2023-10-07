@@ -43,7 +43,15 @@ extends Control
 		add_clickzone_handler()
 		add_clickzone = false
 		
-## This is the description for save_sahpes
+## LOADS new shapes from selected_folder
+@export var load_shapes = false :
+	get:
+		return load_shapes
+	set(value):
+		load_shapes_handler()
+		load_shapes = false		
+		
+## SAVES shapes to selected_folder
 @export var save_shapes = false :
 	get:
 		return save_shapes
@@ -55,8 +63,8 @@ extends Control
 
 # global nodes
 @onready var image = $TextureRect
-@onready var clickZones: Array[Node] = $click_zones.get_children()
-@onready var buttonImageRegions: Array[Node] = $button_images.get_children()
+@onready var clickZones: Array[Node] = $click_zone_container.get_children()
+@onready var buttonImageRegions: Array[Node] = $button_image_container.get_children()
 	
 
 
@@ -65,30 +73,19 @@ extends Control
 # Polygon2D??
 
 
-var image_regions: Array[Polygon2D] = [] :
-	get:
-		print('image_regions', image_regions)
-		return image_regions
-#	set(value):
-#		print('value', value)
-		
-#		surfaceColors = value
-		
-		#setget set_sprite_offset
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	print('ready')
-	for rect2 in image_regions:
-		print('rect2', rect2)
+
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-#	print("regions", image_regions)
+
 	# do we need to make this @tool?
 	# render all the regions on the canvas
 
@@ -114,7 +111,6 @@ func add_clickzone_handler():
 	# set this scene root as owner so it'll persist the creation of the node
 	poly.set_owner(get_tree().edited_scene_root)
 	
-	image_regions.append(poly)
 	
 #	if(self in EditorPlugin.new()):
 		# set focus to new node
@@ -152,13 +148,84 @@ func add_clickzone_handler():
 func load_shapes_handler():
 	# load the data file
 	# load the image
+	var loaded_image = load("res://%s/src/img.png" % selected_folder)
+#	var loaded_data = load("res://02/src/shape_data")
+	var loaded_data_raw = FileAccess.open("%s/src/shape_data" % selected_folder, FileAccess.READ)
+	var loaded_data = loaded_data_raw.get_var() # deserialize back into the data structure
+	
+	
+	# set up 2 images (1 full, 1 with legend hidden)
+	var atlasTexture = AtlasTexture.new()
+	atlasTexture.atlas = loaded_image
+	# set atlas region to entire image (for now)
+#	atlasTexture.region = Rect2(0, 0, atlasTexture.atlas.get_width(), atlasTexture.atlas.get_height())
+	atlasTexture.region = loaded_data["imageData"].region
+	
+	# assign new image to the 2 image nodes
+	$TextureRect.texture = atlasTexture
+	
+	var w = loaded_data["imageData"].size.x
+	var h = loaded_data["imageData"].size.y
+	$TextureRect_w_legend.texture = atlasTexture.duplicate()
+	$TextureRect_w_legend.texture.set_region(Rect2(0,0, w, h)) # full height of img
+
+	
+	
+	
+	# remove all existing clickzones
+	for zone in $click_zone_container.get_children():
+		$click_zone_container.remove_child(zone)
+	
+	# create clickzones from stored data
+	for zoneData in loaded_data["clickZones"]:
+		var poly = Polygon2D.new()
+		# attach to tree
+		$click_zone_container.add_child(poly)
+		
+		poly.name = zoneData.name
+		poly.position = Vector2(zoneData["pos_x"], zoneData["pos_y"])
+		poly.polygon = zoneData["polygon"]
+		# turn transparency down
+		poly.color.a = .5
+		
+		
+		# persist
+		poly.set_owner(get_tree().edited_scene_root)
+		
+		
+	# remove existing button_image rects
+	for rect in $button_image_container.get_children():
+		$button_image_container.remove_child(rect)	
+		
+	# create button_image reference rects from stored data
+	for loaded_region in loaded_data["buttonRegions"]:
+		var region = ReferenceRect.new()
+		$button_image_container.add_child(region)
+		
+		region.name = loaded_region.name
+		
+		# we can't SET rect (only get it) so we set it like so
+		region.set_position(loaded_region.rect.position)
+		region.set_size(loaded_region.rect.size)
+		
+		# persist new nodes in tree
+		region.set_owner(get_tree().edited_scene_root)
+		
+		
+	
+#	print('loaded_data1', loaded_image)
+#	print('loaded_data2', loaded_data)
+#	print('loaded_data3', loaded_data.get_var())
+	
 	# deserialize the data from the file and load it into the scene tree
 	# 1) Reproduce the (named) button images (with correct atlas ref)
 	# 2) Reproduce the (named) polygons
 	
-	image = load("res://00/stage.tscn")
 	
-	pass
+	
+	
+	
+
 	
 # WRITES shapes to disc in the target folder	
 # TODO: Extract all the serialize -> deserialize logic?
@@ -187,7 +254,7 @@ func save_shapes_handler():
 	
 	
 	# capture clickzone shapes
-	for zone in clickZones:
+	for zone in $click_zone_container.get_children():
 		data["clickZones"].append({
 			# Vector2 is not supported by JSON
 			"name": zone.name,
@@ -199,7 +266,7 @@ func save_shapes_handler():
 		
 		
 	## capture button_image rects for subregions
-	for region in buttonImageRegions:
+	for region in $button_image_container.get_children():
 		data["buttonRegions"].append({
 			# Vector2 is not supported by JSON
 			"name": region.name,
