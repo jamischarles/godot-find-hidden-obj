@@ -1,27 +1,27 @@
 [gd_scene load_steps=5 format=3 uid="uid://bbkcfq5kkafli"]
 
-[ext_resource type="Script" path="res://00_tools/get_image_coords.gd" id="1_vkhnq"]
-[ext_resource type="Texture2D" uid="uid://bwblsu4no4md" path="res://02/src/img.png" id="2_ol1n7"]
+[ext_resource type="Script" path="res://00_tools/create_shape_data.gd" id="1_d2j0w"]
+[ext_resource type="Texture2D" uid="uid://bpwphtkeq6rxm" path="res://00_canvas_images/02.png" id="2_lpish"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vc580"]
-atlas = ExtResource("2_ol1n7")
-region = Rect2(2.08165e-12, 2.08165e-12, 2999, 975)
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8hhx"]
+atlas = ExtResource("2_lpish")
+region = Rect2(2.08165e-12, 2.08165e-12, 3000, 975)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fk5dq"]
-atlas = ExtResource("2_ol1n7")
-region = Rect2(0, 0, 2999, 1350)
+[sub_resource type="AtlasTexture" id="AtlasTexture_62epw"]
+atlas = ExtResource("2_lpish")
+region = Rect2(0, 0, 3000, 1350)
 
 [node name="get_image_coords" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_vkhnq")
+script = ExtResource("1_d2j0w")
 selected_folder = "02"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_vc580")
+texture = SubResource("AtlasTexture_e8hhx")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
@@ -29,7 +29,7 @@ metadata/_edit_lock_ = true
 layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_fk5dq")
+texture = SubResource("AtlasTexture_62epw")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 

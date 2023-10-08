@@ -1,20 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://gwmxdq22ctwa"]
 
-[ext_resource type="Script" path="res://00_tools/get_image_coords.gd" id="1_y5vro"]
-[ext_resource type="Texture2D" uid="uid://bwblsu4no4md" path="res://02/src/img.png" id="2_u2xgi"]
+[ext_resource type="Script" path="res://00_tools/create_shape_data.gd" id="1_1mkpb"]
+[ext_resource type="Texture2D" path="_canvas_images/02.png" id="2_ao5r7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ha2k"]
-atlas = ExtResource("2_u2xgi")
+atlas = ExtResource("2_ao5r7")
 region = Rect2(2.08165e-12, 2.08165e-12, 2999, 975)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kl2y5"]
-atlas = ExtResource("2_u2xgi")
+atlas = ExtResource("2_ao5r7")
 region = Rect2(0, 0, 2999, 1350)
 
 [node name="get_image_coords" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_y5vro")
+script = ExtResource("1_1mkpb")
 selected_folder = "02"
 
 [node name="TextureRect" type="TextureRect" parent="."]

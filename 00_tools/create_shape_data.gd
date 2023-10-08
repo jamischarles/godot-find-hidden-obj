@@ -148,10 +148,15 @@ func add_clickzone_handler():
 func load_shapes_handler():
 	# load the data file
 	# load the image
-	var loaded_image = load("res://%s/src/img.png" % selected_folder)
+	
+	
+	
 #	var loaded_data = load("res://02/src/shape_data")
-	var loaded_data_raw = FileAccess.open("%s/src/shape_data" % selected_folder, FileAccess.READ)
-	var loaded_data = loaded_data_raw.get_var() # deserialize back into the data structure
+	var loaded_data_raw = FileAccess.open("%s/src/shape_data.txt" % selected_folder, FileAccess.READ)
+	var loaded_data = str_to_var(loaded_data_raw.get_as_text()) # deserialize back into the data structure
+	
+	# EXPECT this to ref the 00_canvas_images location (backups for all images)
+	var loaded_image = load(loaded_data["imageData"].src)
 	
 	
 	# set up 2 images (1 full, 1 with legend hidden)
@@ -245,9 +250,11 @@ func save_shapes_handler():
 	var data = {"imageData": {}, "clickZones": [], "buttonRegions": []}
 	
 #	print('data', data)
+	var img_path = $TextureRect.texture.atlas.resource_path
 	
 	# capture image rect data
 	data["imageData"] = {
+		"src": img_path,
 		"size": image.size, # total image size (no region restrictions)
 		"region": image.texture.region # region of image minus legend
 	}
@@ -302,16 +309,29 @@ func save_shapes_handler():
 	
 	# save data file with shapes
 #	ResourceSaver.save(packed, "%s/src/shape_data.res" % dest_folder)
-	var save_shapes = FileAccess.open("%s/src/shape_data" % selected_folder, FileAccess.WRITE)
+	var save_shapes = FileAccess.open("%s/src/shape_data.txt" % selected_folder, FileAccess.WRITE)
 	
-	save_shapes.store_var(data, true)
+	# save as binary (non human readable, but preserves data stuctures)
+#	save_shapes.store_var(data, true)
+	
+#	https://www.gdquest.com/tutorial/godot/best-practices/save-game-formats/
+	# save human readable non-json format that prerves godot data types
+	# TODO consider saving different props on dipp lines...
+#	save_shapes.store_line(var_to_str(data))
+	save_shapes.store_string(var_to_str(data))
+	
+	
+#	save_shapes.store_line(var_to_str(data["clickZones"]))
+	
+	
+	
 #	save_shapes.store_pascal_string(data)
 #	ResourceSaver.save(data, "%s/src/shape_data.res" % selected_folder)
 
 	
 	# save/copy image
 #
-	var img_path = $TextureRect.texture.atlas.resource_path
+	
 #	DirAccess.copy
 
 #	var dir = DirAccess.open(selected_folder + "/src")
@@ -322,8 +342,9 @@ func save_shapes_handler():
 #	dir.copy(img_path,"res://%s/src" % dest_folder);
 
 	## TODO: Move to separate function
+	print('image copy: ', img_path, " -> res://%s/src/img.png" % selected_folder) 
 	var res = DirAccess.copy_absolute(img_path, "res://%s/src/img.png" % selected_folder)
-	print('res', res) # code 0 == SUCCESS!!!
+	print('image copy status: ', res, img_path) # code 0 == SUCCESS!!!
 #	var directory = Directory.new()
 #	var dirErr = directory.open(basePath)
 #	if dirErr != OK:
