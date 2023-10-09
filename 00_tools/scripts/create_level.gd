@@ -14,13 +14,14 @@ extends EditorScript
 
 # constants to change before running the script
 
-@export var test = "hi"
+
 
 @export var resource: Resource
 @export var node: Node
 # needed to update the props
 
-var INPUT_FOLDER = "02"
+## Folder where we read the src folder and generate the stage.tscn file for that folder in ../
+var INPUT_FOLDER = "01"
 
 # Used to (re-)generate a level
 

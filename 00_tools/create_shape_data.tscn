@@ -1,27 +1,27 @@
 [gd_scene load_steps=5 format=3 uid="uid://bbkcfq5kkafli"]
 
 [ext_resource type="Script" path="res://00_tools/create_shape_data.gd" id="1_d2j0w"]
-[ext_resource type="Texture2D" uid="uid://bpwphtkeq6rxm" path="res://00_canvas_images/02.png" id="2_lpish"]
+[ext_resource type="Texture2D" uid="uid://pxtn1xo7i110" path="res://00_canvas_images/01.png" id="2_k2i4r"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e8hhx"]
-atlas = ExtResource("2_lpish")
-region = Rect2(2.08165e-12, 2.08165e-12, 3000, 975)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3nu2p"]
+atlas = ExtResource("2_k2i4r")
+region = Rect2(858, 2.08165e-12, 2144, 2143)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_62epw"]
-atlas = ExtResource("2_lpish")
-region = Rect2(0, 0, 3000, 1350)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssm13"]
+atlas = ExtResource("2_k2i4r")
+region = Rect2(2.08165e-12, 2.08165e-12, 3000, 2143)
 
 [node name="get_image_coords" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_d2j0w")
-selected_folder = "02"
+selected_folder = "01"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_e8hhx")
+texture = SubResource("AtlasTexture_3nu2p")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
@@ -29,7 +29,7 @@ metadata/_edit_lock_ = true
 layout_mode = 0
 offset_right = 2999.0
 offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_62epw")
+texture = SubResource("AtlasTexture_ssm13")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
@@ -44,48 +44,53 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_edit_lock_ = true
 
-[node name="sheep" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(321, 190)
+[node name="tablett" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-24, -28, 12, -28, 32, 1, 7, 27, -16, 14, -25, 3)
+polygon = PackedVector2Array(2410, 744, 2424, 749, 2475, 774, 2489, 781, 2515, 797, 2530, 816, 2539, 835, 2540, 852, 2541, 880, 2537, 901, 2527, 923, 2510, 931, 2500, 932, 2514, 940, 2508, 948, 2495, 967, 2463, 983, 2439, 987, 2412, 985, 2391, 990, 2379, 988, 2368, 975, 2351, 957, 2333, 927, 2322, 901, 2322, 891, 2338, 876, 2344, 853, 2344, 819, 2343, 795, 2348, 782, 2379, 762, 2395, 751)
 
-[node name="turtle" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1462, -393)
+[node name="knight" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1219, 568, 1209, 587, 1213, 602, 1266, 607, 1295, 571, 1274, 544, 1255, 532, 1229, 539)
+polygon = PackedVector2Array(2510, 1608, 2584, 1541, 2643, 1506, 2673, 1437, 2721, 1409, 2772, 1398, 2799, 1296, 2805, 1404, 2852, 1432, 2889, 1476, 2908, 1533, 2900, 1595, 2872, 1638, 2868, 1654, 2912, 1670, 2934, 1692, 2953, 1722, 2958, 1752, 2956, 1783, 2940, 1798, 2940, 1838, 2947, 1871, 2961, 1877, 2960, 1897, 2959, 1912, 2963, 1949, 2980, 1960, 2982, 2056, 3003, 2095, 3004, 2146, 2899, 2143, 2930, 2067, 2901, 1977, 2915, 1960, 2916, 1919, 2903, 1907, 2905, 1890, 2886, 1790, 2859, 1778, 2882, 1884, 2890, 1927, 2882, 1981, 2882, 2009, 2865, 2144, 2799, 2143, 2793, 2082, 2781, 2069, 2733, 2068, 2700, 2057, 2687, 2059, 2675, 2144, 2620, 2144, 2624, 1997, 2620, 1979, 2623, 1966, 2609, 1932, 2614, 1885, 2644, 1807, 2562, 1864, 2557, 1887, 2541, 1890, 2524, 1889, 2524, 1868, 2491, 1833, 2468, 1851, 2428, 1769, 2390, 1767, 2379, 1761, 2397, 1750, 2387, 1738, 2376, 1714, 2377, 1695, 2387, 1684, 2394, 1669, 2418, 1665, 2445, 1670, 2459, 1690, 2457, 1711, 2455, 1727, 2498, 1782, 2507, 1798, 2505, 1811, 2521, 1823, 2545, 1823, 2625, 1763, 2639, 1720, 2660, 1700, 2691, 1680, 2708, 1675, 2671, 1672, 2625, 1672, 2562, 1672, 2520, 1665, 2503, 1640)
 
-[node name="hippo" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1687, -430)
+[node name="sword" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(556, 822, 533, 827, 528, 840, 538, 862, 578, 863, 581, 856, 633, 868, 664, 843, 665, 808, 648, 789, 618, 783, 583, 791, 566, 804)
+polygon = PackedVector2Array(1731, 443, 1653, 433, 1583, 411, 1526, 388, 1536, 370, 1533, 358, 1523, 353, 1514, 357, 1513, 367, 1523, 373, 1522, 363, 1529, 373, 1518, 381, 1497, 372, 1481, 362, 1475, 351, 1469, 359, 1470, 367, 1481, 375, 1508, 394, 1502, 404, 1500, 417, 1514, 421, 1521, 415, 1516, 410, 1506, 412, 1516, 394, 1538, 413, 1572, 432, 1620, 447, 1661, 455, 1687, 455, 1709, 452)
 
-[node name="pig" type="Polygon2D" parent="click_zone_container"]
+[node name="sarcophagus" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1415, 885, 1443, 872, 1477, 882, 1494, 897, 1501, 913, 1501, 923, 1496, 936, 1485, 940, 1465, 942, 1431, 932, 1408, 917, 1396, 910, 1398, 890, 1407, 883)
+polygon = PackedVector2Array(986, 872, 990, 814, 998, 763, 1011, 732, 1031, 707, 1055, 695, 1083, 691, 1111, 695, 1131, 707, 1148, 728, 1163, 761, 1171, 794, 1174, 832, 1174, 874, 1173, 910, 1139, 915, 1152, 1049, 1142, 1106, 1137, 1147, 1140, 1172, 1151, 1196, 1161, 1210, 1165, 1224, 1164, 1245, 1084, 1249, 1060, 1248, 1046, 1219, 1032, 1218, 1011, 1225, 1013, 1190, 1038, 1198, 1048, 1198, 1048, 1205, 1063, 1211, 1074, 1208, 1083, 1196, 1086, 1180, 1083, 1160, 1073, 1140, 1080, 1121, 1084, 1106, 1073, 1091, 1055, 1080, 1040, 1075, 1040, 1061, 1041, 1048, 1028, 1040, 1020, 1038, 1004, 988, 993, 951, 988, 912, 986, 892)
 
-[node name="bull" type="Polygon2D" parent="click_zone_container"]
+[node name="painting" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1570, 446, 1572, 457, 1582, 470, 1592, 476, 1602, 477, 1602, 494, 1602, 504, 1605, 516, 1610, 520, 1615, 519, 1620, 513, 1623, 518, 1625, 527, 1629, 536, 1632, 529, 1631, 521, 1633, 516, 1635, 525, 1637, 533, 1640, 533, 1640, 527, 1641, 518, 1656, 516, 1675, 514, 1679, 528, 1681, 528, 1684, 520, 1687, 526, 1691, 522, 1692, 510, 1689, 496, 1683, 484, 1677, 473, 1666, 467, 1654, 466, 1643, 467, 1634, 469, 1624, 471, 1637, 460, 1644, 447, 1649, 433, 1649, 421, 1644, 434, 1637, 447, 1626, 457, 1615, 462, 1600, 464, 1588, 462, 1580, 456, 1576, 452)
+polygon = PackedVector2Array(3000, 141, 3000, 379, 2946, 376, 2889, 380, 2874, 373, 2870, 386, 2858, 396, 2844, 394, 2836, 384, 2837, 370, 2844, 365, 2854, 361, 2854, 237, 2859, 163, 2844, 160, 2839, 147, 2840, 133, 2852, 130, 2860, 136, 2867, 142)
 
-[node name="elephant" type="Polygon2D" parent="click_zone_container"]
+[node name="axe" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(577, 393, 572, 402, 574, 415, 579, 426, 590, 429, 602, 429, 612, 423, 616, 421, 623, 423, 623, 432, 626, 435, 633, 432, 635, 427, 636, 433, 641, 439, 648, 433, 648, 427, 669, 425, 680, 422, 681, 430, 684, 431, 688, 418, 690, 415, 694, 421, 699, 421, 699, 413, 697, 408, 701, 392, 694, 378, 684, 373, 673, 371, 664, 371, 649, 365, 640, 365, 634, 375, 628, 368, 620, 362, 612, 362, 604, 368, 602, 380, 608, 386, 605, 403, 603, 416, 591, 419, 583, 411, 582, 403, 582, 396)
+polygon = PackedVector2Array(1597, 315, 1711, 366, 1718, 364, 1719, 355, 1639, 324, 1603, 304, 1603, 295, 1608, 288, 1611, 285, 1605, 275, 1606, 260, 1600, 268, 1593, 274, 1583, 278, 1587, 281, 1586, 286, 1580, 289, 1575, 290, 1570, 287, 1565, 290, 1563, 294, 1567, 299, 1573, 302, 1567, 314, 1558, 322, 1544, 322, 1532, 318, 1527, 308, 1526, 299, 1522, 305, 1521, 312, 1522, 322, 1527, 332, 1537, 344, 1553, 356, 1572, 363, 1591, 362, 1605, 359, 1612, 350, 1601, 349, 1592, 342, 1590, 327, 1593, 320)
 
-[node name="lion" type="Polygon2D" parent="click_zone_container"]
+[node name="bones" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1703, 206, 1701, 213, 1704, 220, 1711, 226, 1705, 230, 1704, 239, 1709, 246, 1719, 248, 1717, 256, 1720, 262, 1725, 263, 1727, 266, 1726, 274, 1727, 279, 1731, 278, 1736, 273, 1738, 270, 1747, 271, 1753, 268, 1753, 276, 1753, 284, 1760, 280, 1766, 270, 1771, 263, 1773, 256, 1785, 253, 1798, 251, 1807, 250, 1811, 258, 1815, 267, 1821, 270, 1824, 265, 1821, 249, 1827, 253, 1833, 257, 1837, 257, 1838, 252, 1836, 247, 1825, 241, 1822, 236, 1821, 228, 1817, 222, 1811, 218, 1793, 219, 1783, 220, 1779, 217, 1784, 207, 1783, 202, 1779, 198, 1773, 199, 1770, 202, 1768, 193, 1761, 190, 1756, 193, 1749, 185, 1742, 184, 1736, 186, 1735, 189, 1727, 188, 1721, 190, 1720, 195, 1720, 199, 1712, 199, 1707, 203)
+polygon = PackedVector2Array(2042, 1511, 2055, 1497, 2073, 1488, 2080, 1493, 2087, 1486, 2109, 1505, 2110, 1513, 2115, 1510, 2117, 1506, 2122, 1500, 2108, 1495, 2103, 1489, 2141, 1497, 2157, 1502, 2166, 1502, 2163, 1494, 2160, 1491, 2158, 1483, 2149, 1481, 2145, 1488, 2101, 1480, 2133, 1467, 2143, 1472, 2154, 1471, 2157, 1463, 2151, 1455, 2140, 1453, 2143, 1443, 2134, 1436, 2126, 1437, 2123, 1448, 2124, 1452, 2080, 1468, 2064, 1457, 2059, 1446, 2057, 1452, 2053, 1455, 2057, 1461, 2071, 1471, 2054, 1479, 2042, 1473, 2034, 1477, 2033, 1486, 2045, 1493, 2034, 1495, 2033, 1502, 2033, 1509)
 
-[node name="deer" type="Polygon2D" parent="click_zone_container"]
+[node name="lamp" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(81, 649, 69, 657, 66, 665, 69, 673, 83, 677, 96, 677, 98, 688, 99, 701, 96, 717, 93, 731, 86, 743, 80, 755, 83, 760, 89, 755, 95, 747, 100, 740, 105, 739, 105, 745, 102, 753, 96, 760, 91, 767, 94, 771, 101, 767, 111, 762, 122, 756, 131, 758, 136, 767, 133, 776, 128, 785, 121, 793, 123, 798, 132, 794, 140, 788, 150, 782, 153, 786, 149, 794, 138, 807, 138, 813, 143, 812, 151, 808, 160, 801, 169, 789, 174, 774, 174, 759, 170, 748, 162, 739, 147, 726, 138, 717, 135, 703, 135, 691, 136, 678, 133, 664, 129, 656, 157, 638, 187, 642, 192, 657, 198, 665, 206, 667, 205, 663, 198, 659, 193, 643, 215, 650, 233, 660, 234, 653, 228, 651, 239, 648, 239, 643, 225, 644, 213, 640, 235, 634, 235, 629, 206, 638, 181, 634, 170, 633, 162, 633, 146, 637, 138, 642, 126, 651, 117, 645, 138, 618, 152, 613, 158, 614, 164, 624, 165, 615, 170, 614, 149, 607, 158, 604, 147, 603, 138, 609, 126, 622, 112, 644, 96, 641, 87, 643)
+polygon = PackedVector2Array(1399, 1015, 1421, 1028, 1435, 1030, 1453, 1027, 1468, 1024, 1470, 1019, 1464, 1016, 1467, 1010, 1476, 1011, 1480, 1014, 1479, 1018, 1477, 1021, 1479, 1024, 1492, 1028, 1500, 1030, 1508, 1024, 1513, 1024, 1520, 1026, 1523, 1032, 1525, 1038, 1522, 1043, 1516, 1048, 1508, 1050, 1508, 1058, 1504, 1065, 1496, 1072, 1487, 1076, 1478, 1077, 1478, 1081, 1483, 1082, 1483, 1082, 1486, 1086, 1481, 1089, 1463, 1087, 1458, 1083, 1464, 1080, 1467, 1075, 1451, 1069, 1443, 1058, 1439, 1050, 1423, 1044, 1407, 1034, 1396, 1026, 1387, 1015, 1393, 1012)
 
-[node name="fish" type="Polygon2D" parent="click_zone_container"]
+[node name="egg" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(502, 155, 524, 142, 536, 126, 549, 101, 553, 79, 555, 61, 557, 41, 569, 41, 578, 34, 579, 27, 570, 26, 561, 29, 556, 35, 551, 23, 544, 21, 543, 28, 547, 38, 532, 51, 519, 64, 508, 79, 501, 97, 497, 113, 497, 129, 498, 145)
+polygon = PackedVector2Array(1328, 943, 1341, 946, 1351, 953, 1356, 963, 1361, 975, 1365, 993, 1367, 1010, 1363, 1024, 1355, 1036, 1344, 1042, 1335, 1048, 1334, 1060, 1337, 1068, 1345, 1074, 1354, 1079, 1349, 1086, 1338, 1090, 1323, 1092, 1307, 1086, 1301, 1081, 1307, 1074, 1314, 1066, 1316, 1058, 1317, 1049, 1316, 1045, 1302, 1038, 1294, 1028, 1289, 1015, 1287, 1002, 1287, 987, 1292, 972, 1299, 960, 1308, 951, 1317, 946)
 
-[node name="giraffe" type="Polygon2D" parent="click_zone_container"]
+[node name="bust" type="Polygon2D" parent="click_zone_container"]
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1009, 60, 1012, 65, 1020, 68, 1031, 70, 1030, 83, 1022, 108, 1016, 130, 1010, 157, 1004, 181, 1001, 199, 999, 209, 1000, 212, 1003, 207, 1003, 202, 1008, 203, 1007, 211, 1009, 214, 1013, 204, 1020, 204, 1030, 206, 1030, 213, 1031, 215, 1034, 208, 1037, 209, 1038, 216, 1040, 216, 1041, 207, 1041, 195, 1039, 186, 1034, 177, 1027, 169, 1028, 164, 1036, 123, 1045, 85, 1049, 68, 1055, 71, 1063, 71, 1068, 69, 1065, 64, 1059, 62, 1054, 63, 1059, 54, 1061, 45, 1060, 39, 1057, 37, 1054, 38, 1052, 42, 1050, 51, 1044, 52, 1044, 42, 1042, 35, 1039, 34, 1038, 38, 1037, 46, 1037, 50, 1022, 52, 1013, 54, 1009, 57)
+polygon = PackedVector2Array(1928, 275, 1925, 259, 1938, 244, 1937, 230, 1947, 222, 1960, 216, 1967, 215, 1978, 205, 1988, 202, 2005, 205, 2019, 205, 2032, 210, 2035, 221, 2035, 232, 2043, 236, 2043, 247, 2036, 254, 2027, 258, 2030, 277, 2028, 298, 2029, 307, 2032, 316, 2024, 324, 2010, 327, 2008, 335, 2024, 338, 2029, 334, 2039, 335, 2042, 342, 2039, 350, 2030, 351, 2026, 374, 2017, 392, 2008, 404, 2005, 415, 2015, 424, 2024, 424, 2024, 430, 2037, 438, 2038, 454, 2029, 453, 2047, 462, 2048, 472, 2049, 479, 2058, 482, 2058, 496, 2032, 538, 2032, 554, 2092, 571, 2088, 611, 1979, 615, 1933, 600, 1935, 565, 1950, 569, 1953, 560, 1954, 550, 1961, 546, 1961, 528, 1959, 514, 1946, 496, 1942, 484, 1950, 475, 1953, 461, 1958, 454, 1954, 446, 1954, 437, 1964, 430, 1965, 422, 1983, 417, 1982, 411, 1966, 405, 1957, 383, 1952, 362, 1949, 350, 1974, 340, 1964, 300, 1954, 304, 1945, 301, 1942, 295, 1941, 287, 1933, 283)
+
+[node name="urn" type="Polygon2D" parent="click_zone_container"]
+color = Color(1, 1, 1, 0.5)
+polygon = PackedVector2Array(2427, 1226, 2413, 1222, 2420, 1216, 2420, 1209, 2409, 1195, 2398, 1154, 2393, 1118, 2374, 1089, 2369, 1059, 2376, 1059, 2383, 1081, 2394, 1099, 2404, 1094, 2410, 1083, 2413, 1068, 2414, 1043, 2406, 1033, 2415, 1029, 2425, 1030, 2437, 1035, 2428, 1043, 2428, 1058, 2429, 1068, 2442, 1057, 2459, 1058, 2470, 1064, 2470, 1079, 2466, 1096, 2453, 1110, 2453, 1146, 2453, 1174, 2447, 1195, 2438, 1205, 2434, 1211, 2445, 1218, 2437, 1224)
+
+[node name="portrait" type="Polygon2D" parent="click_zone_container"]
+color = Color(1, 1, 1, 0.5)
+polygon = PackedVector2Array(857, 134, 1072, 98, 1112, 93, 1106, 378, 1101, 463, 857, 433)
 
 [node name="button_image_container" type="Control" parent="."]
 layout_mode = 1
@@ -95,72 +100,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="sheep" type="ReferenceRect" parent="button_image_container"]
+[node name="tablet" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 44.0
-offset_top = 1096.0
-offset_right = 230.0
-offset_bottom = 1290.0
+offset_left = 108.0
+offset_top = 389.0
+offset_right = 366.0
+offset_bottom = 624.0
 
-[node name="turtle" type="ReferenceRect" parent="button_image_container"]
+[node name="knight" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 238.0
-offset_top = 1142.0
-offset_right = 410.0
-offset_bottom = 1313.0
+offset_left = 383.0
+offset_top = 353.0
+offset_right = 810.0
+offset_bottom = 904.0
 
-[node name="hippo" type="ReferenceRect" parent="button_image_container"]
+[node name="sword" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 411.0
-offset_top = 1109.0
-offset_right = 643.0
-offset_bottom = 1304.0
+offset_left = 135.0
+offset_top = 630.0
+offset_right = 473.0
+offset_bottom = 806.0
 
-[node name="pig" type="ReferenceRect" parent="button_image_container"]
+[node name="sarcophagus" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 665.0
-offset_top = 1119.0
-offset_right = 847.0
-offset_bottom = 1304.0
+offset_left = 143.0
+offset_top = 848.0
+offset_right = 361.0
+offset_bottom = 1365.0
 
-[node name="bull" type="ReferenceRect" parent="button_image_container"]
+[node name="painting" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 834.0
-offset_top = 1089.0
-offset_right = 1068.0
-offset_bottom = 1315.0
+offset_left = 430.0
+offset_top = 919.0
+offset_right = 732.0
+offset_bottom = 1213.0
 
-[node name="elephant" type="ReferenceRect" parent="button_image_container"]
+[node name="axe" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 1074.0
-offset_top = 1129.0
-offset_right = 1283.0
-offset_bottom = 1314.0
+offset_left = 467.0
+offset_top = 1228.0
+offset_right = 745.0
+offset_bottom = 1401.0
 
-[node name="lion" type="ReferenceRect" parent="button_image_container"]
+[node name="bones" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 1290.0
-offset_top = 1090.0
-offset_right = 1547.0
-offset_bottom = 1298.0
+offset_left = 93.0
+offset_top = 1432.0
+offset_right = 340.0
+offset_bottom = 1564.0
 
-[node name="deer" type="ReferenceRect" parent="button_image_container"]
+[node name="lamp" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 1560.0
-offset_top = 1013.0
-offset_right = 1756.0
-offset_bottom = 1299.0
+offset_left = 370.0
+offset_top = 1454.0
+offset_right = 556.0
+offset_bottom = 1573.0
 
-[node name="fish" type="ReferenceRect" parent="button_image_container"]
+[node name="egg" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 1751.0
-offset_top = 1098.0
-offset_right = 1860.0
-offset_bottom = 1298.0
+offset_left = 573.0
+offset_top = 1451.0
+offset_right = 743.0
+offset_bottom = 1659.0
 
-[node name="giraffe" type="ReferenceRect" parent="button_image_container"]
+[node name="bust" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 1861.0
-offset_top = 1013.0
-offset_right = 2004.0
-offset_bottom = 1308.0
+offset_left = 81.0
+offset_top = 1634.0
+offset_right = 289.0
+offset_bottom = 2053.0
+
+[node name="urn" type="ReferenceRect" parent="button_image_container"]
+layout_mode = 0
+offset_left = 340.0
+offset_top = 1647.0
+offset_right = 476.0
+offset_bottom = 1950.0
+
+[node name="portrait" type="ReferenceRect" parent="button_image_container"]
+layout_mode = 0
+offset_left = 507.0
+offset_top = 1702.0
+offset_right = 793.0
+offset_bottom = 2072.0

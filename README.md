@@ -10,29 +10,32 @@
 3. Open 00_tools/create_shape_data.tscn
 4. For TextureRect node, create atlas texture for new image, loaded from 00_canvas_images/ folder
 	- set region to exclude the legend & solution
-5. For TextureRect with legend mode do same as 4 (or clone and make texture UNIQUE (parent only))
+5. Duplicate the ^ node, then make texture UNIQUE (parent only)
 	- set region to entire image
 6. Select root node in tree for create_shape_data.tscn
 	- delete all the children of `click_zone_container` node
+	- delete all the children of `button_image_container` node
+	
+	
+Create all the button_image_container shapes and name them	
 	
 For each shape... ------------------>	
 7. In right rail props click "Add Clickzone" (this will add a new node and switch focus to it)
 8. Zoom into a shape, and click to add all the polygons for it. Then close it at the end.
-9. Delete children of button_image_container node
-10. Add a new reference_rect node as child of "button_image_container"
+9. Add a new reference_rect node as child of "button_image_container"
 	- Size and move the new rect node to cover the corresponding legend image the clickzone shape was just added for
-11. Name the clickZone and button_image	node to match (and describes object)
+10. Name the clickZone and button_image	node to match (and describes object)
 ------------
 
-12. When done, enter "selected folder" (2 digit format) like "02" in right rail
-13. Click "Save Shapes" in right rail
+11. When done, enter "selected folder" (2 digit format) like "02" in right rail
+12. Click "Save Shapes" in right rail
 This will create "02/src/img.png" and "02/src/shape_data.dat"
 
-14. Open `create_level.gd`. Enter in code the folder to process (02 here)
-15. File RUN from that file.
+13. Open `create_level.gd`. Enter in code the folder to process (02 here)
+14. File RUN from that file.
 This generates the tscn file which we can use to run the level.
-16. Open that new scene
-17. Try it out (cmd+r) run current scene.
+15. Open that new scene
+16. Try it out (cmd+r) run current scene.
 Verify it all works
 
 

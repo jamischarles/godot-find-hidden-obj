@@ -95,7 +95,7 @@ func add_clickzone_handler():
 	var poly = Polygon2D.new()
 	# turn transparency down
 	poly.color.a = .5
-	$click_zones.add_child(poly)
+	$click_zone_container.add_child(poly)
 	
 	poly.set_name("new_poly")
 	
