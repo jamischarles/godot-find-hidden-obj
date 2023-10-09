@@ -222,6 +222,8 @@ func _run():
 
 		# not needed if we don't want to click them anymore
 		btn.focus_mode = Control.FOCUS_NONE
+		btn.mouse_filter = Control.MOUSE_FILTER_IGNORE # pass the scroll event through to container underneath
+		
 #		btn.button_group = btnGroup
 #		btn.toggle_mode = true
 		
