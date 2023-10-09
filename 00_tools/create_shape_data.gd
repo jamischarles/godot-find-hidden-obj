@@ -236,6 +236,11 @@ func load_shapes_handler():
 # TODO: Extract all the serialize -> deserialize logic?
 func save_shapes_handler():
 	print("SAVE TO DISK")
+	
+	
+	# Assert that it's safe to export
+	run_assertions_on_tree()
+	
 	# gather the data we want to save
 	# create data structure
 	# save it
@@ -352,7 +357,65 @@ func save_shapes_handler():
 #		return
 	
 	
+###################### assertion code
+# node name
+
+var assert_verify_matches
+
+## Runs the assertions on the tree before we export to ensure the nodes are properly set up and named
+func run_assertions_on_tree():
+	# wipe out assertion data structure
+	assert_verify_matches = {}
 	
+	for zone in $click_zone_container.get_children():
+		var name = zone.get_name()
+
+		# add up the canvas clickzones
+		if assert_verify_matches.has(name):
+			assert_verify_matches[name] += 1
+		else:
+			assert_verify_matches[name] = 1
+
+	# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
+	# we can create a dictionary and count that each one has 2
+
+#	print("i", i)
+#	print('nodeNUm', clickZone.get_instance_id())
+
+#
+
+
+#	# count the right_rail button node names,
+	var legendButtons = $button_image_container.get_children()
+	for btn in legendButtons:
+		var btn_name = btn.get_name()
+		## TODO: Reuse this? in fn?
+		if assert_verify_matches.has(btn_name):
+			assert_verify_matches[btn_name] += 1
+		else:
+			assert_verify_matches[btn_name] = 1
+	
+	
+	#VERIFY: there should be exactly one of each currently in the clickzones
+	for zone in assert_verify_matches:
+		assert(assert_verify_matches[zone] == 2, "ClickZones: %s has %s" % [zone, assert_verify_matches[zone]])
+	
+	
+	
+## warn in the GUI tree when hidden shapes are mismatched or misnamed
+#https://docs.godotengine.org/en/stable/tutorials/plugins/running_code_in_the_editor.html
+# Only works when opening the scene?
+#func _get_configuration_warnings():
+#	var warnings = []
+#
+#	if title == "":
+#		warnings.append("Please set `title` to a non-empty value.")
+#
+#	if description.length() >= 100:
+#		warnings.append("`description` should be less than 100 characters long.")
+#
+#	# Returning an empty array means "no warning".
+#	return warnings
 	
 	
 #	ResourceSaver.save(packed, "%s/src/shape_data.res" % dest_folder)

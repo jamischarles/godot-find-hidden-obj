@@ -1,14 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://gwmxdq22ctwa"]
+[gd_scene load_steps=4 format=3 uid="uid://gwmxdq22ctwa"]
 
 [ext_resource type="Script" path="res://00_tools/create_shape_data.gd" id="1_1mkpb"]
-[ext_resource type="Texture2D" path="_canvas_images/02.png" id="2_ao5r7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5ha2k"]
-atlas = ExtResource("2_ao5r7")
 region = Rect2(2.08165e-12, 2.08165e-12, 2999, 975)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kl2y5"]
-atlas = ExtResource("2_ao5r7")
 region = Rect2(0, 0, 2999, 1350)
 
 [node name="get_image_coords" type="Control"]

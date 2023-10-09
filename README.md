@@ -15,7 +15,8 @@
 6. Select root node in tree for create_shape_data.tscn
 	- delete all the children of `click_zone_container` node
 	- delete all the children of `button_image_container` node
-	
+
+6.5. HIDE the legend node so the coords will be accurate (esp if they are on left edge)	
 	
 Create all the button_image_container shapes and name them	
 	

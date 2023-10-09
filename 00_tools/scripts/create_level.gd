@@ -2,38 +2,22 @@
 extends EditorScript
 
 ## HOW to use this...
-## CURRENTLY ACTIVE SCENE (we need a more intuitive way to select this)...
-## whichever scene is selected in `scene` (via selection in the filesystem) 
-## is the current scene (even local_scene) from resource loader...
-## maybe we instantiate it otherwise...?
-
-
-#@export_file var destination_folder 
-@export_dir() var destination_folder: String = "test"
-
-
 # constants to change before running the script
 
 
-
-@export var resource: Resource
-@export var node: Node
-# needed to update the props
-
-## Folder where we read the src folder and generate the stage.tscn file for that folder in ../
-var INPUT_FOLDER = "01"
+## Folder where we read the ./src folder and generate the stage.tscn file for that folder in ../
+var SELECTED_FOLDER = "01" # res://${num}/src
 
 # Used to (re-)generate a level
 
 ## INPUT
 ## src/
-## - Image
-## - Array of regions for the buttons (legend of objects to find)
-## - Array of polygons for the click targets
+## - img.png
+## - shape_data.txt - button regions, image data, clickzone polygon shapes + locationa
 
 ## Output
 ## Scene tree for that image with click zones and right rail buttons. 
-## All based on the template stage.gd file
+## All based on the 00_template_stage_template.tscn file
 
 
 
@@ -43,8 +27,8 @@ var INPUT_FOLDER = "01"
 
 # Called when the script is executed (using File -> Run in Script Editor).
 func _run():
-	var srcDir = DirAccess.open("res://%s/src" % INPUT_FOLDER)
-	var destDir = DirAccess.open("res://%s" % INPUT_FOLDER)
+	var srcDir = DirAccess.open("res://%s/src" % SELECTED_FOLDER)
+	var destDir = DirAccess.open("res://%s" % SELECTED_FOLDER)
 	print('srcdir', srcDir.get_files())
 	
 	
@@ -53,21 +37,22 @@ func _run():
 	print(templateDir.get_files())
 	
 	# clean up dest folder
-#	for file in destDir.get_files():
-#		print("deleting file:", file)
-#		destDir.remove(file)
+	for file in destDir.get_files():
+		print("deleting file:", file)
+		destDir.remove(file)
 
 	
 	# just needs to be a dir handle. Doesn't matter which folder it's in really
 	# todo: Can we read that tree and just copy those nodes over?
-#	destDir.copy("res://shared/stage_global.tscn", "res://%s/stage.tscn" % INPUT_FOLDER)
+#	destDir.copy("res://shared/stage_global.tscn", "res://%s/stage.tscn" % SELECTED_FOLDER)
 	
 	# load data file with shape data
-	# Creates the helper class to interact with JSON
-	var json = JSON.new()
-# https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
-	var shape_raw_data = FileAccess.open("%s/src/shape_data" % INPUT_FOLDER, FileAccess.READ)
-#	var json_string = shape_raw_data.get_file_as_string("%s/src/shape_data.json" % INPUT_FOLDER)
+	# #	https://www.gdquest.com/tutorial/godot/best-practices/save-game-formats/
+	var loaded_data_raw = FileAccess.open("%s/src/shape_data.txt" % SELECTED_FOLDER, FileAccess.READ)
+	var shape_data = str_to_var(loaded_data_raw.get_as_text()) # deserialize back into the data structure
+	
+	
+#	var json_string = shape_raw_data.get_file_as_string("%s/src/shape_data.json" % SELECTED_FOLDER)
 	# Check if there is any error while parsing the JSON string, skip in case of failure
 #	var parse_result = json.parse(json_string)
 #	if not parse_result == OK:
@@ -75,9 +60,9 @@ func _run():
 ##		continue
 
 
-	print("##raw", shape_raw_data)
+	print("##raw", shape_data)
 	# does this modify the file data?!? Seems to... hm...
-	var shape_data =  shape_raw_data.get_var(true)
+	
 
 
 
@@ -100,7 +85,7 @@ func _run():
 
 	
 	# create a copy of the template scene tree so we can modify it
-	var scene = ResourceLoader.load("res://shared/stage_global.tscn").instantiate()
+	var scene = ResourceLoader.load("res://00_template/stage_template.tscn").instantiate()
 	var imgNode: TextureRect = scene.get_node("HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/hidden_objects_image")
 	var canvasContainer: Control = imgNode.get_parent()
 	var clickZoneContainer: Control = scene.get_node("HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container")
@@ -109,13 +94,13 @@ func _run():
 	
 	# change image
 	var atlasTexture = AtlasTexture.new()
-	atlasTexture.atlas = load("res://%s/src/img.png" % INPUT_FOLDER)
+	atlasTexture.atlas = load("res://%s/src/img.png" % SELECTED_FOLDER)
 	# set atlas region to entire image (for now)
 #	atlasTexture.region = Rect2(0, 0, atlasTexture.atlas.get_width(), atlasTexture.atlas.get_height())
 	atlasTexture.region = shape_data["imageData"].region
 	
 	
-#	imgNode.texture.atlas.resource_path = "%s/src/img.png" % INPUT_FOLDER
+#	imgNode.texture.atlas.resource_path = "%s/src/img.png" % SELECTED_FOLDER
 	imgNode.texture = atlasTexture
 	
 	# get the size of the imgNode container from the region
@@ -211,14 +196,14 @@ func _run():
 	for buttonRegionRect in shape_data["buttonRegions"]:
 		# button icon from legend on canvas image
 		var btnAtlasTexture = AtlasTexture.new()
-		btnAtlasTexture.atlas = load("res://%s/src/img.png" % INPUT_FOLDER)
+		btnAtlasTexture.atlas = load("res://%s/src/img.png" % SELECTED_FOLDER)
 		# set atlas region to entire image (for now)
 
 
 #		print("##", buttonRegionRect)
 #		btnAtlasTexture.region = Rect2(0, 0, btnAtlasTexture.atlas.get_width(), btnAtlasTexture.atlas.get_height())
 		btnAtlasTexture.region = buttonRegionRect.rect
-	#	imgNode.texture.atlas.resource_path = "%s/src/img.png" % INPUT_FOLDER
+	#	imgNode.texture.atlas.resource_path = "%s/src/img.png" % SELECTED_FOLDER
 #		imgNode.texture = atlasTexture
 		
 #		print("###buttonRegionRect", buttonRegionRect)		
@@ -278,7 +263,7 @@ func _run():
 	# SAVE new tree as scene
 	var scene_new = PackedScene.new()
 	scene_new.pack(scene)
-	ResourceSaver.save(scene_new, "res://%s/stage.tscn" % INPUT_FOLDER)
+	ResourceSaver.save(scene_new, "res://%s/stage.tscn" % SELECTED_FOLDER)
 	
 	
 	# FIXME: or we can just load that and INSTANTIATE it... 
@@ -296,7 +281,7 @@ func _run():
 	
 	
 	# this broke the editor. Don't want to do that lol.
-#	get_scene().get_tree().change_scene_to_file("res://%s/stage.tscn" % INPUT_FOLDER)
+#	get_scene().get_tree().change_scene_to_file("res://%s/stage.tscn" % SELECTED_FOLDER)
 	
 	
 #	var frog1 = ResourceLoader.load("res://shared/stage_global.tscn");
