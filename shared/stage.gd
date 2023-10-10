@@ -1,18 +1,27 @@
 extends Node
 
-
+@onready var touch_feedback_node = $HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/TouchFeedback
 @onready var right_rail_buttons: Array[Node] = $HBoxContainer/right_rail/legend_for_hidden_objects.get_children()
+
+@onready var home_btn = $HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer/Home
+@onready var lvl_done = $level_complete_panel/Panel/btn_level_select
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	# when TouchFeedback sends us "shape found" we handle that here
+	touch_feedback_node.connect("shape_found", on_shape_found)
+	
+	# connect home btn to menu select
+	home_btn.connect("button_up", _on_home_button_up)
+	lvl_done.connect("button_up", _on_home_button_up)
+	
 	
 	var clickZones = $HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container.get_children()
 	# set alpha to 0 so click zones are invisible to user but still active
 	# FIXME: Should I just set this in a shared style?!?
 	for clickZone in clickZones:
 		clickZone.set_modulate(Color(1, 1, 1, 0)) # hide all the clickzones
-		clickZone.connect("input_event", on_shape_found.bind(clickZone))# add clickHandlers
+#		clickZone.connect("shape_found", on_shape_found.bind(clickZone))# add clickHandlers
 		
 	
 
@@ -28,9 +37,9 @@ func _process(delta):
 #		on_shape_found(shape)
 
 # on hidden shape found
-func on_shape_found(viewport, event, shape_idx, clickZoneNode):
-	if !isEventClick(event):
-		return # bail early
+func on_shape_found(clickZoneNode: Area2D):
+#	if !isEventClick(event):
+#		return # bail early
 		
 	var shape_name = clickZoneNode.name
 	mark_clickzone_as_done(clickZoneNode)
@@ -55,11 +64,29 @@ func on_shape_found(viewport, event, shape_idx, clickZoneNode):
 			
 	end_level()
 	
-func mark_clickzone_as_done(shape):
+func mark_clickzone_as_done(shape: Area2D):
 	# canvas click zone. Gray out, then disable
 	shape.set_modulate(Color(.36, .36, .36, .74))
-	# functionally - disable clicks
-	shape.set_pickable(false) # bubbles up from collisionlayer. Nice!
+	var collisionShape = get_collision_shape_from_node(shape)
+	collisionShape.disabled = true
+	
+#	shape.disabled = true
+	# disable collision detection on this shape
+#	shape.shape_owner_get_shape(shape.get_id(), 0)
+#	area.shape_owner_get_owner(area_shape_index)
+#	shape_owner_get_shape()
+	
+	
+	# functionally - disable clicks (needed when you'd click on each shape)
+#	shape.set_pickable(false) # bubbles up from collisionlayer. Nice!
+	
+# need this to get the collision node so we can disable it (because monitoring doesn't work?)	
+func get_collision_shape_from_node(shape: Area2D):
+	for node in shape.find_children("*", "CollisionPolygon2D"):
+		return node
+#		print('###node', node)
+#		print('node', node.is_class("node"))
+#		print('node2', node.get_class())
 	
 
 ## Pass in the name of the shape(node) then returns that right rail button by that name

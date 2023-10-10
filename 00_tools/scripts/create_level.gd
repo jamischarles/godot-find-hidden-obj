@@ -160,6 +160,9 @@ func _run():
 		
 		area.position = Vector2i(clickZone["pos_x"],clickZone["pos_y"])
 		
+		# We don't need to have clickzones monitor other shapes
+		area.monitoring = false
+		
 		
 		
 		
@@ -174,6 +177,7 @@ func _run():
 		
 		# create collisionshape with same polygon
 		collisionPoly.polygon = poly.polygon
+		collisionPoly.name = "collisionPolygon"
 #		collisionPoly.position = poly.position
 		
 		

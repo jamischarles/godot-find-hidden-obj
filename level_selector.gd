@@ -21,4 +21,5 @@ func _process(delta):
 
 
 func on_button_up(level_to_load):
+	print('load_level: ', level_to_load)
 	get_tree().change_scene_to_file("res://%s/stage.tscn" % level_to_load)

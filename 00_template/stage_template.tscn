@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dp7eehrtrasqq"]
+[gd_scene load_steps=50 format=3 uid="uid://dp7eehrtrasqq"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_e8tmr"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_q7abq"]
@@ -76,6 +76,9 @@ height = 216.315
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_20nof"]
 radius = 175.011
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w3wpm"]
+radius = 112.4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy5jl"]
 bg_color = Color(1, 1, 1, 1)
@@ -332,12 +335,17 @@ position = Vector2(2.08165e-12, 2.08165e-12)
 shape = SubResource("CircleShape2D_20nof")
 metadata/_edit_lock_ = true
 
-[node name="TouchFeedback" type="Sprite2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
-modulate = Color(0.647059, 0.00784314, 0.858824, 0)
+[node name="TouchFeedback" type="Area2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer"]
 position = Vector2(410.306, 258.118)
 scale = Vector2(1.01, 1.01)
-texture = ExtResource("8_sfpxq")
 script = ExtResource("9_m2bdv")
+
+[node name="CollisionCircle" type="CollisionShape2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/TouchFeedback"]
+shape = SubResource("CircleShape2D_w3wpm")
+
+[node name="CircleSprite" type="Sprite2D" parent="HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/TouchFeedback"]
+modulate = Color(0.647059, 0.00784314, 0.858824, 0)
+texture = ExtResource("8_sfpxq")
 
 [node name="right_rail" type="ScrollContainer" parent="HBoxContainer"]
 clip_contents = false
