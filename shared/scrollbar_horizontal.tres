@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://c1ox2ornm11kr"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_yt5lv"]
+content_margin_right = 6.0
+content_margin_bottom = 9.0
+color = Color(0.968627, 0.74902, 0.486275, 1)
+grow_begin = -20.0
+grow_end = -20.0
+thickness = 80
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_p5uli"]
+color = Color(0.996078, 0, 0, 1)
+thickness = 30
+
+[resource]
+HScrollBar/styles/grabber = SubResource("StyleBoxLine_yt5lv")
+HScrollBar/styles/scroll = SubResource("StyleBoxLine_p5uli")

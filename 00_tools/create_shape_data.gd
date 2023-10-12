@@ -27,8 +27,7 @@ extends Control
 
 #export(Array, AtlasTexture) var textures
 
-## To LOAD shapes from and SAVE shapes and image to
-@export var selected_folder: String
+
 
 
 ## add a button to add another item
@@ -36,13 +35,55 @@ extends Control
 # add a new poly with a basic shape (square?)
 # then we can move it around etc...
 # Clicking save would serialize and save to a resource with simple objects (class needed?)
+
 @export var add_clickzone = false :
 	get:
 		return add_clickzone
 	set(value):
 		add_clickzone_handler()
 		add_clickzone = false
+
+@export_category("Move Polygon Shape set") #######################		
+## Readonly. Usually set to center of the shape
+@export var new_position = Vector2(0,0) : 
+	get:
+		return get_node("Marker2D").position
+	set(value):
+		get_node("Marker2D").set_position(new_position)
+		#update?
+
+## Clickzone we want to move the position of
+@export var selected_clickzone: Polygon2D
+
+## on enter make the movement. Or just convert this to the movement with another button?
+## ACTION: Moves polygon from current position to New Position ^ 
+## and sets the each polygon point relative to the new center point based on new position
+@export var move_polygon_set = false :
+	get:
+		return load_shapes
+	set(value):
+		move_polygon_handler(selected_clickzone, new_position)
+		move_polygon_set = false
+
+## Automagically detect centroid of the shape, and move the polygon position there
+## then move all the polygons so they are relative to that 0,0 center
+@export var auto_move_to_center  = false :
+	get:
+		return auto_move_to_center
+	set(value):
+#		find_center_of_shape()
+		auto_move_to_center = false
 		
+		## for now just loop and fix ALL the clickzone center points
+		for zone in get_node("click_zone_container").get_children():
+			auto_calc_shape_center_and_move_shape_there(zone)
+		
+
+
+		
+@export_category("Load & Save") #########################
+## To LOAD shapes from and SAVE shapes and image to
+@export var selected_folder: String
 ## LOADS new shapes from selected_folder
 @export var load_shapes = false :
 	get:
@@ -58,6 +99,11 @@ extends Control
 	set(value):
 		save_shapes_handler()
 		save_shapes = false
+
+
+
+
+
 
 
 
@@ -375,6 +421,10 @@ func run_assertions_on_tree():
 			assert_verify_matches[name] += 1
 		else:
 			assert_verify_matches[name] = 1
+			
+			
+		#VERIFY: No clickZone positions should be OUTSIDE the canvas or on the edge...
+		assert(zone.position.x > 0 && zone.position.y > 0, "ClickZones: %s has position at edge or off canvas. Please fix" % zone)
 
 	# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
 	# we can create a dictionary and count that each one has 2
@@ -399,8 +449,87 @@ func run_assertions_on_tree():
 	#VERIFY: there should be exactly one of each currently in the clickzones
 	for zone in assert_verify_matches:
 		assert(assert_verify_matches[zone] == 2, "ClickZones: %s has %s" % [zone, assert_verify_matches[zone]])
+		
 	
 	
+	
+	
+	
+	
+## Auto calc center, and move the polygons there
+## Just fix all shapes for now...
+func auto_calc_shape_center_and_move_shape_there(clickZoneShape):
+	var centerOfShape = centroid_of_polygon(clickZoneShape.polygon)
+#	print("###centroid", centerOfShape)
+	
+	## take center of shape (which is relative to polygon2d position, and
+	## adjust so new position is (0,0) based
+	## ie: Vector2(800,100) and (-500, 0) will result in
+	## Vector2(300,100) (* -1 flips the sign so we don't get double negative = pos)
+	var newPos = centerOfShape - clickZoneShape.position * -1
+	
+	# move position of shape to new center
+	move_polygon_handler(clickZoneShape, newPos)
+	
+# FIXME: Consider getting the new_position automatically from shape_gravity or similar...
+# then this could be, "set_polygons_relative_to_shape_gravity_center_point
+# moves POSITION of area, and adjusts the polygon shape to balance that.
+func move_polygon_handler(selected_zone: Polygon2D, new_pos:Vector2):
+
+	# distance between old and new position and the distance we have to move each polygon
+	var delta = new_pos - selected_zone.position
+	print("delta to move: ", delta)
+	
+	# move the shape area to new position by delta
+	selected_zone.set_position(new_pos)
+	
+	
+	# move each polygon point in polygon shape to new delta relative to new area position
+	
+	for i in len(selected_zone.polygon): # move each point by delta
+		selected_zone.polygon[i] -= delta
+#		point = point + delta
+	
+	# assign modified clone of polygon to clickzone shape (because it was a copy)
+#	selected_clickzone.set_polygon(poly)
+
+
+
+
+# https://github.com/godotengine/godot/issues/58552#issuecomment-1053192791
+func centroid_of_polygon(poly_array: PackedVector2Array):
+	# stolen javascript solution from https://stackoverflow.com/a/43747218
+	var first = poly_array[0]; var last = poly_array[len(poly_array) - 1]
+	# original solution assumed first and last points are the same
+	# Godot doesn't do that, at least in BitMap.opaque_to_polygons()
+	if first != last:
+		poly_array.append(first)
+	# sum the area as we go
+	var twice_area: float = 0.0
+	# weighted sum of centroids of triangles; later divide by area
+	var coord: Vector2
+	var n_pts = len(poly_array)
+	# used inside loop
+	var p1: Vector2; var p2: Vector2; var j: float; var f: float
+	# iterate over triangles: (0, 1, 2), (0, 2, 3), ... (0, n-2, n-1)
+	# if one of the points is Point 0, resulting area/weight is 0 anyway
+	for i in range(0, n_pts):
+		j = posmod(i - 1, n_pts)
+		p1 = poly_array[i]; p2 = poly_array[j]
+		# the signed area of a triangle is the cross product of two of the sides divided by two
+		f = (p1 - first).cross(p2 - first)
+		twice_area += f
+		# add contribution to weighted sum of centers;
+		# p1 + p2 - 2 * first == (p1 - first) + (p2 - first)
+		coord += (p1 + p2 - 2 * first) * f
+	# multiply the total area by 3 (6 from actual area of polygon)
+	# (even though I don't know why)
+	f = twice_area * 3
+	# finally, divide the weighted sum of the coordinates by that area
+	var centroid = coord / f + first
+	return centroid
+
+
 	
 ## warn in the GUI tree when hidden shapes are mismatched or misnamed
 #https://docs.godotengine.org/en/stable/tutorials/plugins/running_code_in_the_editor.html

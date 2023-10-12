@@ -3,6 +3,10 @@
 ## Current UI
 ![Screenshot of app](./screenshot.png?raw=true "Title")
 
+## Known Bugs
+When generating new scene / overwriting old one, delete first, and close tabs with those files.
+This will avoid stale cache issues
+
 
 ## Adding Level (with new canvas image)
 1. Add new image to 00_canvas_images
@@ -22,11 +26,14 @@ Create all the button_image_container shapes and name them
 	
 For each shape... ------------------>	
 7. In right rail props click "Add Clickzone" (this will add a new node and switch focus to it)
+(NO) 7.1. IMPORTANT!: Move the position of the node (W) to the center of the shape. All polygons will be relative to this position. This affects scaling etc.
 8. Zoom into a shape, and click to add all the polygons for it. Then close it at the end.
 9. Add a new reference_rect node as child of "button_image_container"
 	- Size and move the new rect node to cover the corresponding legend image the clickzone shape was just added for
 10. Name the clickZone and button_image	node to match (and describes object)
 ------------
+Click "Auto move to center" in right rail, to auto-fix all the positions for each clickZone
+
 
 11. When done, enter "selected folder" (2 digit format) like "02" in right rail
 12. Click "Save Shapes" in right rail

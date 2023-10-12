@@ -65,10 +65,31 @@ func on_shape_found(clickZoneNode: Area2D):
 	end_level()
 	
 func mark_clickzone_as_done(shape: Area2D):
-	# canvas click zone. Gray out, then disable
-	shape.set_modulate(Color(.36, .36, .36, .74))
+	# disable collision shape
 	var collisionShape = get_collision_shape_from_node(shape)
 	collisionShape.disabled = true
+	
+	
+	# canvas click zone. Gray out with animation
+#	shape.set_modulate(Color(.36, .36, .36, .74))
+	
+	
+	
+	var tween = get_tree().create_tween().set_parallel(false)
+#	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
+#	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(shape, "modulate", Color(.36, .36, .36, .74), .1).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+	tween.tween_property(shape, "scale", Vector2(1.3,1.3), .3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(shape, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+#	tween.tween_property(shape, "modulate", Color(0.65,.1,.86, 0), .1).set_ease(Tween.EASE_OUT)
+	
+#	tween.tween_property(self, "scale", Vector2(), 1)
+#	tween.tween_property(self, "scale", Vector2(), 1).set_trans(Tween.TRANS_BOUNCE)
+	
+
+		
+	# don't remove it since we only have one
+#	tween.tween_callback(on_tween_done)
 	
 #	shape.disabled = true
 	# disable collision detection on this shape
