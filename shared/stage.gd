@@ -73,20 +73,22 @@ func mark_clickzone_as_done(shape: Area2D):
 	# canvas click zone. Gray out with animation
 #	shape.set_modulate(Color(.36, .36, .36, .74))
 	
+	# bump z-index high so this animation will pop above the touchfeedback circle
+	shape.z_index = 5
 	
-	
+	# delay starting until the feedback circle is a little later (or move the z-index of this higher)
 	var tween = get_tree().create_tween().set_parallel(false)
 #	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
 #	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(shape, "modulate", Color(.36, .36, .36, .74), .1).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
-	tween.tween_property(shape, "scale", Vector2(1.3,1.3), .3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(shape, "modulate", Color(.36, .36, .36, .74), .1).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN).set_delay(.01)
+	tween.tween_property(shape, "scale", Vector2(1.3,1.3), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(shape, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 #	tween.tween_property(shape, "modulate", Color(0.65,.1,.86, 0), .1).set_ease(Tween.EASE_OUT)
 	
 #	tween.tween_property(self, "scale", Vector2(), 1)
 #	tween.tween_property(self, "scale", Vector2(), 1).set_trans(Tween.TRANS_BOUNCE)
 	
-
+#	shape.z_index = 0 # reset back down
 		
 	# don't remove it since we only have one
 #	tween.tween_callback(on_tween_done)

@@ -44,8 +44,11 @@ func on_touch_screen(newPosition:Vector2):
 #	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
 #	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	tween.tween_property($CircleSprite, "modulate", Color(0.65,.1,.86,.5), .1).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
-	tween.tween_property($CircleSprite, "scale", Vector2(MAX_CIRCLE_SIZE,MAX_CIRCLE_SIZE), .3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property($CircleSprite, "modulate", Color(0.65,.1,.86, 0), .1).set_ease(Tween.EASE_OUT)
+	tween.tween_callback(on_tween_done.bind(tween)) # check for overlap
+	tween.tween_property($CircleSprite, "scale", Vector2(MAX_CIRCLE_SIZE,MAX_CIRCLE_SIZE), .2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	tween.tween_property($CircleSprite, "modulate", Color(0.65,.1,.86, 0), .01).set_ease(Tween.EASE_OUT)
+	## can we push the overlap detection earlier?
 	
 #	tween.tween_property(self, "scale", Vector2(), 1)
 #	tween.tween_property(self, "scale", Vector2(), 1).set_trans(Tween.TRANS_BOUNCE)
@@ -53,15 +56,18 @@ func on_touch_screen(newPosition:Vector2):
 	
 		
 	# don't remove it since we only have one
-	tween.tween_callback(on_tween_done)
+	tween.tween_callback(on_tween_done.bind(tween))
 
 
-func on_tween_done():
+func on_tween_done(tween):
 	# disable the collision circle
 	# OR just set "monitoring" to false
 	print('tween DONE')
 	# checking for overlap avoids getting stale overlapping areas
 	if self.has_overlapping_areas():
+		# stop feedback animation
+#		tween.stop()
+		
 		# emit signal that we have a shape that's marked within feedback circle area
 		print('overlaps', self.get_overlapping_areas())
 		

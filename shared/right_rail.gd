@@ -14,6 +14,7 @@ extends ScrollContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	z_index = 10 # set above clickzones (after matched) so it doesn't bleed through right rail
 	pass
 #	var legend_buttons = $legend_for_hidden_objects.get_children()
 #
