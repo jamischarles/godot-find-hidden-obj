@@ -38,24 +38,12 @@ func _process(delta):
 
 # on hidden shape found
 func on_shape_found(clickZoneNode: Area2D):
-#	if !isEventClick(event):
-#		return # bail early
-		
-	var shape_name = clickZoneNode.name
-	mark_clickzone_as_done(clickZoneNode)
 
-#	print('shape.name##', shape.get_name())
-	var rr_btn = find_matching_right_rail_button(shape_name)
-#	var rr_btn = find_matching_right_rail_button(shape.get_name())
+	var shape_name = clickZoneNode.name
 	
-	## Right rail button. Disable and fade out
-	rr_btn.disabled = true
-	# stop using the shader, so we can effect the alpha channel of this
-	rr_btn.use_parent_material = true
-	rr_btn.set_modulate(Color(1,1,1,.5))
-	rr_btn.get_parent().move_child(rr_btn, rr_btn.get_parent().get_child_count()) # move to end
-	
-	
+	mark_clickzone_as_done(clickZoneNode)
+	mark_right_rail_btn_as_done(shape_name)
+
 	# Is the level done?	
 	for btn in right_rail_buttons:
 		print("name", btn.name)
@@ -63,6 +51,7 @@ func on_shape_found(clickZoneNode: Area2D):
 			return
 			
 	end_level()
+	
 	
 func mark_clickzone_as_done(shape: Area2D):
 	# disable collision shape
@@ -81,7 +70,7 @@ func mark_clickzone_as_done(shape: Area2D):
 #	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
 #	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(shape, "modulate", Color(.36, .36, .36, .74), .1).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN).set_delay(.01)
-	tween.tween_property(shape, "scale", Vector2(1.3,1.3), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(shape, "scale", Vector2(1.5,1.5), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	tween.tween_property(shape, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 #	tween.tween_property(shape, "modulate", Color(0.65,.1,.86, 0), .1).set_ease(Tween.EASE_OUT)
 	
@@ -102,6 +91,60 @@ func mark_clickzone_as_done(shape: Area2D):
 	
 	# functionally - disable clicks (needed when you'd click on each shape)
 #	shape.set_pickable(false) # bubbles up from collisionlayer. Nice!
+	
+	
+# marks button as disabled	
+func mark_right_rail_btn_as_done(shape_name: String):
+	var btn = find_matching_right_rail_button(shape_name)
+#	var rr_btn = find_matching_right_rail_button(shape.get_name())
+	
+	# values to restore at the end
+	var btn_min_size = btn.custom_minimum_size
+	
+	## Right rail button. Disable and fade out
+#	btn.disabled = true
+	# stop using the shader, so we can effect the alpha channel of this
+	btn.use_parent_material = true
+#	btn.set_modulate(Color(1,1,1,.5))
+
+	var btn_global_pos = btn.global_position
+	print("##global_pos", btn.global_position)
+	
+	# pull out of parent flow (like pos:absolute)
+#	btn.set_position(btn.global_position)
+	btn.top_level = true
+	btn.z_index = 12 # move high enough so it floats above the right rail
+	print("##global_pos", btn.global_position)
+	btn.set_position(btn_global_pos)
+	print("##global_pos", btn_global_pos)
+#	btn_global_pos
+
+	# get position of last btn? Or just the bottom of the screen maybe?
+#	get veiwport height so we can move just beyond it	
+	var viewport_height = get_viewport().get_visible_rect().size.y
+	
+	
+	var tween = get_tree().create_tween().set_parallel(false)
+#	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
+#	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(btn, "position", Vector2(btn_global_pos.x, viewport_height), 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(.01)
+	tween.parallel().tween_property(btn, "scale", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
+	tween.parallel().tween_property(btn, "custom_minimum_size", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
+#	tween.parallel().tween_property(btn, "modulate", Color(1, 1, 1, .5), 3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+#	tween.tween_property(btn, "scale", Vector2(1.5,1.5), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+#	tween.tween_property(btn, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# can we animate this?
+	var on_tween_done = func():
+		btn.top_level = false # put the positioning back in the parent container
+		btn.custom_minimum_size = btn_min_size # restore size
+		btn.get_parent().move_child(btn, btn.get_parent().get_child_count()) # move to end
+		btn.disabled = true # set disabled style
+
+	# scroll right rail to top?
+	
+	tween.tween_callback(on_tween_done)
+#	tween.finished(btn.set.bind("top_level", false))
+
 	
 # need this to get the collision node so we can disable it (because monitoring doesn't work?)	
 func get_collision_shape_from_node(shape: Area2D):
