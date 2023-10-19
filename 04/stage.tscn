@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://vkjq74hqi7nc"]
 
-[ext_resource type="PackedScene" uid="uid://dp7eehrtrasqq" path="res://00_template/stage_template.tscn" id="1_s6cvn"]
+[ext_resource type="PackedScene" uid="uid://dp7eehrtrasqq" path="res://00_template/stage_template.bak.tscn" id="1_s6cvn"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_nf50f"]
 

@@ -8,6 +8,10 @@ When generating new scene / overwriting old one, delete first, and close tabs wi
 This will avoid stale cache issues
 
 
+## NOTE
+If you update a scene file ensure you do it in the 00_template folder or else your changes
+will be overridden next time you generate a level and then nothign works.
+
 ## Adding Level (with new canvas image)
 1. Add new image to 00_canvas_images
 2. Name it with 2 digit number for level it's for

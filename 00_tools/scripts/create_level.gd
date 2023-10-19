@@ -86,10 +86,10 @@ func _run():
 	
 	# create a copy of the template scene tree so we can modify it
 	var scene = ResourceLoader.load("res://00_template/stage_template.tscn").instantiate()
-	var imgNode: TextureRect = scene.get_node("HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/hidden_objects_image")
+	var imgNode: TextureRect = scene.get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image")
 	var canvasContainer: Control = imgNode.get_parent()
-	var clickZoneContainer: Control = scene.get_node("HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container")
-	var rightRailButtonContainer: VBoxContainer = scene.get_node("HBoxContainer/right_rail/legend_for_hidden_objects")
+	var clickZoneContainer: Control = scene.get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container")
+	var rightRailButtonContainer: VBoxContainer = scene.get_node("HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects")
 
 	
 	# change image
