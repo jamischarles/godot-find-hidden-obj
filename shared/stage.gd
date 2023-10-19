@@ -1,22 +1,37 @@
 extends Node
 
-@onready var touch_feedback_node = $HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/TouchFeedback
-@onready var right_rail_buttons: Array[Node] = $HBoxContainer/right_rail/legend_for_hidden_objects.get_children()
+@onready var touch_feedback_node = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/TouchFeedback
+@onready var right_rail_buttons: Array[Node] = $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.get_children()
 
-@onready var home_btn = $HBoxContainer/ScrollContainer/HBoxContainer/left_rail_notch_buffer/Home
+
+@onready var home_btn = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer/Home
 @onready var lvl_done = $level_complete_panel/Panel/btn_level_select
+
+
+@onready var imageSize = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image.size
+@onready var zoomLevel = 1
+## TODO: Figure out max zoom
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# when TouchFeedback sends us "shape found" we handle that here
 	touch_feedback_node.connect("shape_found", on_shape_found)
+	# zoom in when zoom in event is fired
+	touch_feedback_node.connect("should_zoom", _on_should_zoom)
 	
 	# connect home btn to menu select
 	home_btn.connect("button_up", _on_home_button_up)
 	lvl_done.connect("button_up", _on_home_button_up)
 	
 	
-	var clickZones = $HBoxContainer/ScrollContainer/HBoxContainer/CanvasContainer/click_zone_container.get_children()
+	
+	# set width of the scroll
+	
+	
+	
+	var clickZones = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container.get_children()
+	print("#clickZones", clickZones)
 	# set alpha to 0 so click zones are invisible to user but still active
 	# FIXME: Should I just set this in a shared style?!?
 	for clickZone in clickZones:
@@ -177,6 +192,58 @@ func _on_home_button_up():
 
 func _on_btn_level_select_button_up():
 	_on_home_button_up()
+
+
+
+# is gated...
+
+func _on_should_zoom(zoomIn, dist):
+	# what if we handle the debounce here?
+	
+	print('\n\n###zoomIn', zoomIn, dist)
+	var imageContainerParent: Control = get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control")
+	print("node", imageContainerParent)
+#	print("IMAGE RISZE TO ZOOM", canvas_img.size) #does it make more sense to upscale the image?
+	# double scale?
+#	$HBoxContainer/ScrollContainer.scale = Vector2(2,2)
+	# change scrollcontainer child scale and size
+	
+	# toggle zoomLevel
+	if zoomLevel == 1:
+		zoomLevel = 2
+	else:
+		zoomLevel = 1
+		
+		
+	print("zoomLevel", zoomLevel)
+		
+	# scale the image, AND the clickZones (scale the combined parent)
+	# not scaling properly
+	imageContainerParent.call_deferred("set", "scale", "Vector2(3,3)")
+
+#	imageContainerParent.scale = Vector2(zoomLevel,zoomLevel)
+	
+	print("##size", imageContainerParent.get_node("ImageContainer"))
+	# double the canvas size for scrolling accuracy
+	var scrollContent = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent
+	print("####size", scrollContent.custom_minimum_size)
+	scrollContent.custom_minimum_size = imageSize * zoomLevel
+#	scrollContent.custom_minimum_size.y = 1800
+#	scrollContent.custom_minimum_size.x *= 2
+#	scrollContent.custom_minimum_size.y *= 2
+#	scrollContent.custom_minimum_size *= 2
+	
+
+#	$HBoxContainer/ScrollContainer.custom_minimum_size = canvas_img.size * 1.5
+	# resize the child of the ScrollContainer to get the new scroll dimensions
+#	$HBoxContainer/MarginContainer/ScrollContainer/HBoxContainer.custom_minimum_size = canvas_img.size * 2
+	# or can we just scale that?
+#	$HBoxContainer/ScrollContainer/HBoxContainer.scale = Vector2(2,2) # temp scale˚
+	
+	# resize the scrollContainer according to the new full size
+	
+#	canvas_img.scale = Vector2(2,2)
+#	$HBoxContainer/MarginContainer/ScrollContainer/HBoxContainer/CanvasLayer/Camera2D.zoom = Vector2(0.5,0.5)
 
 
 
