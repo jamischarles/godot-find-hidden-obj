@@ -197,11 +197,12 @@ func _on_btn_level_select_button_up():
 
 # is gated...
 
-func _on_should_zoom(zoomIn, dist):
+func _on_should_zoom():
 	# what if we handle the debounce here?
 	
-	print('\n\n###zoomIn', zoomIn, dist)
+	print('\n\n###zoomIn')
 	var imageContainerParent: Control = get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control")
+	var imageContainer = imageContainerParent.get_node("ImageContainer")
 	print("node", imageContainerParent)
 #	print("IMAGE RISZE TO ZOOM", canvas_img.size) #does it make more sense to upscale the image?
 	# double scale?
@@ -217,9 +218,7 @@ func _on_should_zoom(zoomIn, dist):
 		
 	print("zoomLevel", zoomLevel)
 		
-	# scale the image, AND the clickZones (scale the combined parent)
-	# not scaling properly
-	imageContainerParent.call_deferred("set", "scale", "Vector2(3,3)")
+	
 
 #	imageContainerParent.scale = Vector2(zoomLevel,zoomLevel)
 	
@@ -227,11 +226,11 @@ func _on_should_zoom(zoomIn, dist):
 	# double the canvas size for scrolling accuracy
 	var scrollContent = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent
 	print("####size", scrollContent.custom_minimum_size)
-	scrollContent.custom_minimum_size = imageSize * zoomLevel
-#	scrollContent.custom_minimum_size.y = 1800
-#	scrollContent.custom_minimum_size.x *= 2
-#	scrollContent.custom_minimum_size.y *= 2
-#	scrollContent.custom_minimum_size *= 2
+	
+	scrollContent.set_custom_minimum_size(imageSize * zoomLevel)
+	
+	await get_tree().process_frame # needed in this case for changing scale. See docs https://docs.godotengine.org/en/stable/classes/class_control.html
+	imageContainerParent.set_scale(Vector2(zoomLevel,zoomLevel))	
 	
 
 #	$HBoxContainer/ScrollContainer.custom_minimum_size = canvas_img.size * 1.5

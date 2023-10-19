@@ -132,10 +132,10 @@ func _on_image_container_gui_input(event):
 			simulateMultiTouchPinch()
 
 	# TODO: Use pattern matching / switch statement?
-	if event.get_class() == "InputEventScreenDrag":
-		eventState.dragged[event.index] = event
-		print("\n### TOUCH SCREEN DRAG", event)
-		handleZoomTouchEvents(event)
+#	if event.get_class() == "InputEventScreenDrag":
+#		eventState.dragged[event.index] = event
+#		print("\n### TOUCH SCREEN DRAG", event)
+#		handleZoomTouchEvents(event)
 		
 		
 
@@ -145,7 +145,11 @@ func _on_image_container_gui_input(event):
 		
 		print("\n\n##eventState", eventState)
 		
-		handleZoomTouchEvents(event)
+#		handleZoomTouchEvents(event)
+		if event.double_tap:
+			print("DOUBLE TAP")
+			emit_should_zoom() # fire the "should zoom" event
+			return
 	
 		if event.is_pressed():
 			eventState.pressed[event.index] = event
@@ -165,16 +169,21 @@ func _on_image_container_gui_input(event):
 			if !isEventDrag(clickStartPos, clickEndPos):
 				# if touch and NOT drag, then move the touch effect
 				print("\n\n##call on_touch_screen()")
-				on_touch_screen(clickStartPos)
+				
+				if event.double_tap:
+					print("DOUBLE TAP")
+				else:
+					on_touch_screen(clickStartPos)
 #				print('SAME POS')
 
 			# if CLICK DRAG do nothing. 
-			# detect pinch to zoom IN or OUT
+			# LATER detect pinch to zoom IN or OUT
 			else:
 				print("\n##IS DRAG")
+				# for now do NOTHING
 				# is multitouch drag
 
-				return handleZoomTouchEvents(event)
+#				return handleZoomTouchEvents(event)
 
 #				print('new pos')
 	#		print('click_input', event)
@@ -225,14 +234,16 @@ func handleZoomTouchEvents(event):
 				
 				#compare dist between touch points
 				# has the distance between fingers INCREASED or DECREASED?
-				if draggedDist > pressedDist:
-					# FIXME: Add a check for how many events...
-					print("###########ZOOOM IN")
-					if !locked:
-						emit_should_zoom(draggedDist - pressedDist) 
-						eventCooldown()
-				else:
-					print("###########ZOOOM OUUUUUUT")
+#				if draggedDist > pressedDist:
+#					# FIXME: Add a check for how many events...
+##					print("###########ZOOOM IN")
+##					if !locked:
+##						pass
+##						emit_should_zoom(draggedDist - pressedDist) 
+##						eventCooldown()
+#				else:
+##					print("###########ZOOOM OUUUUUUT")
+#					pass
 				
 				# compare both distances...
 				# Should we STORE this somewhere?!?
@@ -241,11 +252,11 @@ func handleZoomTouchEvents(event):
 			# can we take action until both have been processed? Or do we need to capture which we have so far?
 			# like streaming events?
 
-var locked = false
-func eventCooldown():
-	locked = true
-	await get_tree().create_timer(1).timeout
-	locked = false
+#var locked = false
+#func eventCooldown():
+#	locked = true
+#	await get_tree().create_timer(1).timeout
+#	locked = false
 	
 	
 #	if event.get_class() == "InputEventScreenDrag":
@@ -339,8 +350,8 @@ func isEventDrag(startPos: Vector2, endPos: Vector2):
 	
 ## debounce this	
 #var calls = 0
-func emit_should_zoom(dist):
-	emit_signal("should_zoom", true, dist)
+func emit_should_zoom():
+	emit_signal("should_zoom")
 #	calls += 1
 #	await debounceZoom(dist)
 #	calls -= 1

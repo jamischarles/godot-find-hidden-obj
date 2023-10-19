@@ -195,7 +195,6 @@ mouse_filter = 1
 
 [node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 texture_filter = 3
-custom_minimum_size = Vector2(1896, 980)
 layout_mode = 0
 offset_right = 3000.0
 offset_bottom = 980.0
