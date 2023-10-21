@@ -244,10 +244,11 @@ func _on_should_zoom(zoomPosition):
 	# scroll to new place, and take zoomLevel into account
 	
 	var viewPortWidth = get_viewport().get_visible_rect().size.x
+	var viewPortHeight = get_viewport().get_visible_rect().size.y
 	
 	# try to center that and take current zoom level into account
 	scrollContainer.scroll_horizontal = zoomPosition.x * zoomLevel - viewPortWidth / 2 # add buffer so it's center of viewport
-	scrollContainer.scroll_vertical = zoomPosition.y * zoomLevel - viewPortWidth / 2
+	scrollContainer.scroll_vertical = zoomPosition.y * zoomLevel - viewPortHeight / 2
 	
 	
 #	scrollContainer.scroll_horizontal = 200
