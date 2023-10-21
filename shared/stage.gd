@@ -197,7 +197,7 @@ func _on_btn_level_select_button_up():
 
 # is gated...
 
-func _on_should_zoom():
+func _on_should_zoom(zoomPosition):
 	# what if we handle the debounce here?
 	
 	print('\n\n###zoomIn')
@@ -216,8 +216,7 @@ func _on_should_zoom():
 		zoomLevel = 1
 		
 		
-	print("zoomLevel", zoomLevel)
-		
+	
 	
 
 #	imageContainerParent.scale = Vector2(zoomLevel,zoomLevel)
@@ -230,8 +229,32 @@ func _on_should_zoom():
 	scrollContent.set_custom_minimum_size(imageSize * zoomLevel)
 	
 	await get_tree().process_frame # needed in this case for changing scale. See docs https://docs.godotengine.org/en/stable/classes/class_control.html
-	imageContainerParent.set_scale(Vector2(zoomLevel,zoomLevel))	
+#	imageContainerParent.set_scale(Vector2(zoomLevel,zoomLevel))	
+	imageContainer.set_scale(Vector2(zoomLevel,zoomLevel))	
 	
+	# move AFTER we zoom
+	print("zoomLevel", zoomLevel)
+#	scroll to where we double tapped
+# maybe half  distance? not whole distance?
+	print("scroll to:", zoomPosition)
+	
+	await get_tree().process_frame #again?
+	
+	var scrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
+	# scroll to new place, and take zoomLevel into account
+	
+	var viewPortWidth = get_viewport().get_visible_rect().size.x
+	
+	# try to center that and take current zoom level into account
+	scrollContainer.scroll_horizontal = zoomPosition.x * zoomLevel - viewPortWidth / 2 # add buffer so it's center of viewport
+	scrollContainer.scroll_vertical = zoomPosition.y * zoomLevel - viewPortWidth / 2
+	
+	
+#	scrollContainer.scroll_horizontal = 200
+#	scrollContainer.set_deferred("scroll_horizontal", 2000)
+#	scrollContainer.set_deferred("scroll_horizontal", 600)
+
+
 
 #	$HBoxContainer/ScrollContainer.custom_minimum_size = canvas_img.size * 1.5
 	# resize the child of the ScrollContainer to get the new scroll dimensions

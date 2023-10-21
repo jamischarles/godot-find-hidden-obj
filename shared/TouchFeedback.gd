@@ -148,7 +148,7 @@ func _on_image_container_gui_input(event):
 #		handleZoomTouchEvents(event)
 		if event.double_tap:
 			print("DOUBLE TAP")
-			emit_should_zoom() # fire the "should zoom" event
+			emit_should_zoom(event.position) # fire the "should zoom" event
 			return
 	
 		if event.is_pressed():
@@ -350,8 +350,8 @@ func isEventDrag(startPos: Vector2, endPos: Vector2):
 	
 ## debounce this	
 #var calls = 0
-func emit_should_zoom():
-	emit_signal("should_zoom")
+func emit_should_zoom(zoomPosition):
+	emit_signal("should_zoom", zoomPosition)
 #	calls += 1
 #	await debounceZoom(dist)
 #	calls -= 1
