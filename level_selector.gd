@@ -4,7 +4,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var buttons = $Control.get_children()
+	var buttons = $ScrollContainer/VBoxContainer/MarginContainer/level_images.get_children()
 	
 	for button in buttons:
 		print('button', button)

@@ -11,7 +11,6 @@
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jnypx"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0iuur"]
-load_path = "res://.godot/imported/img.png-dbcd5c2a989ca86914a9daa47fd9c093.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x33pu"]
 atlas = ExtResource("9_j3yvo")

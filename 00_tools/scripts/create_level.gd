@@ -87,7 +87,7 @@ func _run():
 	# create a copy of the template scene tree so we can modify it
 	var scene = ResourceLoader.load("res://00_template/stage_template.tscn").instantiate()
 	var imgNode: TextureRect = scene.get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image")
-	var canvasContainer: Control = imgNode.get_parent()
+	var canvasContainer: Control = imgNode.get_parent().get_parent()
 	var clickZoneContainer: Control = scene.get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container")
 	var rightRailButtonContainer: VBoxContainer = scene.get_node("HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects")
 
@@ -104,6 +104,8 @@ func _run():
 	imgNode.texture = atlasTexture
 	
 	# get the size of the imgNode container from the region
+	
+	# need to use the imageContainer's parent (control) to set the minimum size to affect proper full scroll
 	canvasContainer.custom_minimum_size = atlasTexture.region.size
 	imgNode.size = atlasTexture.region.size
 	

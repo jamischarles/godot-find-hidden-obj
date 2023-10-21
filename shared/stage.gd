@@ -1,11 +1,11 @@
 extends Node
 
-@onready var touch_feedback_node = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/TouchFeedback
+@onready var touch_feedback_node = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback
 @onready var right_rail_buttons: Array[Node] = $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.get_children()
 
 
 @onready var home_btn = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer/Home
-@onready var lvl_done = $level_complete_panel/Panel/btn_level_select
+@onready var lvl_done = $level_complete_panel/MarginContainer/PanelContainer/Control/btn_level_select
 
 
 @onready var imageSize = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image.size

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bje0n2mueera4"]
+[gd_scene load_steps=37 format=3 uid="uid://bje0n2mueera4"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_0piok"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_sh800"]
@@ -10,13 +10,28 @@
 [ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="8_7bt8j"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_pc7wy"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="10_pdkhc"]
+[ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="11_k8oex"]
+[ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="12_ja72t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q48if"]
+bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 3
+shadow_offset = Vector2(2, 5)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
 bg_color = Color(0.913725, 0.231373, 0.909804, 1)
 border_width_top = 8
 border_width_bottom = 21
+corner_radius_top_left = 10
 
 [sub_resource type="Theme" id="Theme_p4p8b"]
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_q48if")
+HScrollBar/styles/grabber_highlight = null
+HScrollBar/styles/grabber_pressed = null
 HScrollBar/styles/scroll = SubResource("StyleBoxFlat_b17r5")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jt6b8"]
@@ -90,10 +105,8 @@ region = Rect2(1751, 1098, 109, 200)
 atlas = ExtResource("6_npvy8")
 region = Rect2(1861, 1013, 143, 295)
 
-[sub_resource type="Theme" id="Theme_820n0"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1kf4"]
-bg_color = Color(0.0117647, 0.694118, 0.631373, 1)
+[sub_resource type="SystemFont" id="SystemFont_10jck"]
+font_names = PackedStringArray("Monospace")
 
 [sub_resource type="Theme" id="Theme_k5e1q"]
 
@@ -127,7 +140,6 @@ scroll_horizontal_custom_step = -0.72
 scroll_deadzone = 100
 
 [node name="ScrollContent" type="HBoxContainer" parent="HBoxContainer/MarginContainer/ScrollContainer"]
-custom_minimum_size = Vector2(3000, 980)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -178,31 +190,31 @@ icon = ExtResource("5_8moym")
 icon_alignment = 1
 
 [node name="Control" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent"]
+custom_minimum_size = Vector2(3000, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="ImageContainer" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
+[node name="ImageContainer" type="AspectRatioContainer" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 3000.0
+offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+alignment_horizontal = 0
+alignment_vertical = 0
 
 [node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 texture_filter = 3
-layout_mode = 0
-offset_right = 3000.0
-offset_bottom = 975.0
+layout_mode = 2
 texture = SubResource("AtlasTexture_4ny3j")
-stretch_mode = 2
+stretch_mode = 4
 
 [node name="click_zone_container" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
-layout_mode = 3
-anchors_preset = 0
+layout_mode = 2
+mouse_filter = 1
 
 [node name="sheep" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
 position = Vector2(321, 186)
@@ -304,15 +316,15 @@ polygon = PackedVector2Array(-19.7748, -66.533, -16.7748, -61.533, -8.77478, -58
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/giraffe"]
 polygon = PackedVector2Array(-19.7748, -66.533, -16.7748, -61.533, -8.77478, -58.533, 2.22522, -56.533, 1.22522, -43.533, -6.77478, -18.533, -12.7748, 3.46698, -18.7748, 30.467, -24.7748, 54.467, -27.7748, 72.467, -29.7748, 82.467, -28.7748, 85.467, -25.7748, 80.467, -25.7748, 75.467, -20.7748, 76.467, -21.7748, 84.467, -19.7748, 87.467, -15.7748, 77.467, -8.77478, 77.467, 1.22522, 79.467, 1.22522, 86.467, 2.22522, 88.467, 5.22522, 81.467, 8.22522, 82.467, 9.22522, 89.467, 11.2252, 89.467, 12.2252, 80.467, 12.2252, 68.467, 10.2252, 59.467, 5.22522, 50.467, -1.77478, 42.467, -0.77478, 37.467, 7.22522, -3.53302, 16.2252, -41.533, 20.2252, -58.533, 26.2252, -55.533, 34.2252, -55.533, 39.2252, -57.533, 36.2252, -62.533, 30.2252, -64.533, 25.2252, -63.533, 30.2252, -72.533, 32.2252, -81.533, 31.2252, -87.533, 28.2252, -89.533, 25.2252, -88.533, 23.2252, -84.533, 21.2252, -75.533, 15.2252, -74.533, 15.2252, -84.533, 13.2252, -91.533, 10.2252, -92.533, 9.22522, -88.533, 8.22522, -80.533, 8.22522, -76.533, -6.77478, -74.533, -15.7748, -72.533, -19.7748, -69.533)
 
-[node name="TouchFeedback" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
+[node name="TouchFeedback" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 position = Vector2(410.306, 258.118)
 scale = Vector2(1.01, 1.01)
 script = ExtResource("7_5alox")
 
-[node name="CollisionCircle" type="CollisionShape2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/TouchFeedback"]
+[node name="CollisionCircle" type="CollisionShape2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback"]
 shape = SubResource("CircleShape2D_w3wpm")
 
-[node name="CircleSprite" type="Sprite2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/TouchFeedback"]
+[node name="CircleSprite" type="Sprite2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback"]
 modulate = Color(0.647059, 0.00784314, 0.858824, 0)
 texture = ExtResource("8_7bt8j")
 
@@ -456,50 +468,144 @@ expand_icon = true
 [node name="level_complete_panel" type="Control" parent="."]
 visible = false
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -2000.0
-offset_bottom = -1000.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="level_complete_panel"]
-custom_minimum_size = Vector2(1500, 1500)
+[node name="MarginContainer" type="MarginContainer" parent="level_complete_panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 102.0
-offset_top = -1.0
-offset_right = 1602.0
-offset_bottom = 1499.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_820n0")
-theme_override_styles/panel = SubResource("StyleBoxFlat_b1kf4")
+theme_override_constants/margin_bottom = 200
+metadata/_edit_use_anchors_ = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="level_complete_panel/Panel"]
-layout_mode = 0
-offset_left = 391.0
-offset_top = 126.0
-offset_right = 1238.0
-offset_bottom = 319.0
-theme_override_font_sizes/normal_font_size = 120
-theme_override_font_sizes/bold_font_size = 60
-text = "Level is DONE"
+[node name="PanelContainer" type="PanelContainer" parent="level_complete_panel/MarginContainer"]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 2
 
-[node name="btn_level_select" type="Button" parent="level_complete_panel/Panel"]
+[node name="paper_9patch_bg" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+texture = ExtResource("3_f5emm")
+region_rect = Rect2(608, 32, 32, 96)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Control" type="Control" parent="level_complete_panel/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Control" parent="level_complete_panel/MarginContainer/PanelContainer/Control"]
 layout_mode = 1
-anchors_preset = 5
+anchor_top = 0.0675
+anchor_right = 1.0
+anchor_bottom = 1.0675
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+layout_mode = 0
+offset_left = 442.0
+offset_top = 369.0
+offset_right = 1166.0
+offset_bottom = 507.0
+texture = ExtResource("2_sh800")
+region_rect = Rect2(31, 32, 97, 96)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 1
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 95.0
+offset_top = 15.0
+offset_right = -105.0
+offset_bottom = 148.0
+grow_horizontal = 2
+texture = ExtResource("2_sh800")
+region_rect = Rect2(431, 69, 66, 22)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+layout_mode = 0
+offset_left = 315.0
+offset_top = 342.0
+offset_right = 1558.0
+offset_bottom = 1239.0
+texture = ExtResource("3_f5emm")
+region_rect = Rect2(31, 32, 97, 96)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="BG Wood" type="Sprite2D" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+position = Vector2(1041, 347)
+texture = ExtResource("11_k8oex")
+
+[node name="Label" type="Label" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -110.0
-offset_top = 410.0
-offset_right = 110.0
-offset_bottom = 537.0
+offset_left = -338.0
+offset_top = 50.0
+offset_right = 338.0
+offset_bottom = 73.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0.878431, 0.32549, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("12_ja72t")
+theme_override_font_sizes/font_size = 60
+text = "Level complete"
+
+[node name="btn_level_select" type="Button" parent="level_complete_panel/MarginContainer/PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.883
+anchor_right = 0.5
+anchor_bottom = 0.883
+offset_left = -116.0
+offset_top = -90.2
+offset_right = 152.0
+offset_bottom = 0.799994
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_10jck")
 theme_override_font_sizes/font_size = 60
 text = "Next"
 
@@ -521,4 +627,4 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 75
 text = "5/10"
 
-[connection signal="gui_input" from="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer" to="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/TouchFeedback" method="_on_image_container_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer" to="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback" method="_on_image_container_gui_input"]
