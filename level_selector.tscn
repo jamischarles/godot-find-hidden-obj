@@ -52,9 +52,11 @@ size_flags_vertical = 3
 [node name="PanelContainer" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Backdrop" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="Img3" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
 position = Vector2(1297, 504)
@@ -80,6 +82,7 @@ custom_minimum_size = Vector2(1976, 1300)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 
 [node name="Frame" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Control"]
 layout_mode = 1
@@ -100,6 +103,7 @@ axis_stretch_vertical = 1
 
 [node name="Title" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
+mouse_filter = 1
 metadata/_edit_group_ = true
 
 [node name="NinePatchRect" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Title"]
@@ -171,6 +175,7 @@ text = "Match Y Match"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 1
 
 [node name="TextureButton" type="TextureButton" parent="ScrollContainer/VBoxContainer/PanelContainer/Play section"]
 layout_mode = 0
@@ -186,12 +191,13 @@ stretch_mode = 0
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 453.0
-offset_top = 490.0
-offset_right = 1040.0
-offset_bottom = 717.0
+offset_left = 525.0
+offset_top = 504.0
+offset_right = -1046.0
+offset_bottom = -637.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_fonts/font = ExtResource("6_uc1ic")
 theme_override_font_sizes/font_size = 80
 text = "Play"
@@ -207,7 +213,6 @@ size_flags_vertical = 3
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 200
 theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 200
 
 [node name="level_images" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
@@ -217,6 +222,7 @@ theme_override_constants/separation = 100
 [node name="01" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
+mouse_filter = 1
 texture_normal = SubResource("AtlasTexture_6frhe")
 ignore_texture_size = true
 stretch_mode = 6
@@ -225,6 +231,7 @@ stretch_mode = 6
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 1
 texture_normal = ExtResource("3_t1rf1")
 ignore_texture_size = true
 stretch_mode = 6
