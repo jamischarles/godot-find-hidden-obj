@@ -22,6 +22,9 @@ var eventState = {
 }
 
 
+#@onready var scrollContainer = get_node("/root").get_tree()
+@onready var scrollContainer = get_tree().current_scene.get_node('HBoxContainer/MarginContainer/ScrollContainer')
+
 
 
 ######### event helpers
@@ -104,6 +107,7 @@ func on_tween_done(tween):
 #	on_touch_screen() # Replace with function body.
 var clickStartPos
 var click_circle_pos
+var scrollStartPos: Vector2 #x,y of scrollPosition
 func _on_image_container_gui_input(event):
 #	print('event', event)
 
@@ -154,6 +158,8 @@ func _on_image_container_gui_input(event):
 		if event.is_pressed():
 			eventState.pressed[event.index] = event
 			clickStartPos = event.get_position()
+			scrollStartPos = getScrollVectorPos()
+
 #			print('###DOWN')
 			
 		else:	
@@ -161,12 +167,13 @@ func _on_image_container_gui_input(event):
 
 #			print('###Touch RELEASE')
 			var clickEndPos = event.get_position()
+			var scrollEndPos = getScrollVectorPos()
 			# move the feedback circle
 			click_circle_pos = clickEndPos
 			
 			
 			# todo: Add check for multi touch
-			if !isEventDrag(clickStartPos, clickEndPos):
+			if !isEventDrag(clickStartPos, clickEndPos) && !hasScrollPosChanged(scrollStartPos, scrollEndPos):
 				# if touch and NOT drag, then move the touch effect
 				print("\n\n##call on_touch_screen()")
 				
@@ -338,9 +345,20 @@ func simulateMultiTouchPinch(): # for ZOOM
 
 ## alt + shift click zoom out. Just where you click
 
+func getScrollVectorPos():
+	return Vector2(scrollContainer.scroll_horizontal, scrollContainer.scroll_vertical)
+
+# if scrollPos has changed
+# scroll pos with 
+func hasScrollPosChanged(startScrollPos: Vector2, endScrollPos: Vector2):
+	if isEventDrag(startScrollPos, endScrollPos):
+		return true
+	else:
+		return false
 		
 # if within deadzone, then consider it a touch (with a little movement) vs a drag
 func isEventDrag(startPos: Vector2, endPos: Vector2):
+	
 	var drag_distance = startPos.distance_to(endPos)
 	# FIXME: Maybe we pull that value so they are always the same...
 	# this number (100) lines up PERFECTLY with "scroll_deadzone" on ScrollContainer
