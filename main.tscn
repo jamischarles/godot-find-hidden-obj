@@ -1,74 +1,108 @@
-[gd_scene load_steps=12 format=3 uid="uid://bcwq2l4moui7b"]
+[gd_scene load_steps=16 format=3 uid="uid://d4k8eyst13hus"]
 
-[ext_resource type="Script" path="res://home.gd" id="1_xbqrb"]
-[ext_resource type="Texture2D" uid="uid://q6sjqkh0gvfj" path="res://05/src/img.png" id="2_b05a7"]
-[ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="2_dpqt5"]
-[ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="3_xgd6p"]
-[ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="5_y7veb"]
-[ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="9_eoqg1"]
-[ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="9_j3yvo"]
+[ext_resource type="Script" path="res://main.gd" id="1_gcarg"]
+[ext_resource type="Texture2D" uid="uid://pxtn1xo7i110" path="res://00_canvas_images/01.png" id="2_b7eht"]
+[ext_resource type="Texture2D" uid="uid://cby70mdkyt07l" path="res://00_art/home_screen_backdrop.png" id="2_je6l4"]
+[ext_resource type="Texture2D" uid="uid://q6sjqkh0gvfj" path="res://05/src/img.png" id="2_vqswn"]
+[ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="3_sso1d"]
+[ext_resource type="Texture2D" uid="uid://bpwphtkeq6rxm" path="res://00_canvas_images/02.png" id="3_t1rf1"]
+[ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="4_3xdaj"]
+[ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="5_akn88"]
+[ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="6_uc1ic"]
+[ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="7_lln70"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jnypx"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_amenn"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0iuur"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cvrrn"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_x33pu"]
-atlas = ExtResource("9_j3yvo")
+[sub_resource type="AtlasTexture" id="AtlasTexture_obe8l"]
+atlas = ExtResource("7_lln70")
 region = Rect2(5, 196, 86, 25)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xjn6x"]
+[sub_resource type="Theme" id="Theme_la1nr"]
 
-[node name="Home" type="Node2D"]
-script = ExtResource("1_xbqrb")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6frhe"]
+atlas = ExtResource("2_b7eht")
+region = Rect2(860, 4, 2140, 1088)
 
-[node name="Backdrop" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 313.0
-offset_top = 511.0
-offset_right = 353.0
-offset_bottom = 551.0
+[node name="Level Selector" type="Node2D"]
+script = ExtResource("1_gcarg")
 
-[node name="Img3" type="Sprite2D" parent="Backdrop"]
-position = Vector2(1297, 504)
-texture = SubResource("CompressedTexture2D_jnypx")
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+clip_contents = false
+custom_minimum_size = Vector2(400, 1000)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1984.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+scroll_deadzone = 50
 
-[node name="Img" type="Sprite2D" parent="Backdrop"]
-position = Vector2(1234, -198)
-scale = Vector2(0.290947, 0.290947)
-texture = ExtResource("2_b05a7")
-
-[node name="Img4" type="Sprite2D" parent="Backdrop"]
-position = Vector2(240.967, 500.125)
-scale = Vector2(0.367592, 0.367592)
-texture = ExtResource("2_b05a7")
-
-[node name="Img2" type="Sprite2D" parent="Backdrop"]
-position = Vector2(361, -198)
-scale = Vector2(0.42025, 0.42025)
-texture = SubResource("CompressedTexture2D_0iuur")
-
-[node name="Control" type="Control" parent="."]
-custom_minimum_size = Vector2(1976, 1300)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1976.0
-offset_bottom = 1300.0
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Frame" type="NinePatchRect" parent="Control"]
+[node name="PanelContainer" type="PanelContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(1976, 1000)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="Backdrop" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="HomeScreenBackdrop" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
+modulate = Color(0.215686, 0.65098, 0.937255, 0.568627)
+position = Vector2(992.5, 499.5)
+scale = Vector2(0.7796, 0.796569)
+texture = ExtResource("2_je6l4")
+
+[node name="Img3" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
+visible = false
+position = Vector2(1297, 504)
+texture = SubResource("CompressedTexture2D_amenn")
+
+[node name="Img" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
+visible = false
+position = Vector2(1234, -198)
+scale = Vector2(0.290947, 0.290947)
+texture = ExtResource("2_vqswn")
+
+[node name="Img4" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
+visible = false
+position = Vector2(240.967, 500.125)
+scale = Vector2(0.367592, 0.367592)
+texture = ExtResource("2_vqswn")
+
+[node name="Img2" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
+visible = false
+position = Vector2(361, -198)
+scale = Vector2(0.42025, 0.42025)
+texture = SubResource("CompressedTexture2D_cvrrn")
+
+[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+
+[node name="Frame" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = 17.0
-offset_bottom = -296.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_y7veb")
+texture = ExtResource("3_sso1d")
 draw_center = false
 region_rect = Rect2(31, 32, 97, 96)
 patch_margin_left = 20
@@ -78,25 +112,31 @@ patch_margin_bottom = 13
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 1
 
-[node name="Title" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -40.0
-offset_top = -96.0
-offset_right = -40.0
-offset_bottom = -96.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="TitleContainer" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer/TitleContainer"]
+layout_mode = 1
+anchor_left = 0.248482
+anchor_top = -0.138
+anchor_right = 0.248482
+anchor_bottom = -0.138
+offset_left = 500.0
+offset_top = 300.0
+offset_right = 500.0
+offset_bottom = 300.0
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Title"]
+[node name="NinePatchRect" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/TitleContainer/Title"]
 visible = false
 layout_mode = 0
 offset_left = 442.0
 offset_top = 369.0
 offset_right = 1166.0
 offset_bottom = 507.0
-texture = ExtResource("5_y7veb")
+texture = ExtResource("3_sso1d")
 region_rect = Rect2(31, 32, 97, 96)
 patch_margin_left = 20
 patch_margin_top = 13
@@ -105,13 +145,17 @@ patch_margin_bottom = 13
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 1
 
-[node name="NinePatchRect3" type="NinePatchRect" parent="Title"]
-layout_mode = 0
-offset_left = 442.0
-offset_top = 369.0
-offset_right = 1166.0
-offset_bottom = 507.0
-texture = ExtResource("5_y7veb")
+[node name="NinePatchRect3" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/TitleContainer/Title"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -554.0
+offset_top = -17.0
+offset_right = 559.0
+offset_bottom = 202.0
+grow_horizontal = 2
+texture = ExtResource("3_sso1d")
 region_rect = Rect2(431, 69, 66, 22)
 patch_margin_left = 20
 patch_margin_top = 13
@@ -120,14 +164,14 @@ patch_margin_bottom = 13
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="NinePatchRect2" type="NinePatchRect" parent="Title"]
+[node name="NinePatchRect2" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/TitleContainer/Title"]
 visible = false
 layout_mode = 0
 offset_left = 315.0
 offset_top = 342.0
 offset_right = 1558.0
 offset_bottom = 1239.0
-texture = ExtResource("9_eoqg1")
+texture = ExtResource("4_3xdaj")
 region_rect = Rect2(31, 32, 97, 96)
 patch_margin_left = 20
 patch_margin_top = 13
@@ -136,58 +180,166 @@ patch_margin_bottom = 13
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="BG Wood" type="Sprite2D" parent="Title"]
+[node name="BG Wood" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/TitleContainer/Title"]
 visible = false
 position = Vector2(1041, 347)
-texture = ExtResource("2_dpqt5")
+texture = ExtResource("5_akn88")
 
-[node name="Label" type="Label" parent="Title"]
-layout_mode = 2
-offset_left = 488.0
-offset_top = 404.0
-offset_right = 1113.0
-offset_bottom = 477.0
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/PanelContainer/TitleContainer/Title"]
+layout_mode = 1
+anchors_preset = -1
+offset_top = 40.0
+offset_bottom = 113.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(0.972549, 0.364706, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 5
-theme_override_fonts/font = ExtResource("3_xgd6p")
-theme_override_font_sizes/font_size = 60
-text = "Match Y Match"
+theme_override_fonts/font = ExtResource("6_uc1ic")
+theme_override_font_sizes/font_size = 100
+text = "MatchY-Match"
+metadata/_edit_use_anchors_ = true
 
-[node name="Play section" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="TextureButton" type="TextureButton" parent="Play section"]
-layout_mode = 0
-offset_left = 442.0
-offset_top = 488.0
-offset_right = 1026.0
-offset_bottom = 715.0
-tooltip_text = "Play"
-texture_normal = SubResource("AtlasTexture_x33pu")
-stretch_mode = 0
-
-[node name="Play" type="Button" parent="Play section"]
+[node name="Play button" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 453.0
-offset_top = 490.0
-offset_right = 1040.0
-offset_bottom = 717.0
+mouse_filter = 1
+metadata/_edit_group_ = true
+
+[node name="Control" type="Control" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 200.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_xgd6p")
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -211.0
+offset_top = -110.0
+offset_right = 220.0
+offset_bottom = 109.0
+grow_horizontal = 2
+texture = ExtResource("3_sso1d")
+region_rect = Rect2(421, 260, 54, 25)
+patch_margin_left = 5
+patch_margin_top = 4
+patch_margin_right = 5
+patch_margin_bottom = 6
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Play" type="Button" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+modulate = Color(0.478431, 0.290196, 0.129412, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -209.0
+offset_top = -108.0
+offset_right = 219.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("6_uc1ic")
 theme_override_font_sizes/font_size = 80
 text = "Play"
-icon = SubResource("CompressedTexture2D_xjn6x")
 flat = true
 
-[connection signal="button_up" from="Play section/Play" to="." method="_on_play_button_up"]
+[node name="TextureButton" type="TextureButton" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -237.0
+offset_top = -93.5
+offset_right = 237.0
+offset_bottom = 93.5
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "Play"
+texture_normal = SubResource("AtlasTexture_obe8l")
+stretch_mode = 0
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="level_images" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme = SubResource("Theme_la1nr")
+theme_override_constants/separation = 100
+
+[node name="01" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+mouse_filter = 1
+texture_normal = SubResource("AtlasTexture_6frhe")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="02" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("3_t1rf1")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="more" type="Control" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+mouse_filter = 1
+
+[node name="more" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images/more"]
+modulate = Color(1, 1, 1, 0.0980392)
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+offset_right = 1776.0
+offset_bottom = 400.0
+mouse_filter = 1
+disabled = true
+texture_normal = SubResource("AtlasTexture_6frhe")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images/more"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -447.0
+offset_top = -70.0
+offset_right = 447.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "More coming soon"
+
+[connection signal="button_up" from="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control/Play" to="." method="_on_play_button_up"]
