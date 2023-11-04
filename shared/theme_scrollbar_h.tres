@@ -1,0 +1,25 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c1rj8oj12y7xo"]
+
+[ext_resource type="StyleBox" uid="uid://c7wsyagaqt1mf" path="res://shared/style_scrollbar_h_grabber.tres" id="1_ry4tu"]
+[ext_resource type="StyleBox" uid="uid://4r8dyi3xrcvt" path="res://shared/style_scrollbar_h_height.tres" id="2_8m76x"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2bfhx"]
+bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 3
+shadow_offset = Vector2(2, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1fych"]
+border_width_left = 8
+border_width_right = 7
+
+[resource]
+HScrollBar/styles/grabber = ExtResource("1_ry4tu")
+HScrollBar/styles/grabber_highlight = null
+HScrollBar/styles/grabber_pressed = null
+HScrollBar/styles/scroll = ExtResource("2_8m76x")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_2bfhx")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_1fych")

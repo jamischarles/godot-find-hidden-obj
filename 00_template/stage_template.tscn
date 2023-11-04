@@ -1,7 +1,8 @@
-[gd_scene load_steps=37 format=3 uid="uid://bje0n2mueera4"]
+[gd_scene load_steps=40 format=3 uid="uid://bje0n2mueera4"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_0piok"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_sh800"]
+[ext_resource type="Theme" uid="uid://c1rj8oj12y7xo" path="res://shared/theme_scrollbar_h.tres" id="2_tyhrx"]
 [ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="3_f5emm"]
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="4_5kjb0"]
 [ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_8moym"]
@@ -12,27 +13,6 @@
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="10_pdkhc"]
 [ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="11_k8oex"]
 [ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="12_ja72t"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q48if"]
-bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-shadow_size = 3
-shadow_offset = Vector2(2, 5)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b17r5"]
-bg_color = Color(0.913725, 0.231373, 0.909804, 1)
-border_width_top = 8
-border_width_bottom = 21
-corner_radius_top_left = 10
-
-[sub_resource type="Theme" id="Theme_p4p8b"]
-HScrollBar/styles/grabber = SubResource("StyleBoxFlat_q48if")
-HScrollBar/styles/grabber_highlight = null
-HScrollBar/styles/grabber_pressed = null
-HScrollBar/styles/scroll = SubResource("StyleBoxFlat_b17r5")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jt6b8"]
 texture = ExtResource("3_f5emm")
@@ -59,7 +39,40 @@ region = Rect2(2.08165e-12, 2.08165e-12, 3000, 975)
 [sub_resource type="CircleShape2D" id="CircleShape2D_w3wpm"]
 radius = 112.4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iy5jl"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yobm"]
+bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 3
+shadow_offset = Vector2(2, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o8ktl"]
+border_width_top = 8
+border_width_bottom = 7
+corner_radius_top_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_252p8"]
+bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 3
+shadow_offset = Vector2(2, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0f6t"]
+border_width_left = 4
+border_width_right = 3
+
+[sub_resource type="Theme" id="Theme_exhha"]
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_5yobm")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_o8ktl")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_252p8")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_g0f6t")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kas6d"]
 bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Theme" id="Theme_inwhd"]
@@ -129,13 +142,12 @@ size_flags_horizontal = 3
 theme_override_constants/margin_right = 258
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MarginContainer"]
-clip_contents = false
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 9.0
-theme = SubResource("Theme_p4p8b")
+theme = ExtResource("2_tyhrx")
 scroll_horizontal_custom_step = -0.72
 scroll_deadzone = 100
 
@@ -210,7 +222,7 @@ alignment_vertical = 0
 texture_filter = 3
 layout_mode = 2
 texture = SubResource("AtlasTexture_4ny3j")
-stretch_mode = 4
+stretch_mode = 2
 
 [node name="click_zone_container" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 layout_mode = 2
@@ -343,7 +355,8 @@ offset_left = -0.000102997
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 8
-theme_override_styles/panel = SubResource("StyleBoxFlat_iy5jl")
+theme = SubResource("Theme_exhha")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kas6d")
 horizontal_scroll_mode = 0
 script = ExtResource("9_pc7wy")
 
@@ -467,6 +480,7 @@ expand_icon = true
 
 [node name="level_complete_panel" type="Control" parent="."]
 visible = false
+z_index = 1000
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
