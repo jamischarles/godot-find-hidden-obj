@@ -59,13 +59,25 @@ func on_shape_found(clickZoneNode: Area2D):
 	mark_clickzone_as_done(clickZoneNode)
 	mark_right_rail_btn_as_done(shape_name)
 
+	
+	
+func check_should_end_level(isTweenDone: bool):
+	
+	var count = 0
 	# Is the level done?	
 	for btn in right_rail_buttons:
-		print("name", btn.name)
+#		print("name", btn.name)
 		if !btn.is_disabled():
-			return
+			count += 1
 			
-	end_level()
+	# how many are still left. If it's one it means we are closing up	
+#	print('###count', count)	
+#	if isTweenDone:
+	if count == 0:	
+		end_level()
+	# if have one left that we are closing out, then mark as done (faster to show completion screen)		
+	elif count == 1 && !isTweenDone: 
+		end_level()
 	
 	
 func mark_clickzone_as_done(shape: Area2D):
@@ -110,6 +122,9 @@ func mark_clickzone_as_done(shape: Area2D):
 	
 # marks button as disabled	
 func mark_right_rail_btn_as_done(shape_name: String):
+	check_should_end_level(false) # TODO: Hate this check. fix it
+	
+	
 	var btn = find_matching_right_rail_button(shape_name)
 #	var rr_btn = find_matching_right_rail_button(shape.get_name())
 	
@@ -143,8 +158,8 @@ func mark_right_rail_btn_as_done(shape_name: String):
 #	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
 #	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property(btn, "position", Vector2(btn_global_pos.x, viewport_height), 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(.01)
-	tween.parallel().tween_property(btn, "scale", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
-	tween.parallel().tween_property(btn, "custom_minimum_size", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
+	tween.parallel().tween_property(btn, "scale", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.1)
+	tween.parallel().tween_property(btn, "custom_minimum_size", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.1)
 #	tween.parallel().tween_property(btn, "modulate", Color(1, 1, 1, .5), 3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
 #	tween.tween_property(btn, "scale", Vector2(1.5,1.5), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 #	tween.tween_property(btn, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -154,6 +169,8 @@ func mark_right_rail_btn_as_done(shape_name: String):
 		btn.custom_minimum_size = btn_min_size # restore size
 		btn.get_parent().move_child(btn, btn.get_parent().get_child_count()) # move to end
 		btn.disabled = true # set disabled style
+		check_should_end_level(true) # doesn't hurt to run it multiple times
+
 
 	# scroll right rail to top?
 	
@@ -183,11 +200,24 @@ func find_matching_right_rail_button(shape_name:String)->Button:
 	
 	
 func end_level():
+	# fade out screen
+	$level_complete_panel.modulate.a = 0 # set alpha to 0
 	$level_complete_panel.visible = true # show the 
+	var tween = get_tree().create_tween().set_parallel(true)
+	tween.tween_property($level_complete_panel, "modulate", Color(1, 1, 1, 1), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
+	tween.tween_property($HBoxContainer, "modulate", Color(1, 1, 1, .3), .7).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
+	tween.tween_property($HBoxContainer/right_rail/ScrollContainer, "modulate", Color(1, 1, 1, 0), .7).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
 
-# Go back to level_select screen
+
+	# don't remove it since we only have one
+#	tween.tween_callback(on_tween_done)
+	
+
+
+
+# Go back to main screen
 func _on_home_button_up():
-	get_tree().change_scene_to_file("res://level_selector.tscn" )
+	get_tree().change_scene_to_file("res://main.tscn" )
 
 
 func _on_btn_level_select_button_up():
