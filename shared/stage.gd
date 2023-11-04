@@ -15,6 +15,17 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# set right rail to and left rail to hidden, so we can fade it in after panning
+#	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
+	$HBoxContainer/right_rail.visible = false
+	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
+	# pan the image when we load to show the whole map
+	panImage()
+
+	
+	
+	
+	
 	# when TouchFeedback sends us "shape found" we handle that here
 	touch_feedback_node.connect("shape_found", on_shape_found)
 	# zoom in when zoom in event is fired
@@ -44,6 +55,35 @@ func _ready():
 func _process(delta):
 	pass
 
+# we pan the image at the start of the level
+func panImage():
+	
+	var scrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
+	# the end of it
+	var scrollContentSize = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent.size
+
+	# scroll to new place, and take zoomLevel into account
+	
+#	var viewPortWidth = get_viewport().get_visible_rect().size.x
+#	var viewPortHeight = get_viewport().get_visible_rect().size.y
+	
+	# set scrollPos to opposite end
+	scrollContainer.scroll_horizontal = scrollContentSize.x # add buffer so it's center of viewport
+	scrollContainer.scroll_vertical = scrollContentSize.y
+	
+	# then animate coming back to top left corner
+	var tween = get_tree().create_tween()
+	tween.parallel().tween_property(scrollContainer, "scroll_horizontal", 0, 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.15)
+	tween.parallel().tween_property(scrollContainer, "scroll_vertical", 0, 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.15)
+	tween.tween_callback(onPanDone)
+	
+# fad in 
+func onPanDone():	
+	$HBoxContainer/right_rail.visible = true #make visible so we can fade it in
+	var tween = get_tree().create_tween()
+	var right_rail_faded =  $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects
+	tween.tween_property(right_rail_faded, "modulate", Color(1,1,1,1), 1.5).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+#	tween.tween_callback(onPanDone)
 
 #whenever overlapping shapes are found in canvas pass array of overlapping shapes
 #func on_canvas_shapes_found(shapes: Array[Area2D]):
@@ -226,7 +266,6 @@ func _on_btn_level_select_button_up():
 
 
 # is gated...
-
 func _on_should_zoom(zoomPosition):
 	# what if we handle the debounce here?
 	
@@ -239,6 +278,7 @@ func _on_should_zoom(zoomPosition):
 #	$HBoxContainer/ScrollContainer.scale = Vector2(2,2)
 	# change scrollcontainer child scale and size
 	
+
 	# toggle zoomLevel
 	if zoomLevel == 1:
 		zoomLevel = 2
@@ -246,9 +286,6 @@ func _on_should_zoom(zoomPosition):
 		zoomLevel = 1
 		
 		
-	
-	
-
 #	imageContainerParent.scale = Vector2(zoomLevel,zoomLevel)
 	
 	print("##size", imageContainerParent.get_node("ImageContainer"))
