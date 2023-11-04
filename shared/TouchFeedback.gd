@@ -108,6 +108,11 @@ func on_tween_done(tween):
 var clickStartPos
 var click_circle_pos
 var scrollStartPos: Vector2 #x,y of scrollPosition
+# We'll toggle this when a dblclick is detected. 
+# We'll delay and hold the first click for a minimal amount of time and let it through if
+# it's not quickly followed by a doubleclick
+var isPartOfDoubleClick = false 
+
 func _on_image_container_gui_input(event):
 #	print('event', event)
 
@@ -151,6 +156,7 @@ func _on_image_container_gui_input(event):
 		
 #		handleZoomTouchEvents(event)
 		if event.double_tap:
+			isPartOfDoubleClick = true
 			print("DOUBLE TAP")
 			emit_should_zoom(event.position) # fire the "should zoom" event
 			return
@@ -163,7 +169,16 @@ func _on_image_container_gui_input(event):
 #			print('###DOWN')
 			
 		else:	
+			# AWAIT here for .1 seconds (100ms)? to verify it isn't first tap of a doubleclick?
+			await get_tree().create_timer(0.1).timeout
 			eventState.pressed.erase(event.index)
+			
+			# the delay above allows for enough time to pass to capture the 2nd click
+			# when this is the first part of the doubleclick, abort
+			if isPartOfDoubleClick:
+				isPartOfDoubleClick = false
+				return
+			
 
 #			print('###Touch RELEASE')
 			var clickEndPos = event.get_position()
