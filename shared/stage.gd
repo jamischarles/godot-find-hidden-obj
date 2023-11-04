@@ -257,11 +257,11 @@ func end_level():
 
 # Go back to main screen
 func _on_home_button_up():
-	get_tree().change_scene_to_file("res://main.tscn" )
+	Global.change_scene("home")
 
-
+# NEXT button
 func _on_btn_level_select_button_up():
-	_on_home_button_up()
+	Global.send_to_next_level()
 
 
 
