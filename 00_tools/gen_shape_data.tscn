@@ -1,705 +1,38 @@
 [gd_scene load_steps=5 format=3 uid="uid://bbkcfq5kkafli"]
 
-[ext_resource type="Texture2D" uid="uid://pxtn1xo7i110" path="res://00_canvas_images/01.png" id="2_jx8xw"]
-
-[sub_resource type="GDScript" id="GDScript_434s2"]
-script/source = "@tool # only runs when we have the associated node selected _click_zones
-extends Control
-# hacky way to shortcut creating a plugin w/o creating a proper plugin 
-# need to make a proper plugin for this?
-#extends EditorPlugin
-
-
-
-# use poly POSITION as center point
-# use polygon for shaping
-# save to disk
-
-
-# 1. Add on-screen buttons (in a panel?)
-# 2. CREATE clickzone
-# 3. Renders it on screen via right rail...
-# 4. Adds it to the array? (do we need to export it?)
-# Q: Can we have the code update the right rail thing?
-# 5. Renders it on the page and then we can control it.
-# 6. Manipulating it updates the array
-# Maybe we try to do it w/o exported thing first. THEN we add a \"SAVE\" button...
-# how do we name each shape?
-# we can manually name the node... Yes.
-
-#@export var image_regions: Array Rect2
-#@export(Array, Rect2) var image_regions
-
-#export(Array, AtlasTexture) var textures
-
-
-
-
-## add a button to add another item
-# TODO: 
-# add a new poly with a basic shape (square?)
-# then we can move it around etc...
-# Clicking save would serialize and save to a resource with simple objects (class needed?)
-
-@export var add_clickzone = false :
-	get:
-		return add_clickzone
-	set(value):
-		add_clickzone_handler()
-		add_clickzone = false
-
-@export_category(\"Move Polygon Shape set\") #######################		
-## Readonly. Usually set to center of the shape
-@export var new_position = Vector2(0,0) : 
-	get:
-		return get_node(\"Marker2D\").position
-	set(value):
-		get_node(\"Marker2D\").set_position(new_position)
-		#update?
-
-## Clickzone we want to move the position of
-@export var selected_clickzone: Polygon2D
-
-## on enter make the movement. Or just convert this to the movement with another button?
-## ACTION: Moves polygon from current position to New Position ^ 
-## and sets the each polygon point relative to the new center point based on new position
-@export var move_polygon_set = false :
-	get:
-		return load_shapes
-	set(value):
-		move_polygon_handler(selected_clickzone, new_position)
-		move_polygon_set = false
-
-## Automagically detect centroid of the shape, and move the polygon position there
-## then move all the polygons so they are relative to that 0,0 center
-@export var auto_move_to_center  = false :
-	get:
-		return auto_move_to_center
-	set(value):
-#		find_center_of_shape()
-		auto_move_to_center = false
-		
-		## for now just loop and fix ALL the clickzone center points
-		for zone in get_node(\"click_zone_container\").get_children():
-			auto_calc_shape_center_and_move_shape_there(zone)
-		
-
-
-		
-@export_category(\"Load & Save\") #########################
-## To LOAD shapes from and SAVE shapes and image to
-@export var selected_folder: String
-## LOADS new shapes from selected_folder
-@export var load_shapes = false :
-	get:
-		return load_shapes
-	set(value):
-		load_shapes_handler()
-		load_shapes = false		
-		
-## SAVES shapes to selected_folder
-@export var save_shapes = false :
-	get:
-		return save_shapes
-	set(value):
-		save_shapes_handler()
-		save_shapes = false
-
-
-
-
-
-
-
-
-# global nodes
-@onready var image = $TextureRect
-@onready var clickZones: Array[Node] = $click_zone_container.get_children()
-@onready var buttonImageRegions: Array[Node] = $button_image_container.get_children()
-	
-
-
-# Q: Do we set a dirty flag here?
-# CollisionObject2D requires a shape attached to it...
-# Polygon2D??
-
-
-
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-	# do we need to make this @tool?
-	# render all the regions on the canvas
-
-# add new polygon on canvas
-## TODO: Turn this into a plugin?!?
-func add_clickzone_handler():
-	var poly = Polygon2D.new()
-	# turn transparency down
-	poly.color.a = .5
-	$click_zone_container.add_child(poly)
-	
-	poly.set_name(\"new_poly\")
-	
-	var polygon: PackedVector2Array
-	
-	
-#	var radius = 5
-#	var height = 300
-#	var polygon = generate_capsule_polygon(radius, 40, height)
-	
-	poly.set_polygon(polygon)
-	
-	# set this scene root as owner so it'll persist the creation of the node
-	poly.set_owner(get_tree().edited_scene_root)
-	
-	
-#	if(self in EditorPlugin.new()):
-		# set focus to new node
-		
-	# TODO: Needs to be a proper plugin to be able to modify the selected node
-#	var editor = get_editor_interface()
-#	editor.edit_node(poly)
-#	var editor = EditorInterface
-#	var sec = editor.get_editor_interface()
-	
-#	print(\"##editor\", sec)
-		# TODO: Add a check here
-#	EditorPlugin.new().get_editor_interface().set_selection(poly)
-#	self.get_editor_interface().get_selection()
-
-#	var editor = EditorPlugin.get_editor_interface()
-	
-	
-	var editor = EditorPlugin.new().get_editor_interface()
-	print(\"##\", editor)
-##	editor.edit_node(poly)
-##	editor.add_node(poly)
-#
-#	# change the scene tree selection to new node created
-	var sel = editor.get_selection()
-	sel.clear()
-	sel.add_node(poly)
-#
-##	EditorInterface.
-#	print(\"ADD CLICKZONE\")
-	
-# allows us to load (READ) (and save) shapes from a target folder...	
-# input/output folder should be the same
-# but we can say \"LOAD\" and \"SAVE\" separately
-func load_shapes_handler():
-	# load the data file
-	# load the image
-	
-	
-	
-#	var loaded_data = load(\"res://02/src/shape_data\")
-	var loaded_data_raw = FileAccess.open(\"%s/src/shape_data.txt\" % selected_folder, FileAccess.READ)
-	var loaded_data = str_to_var(loaded_data_raw.get_as_text()) # deserialize back into the data structure
-	
-	# EXPECT this to ref the 00_canvas_images location (backups for all images)
-	var loaded_image = load(loaded_data[\"imageData\"].src)
-	
-	
-	# set up 2 images (1 full, 1 with legend hidden)
-	var atlasTexture = AtlasTexture.new()
-	atlasTexture.atlas = loaded_image
-	# set atlas region to entire image (for now)
-#	atlasTexture.region = Rect2(0, 0, atlasTexture.atlas.get_width(), atlasTexture.atlas.get_height())
-	atlasTexture.region = loaded_data[\"imageData\"].region
-	
-	# assign new image to the 2 image nodes
-	$TextureRect.texture = atlasTexture
-	
-	var w = loaded_data[\"imageData\"].size.x
-	var h = loaded_data[\"imageData\"].size.y
-	$TextureRect_w_legend.texture = atlasTexture.duplicate()
-	$TextureRect_w_legend.texture.set_region(Rect2(0,0, w, h)) # full height of img
-
-	
-	
-	
-	# remove all existing clickzones
-	for zone in $click_zone_container.get_children():
-		$click_zone_container.remove_child(zone)
-	
-	# create clickzones from stored data
-	for zoneData in loaded_data[\"clickZones\"]:
-		var poly = Polygon2D.new()
-		# attach to tree
-		$click_zone_container.add_child(poly)
-		
-		poly.name = zoneData.name
-		poly.position = Vector2(zoneData[\"pos_x\"], zoneData[\"pos_y\"])
-		poly.polygon = zoneData[\"polygon\"]
-		# turn transparency down
-		poly.color.a = .5
-		
-		
-		# persist
-		poly.set_owner(get_tree().edited_scene_root)
-		
-		
-	# remove existing button_image rects
-	for rect in $button_image_container.get_children():
-		$button_image_container.remove_child(rect)	
-		
-	# create button_image reference rects from stored data
-	for loaded_region in loaded_data[\"buttonRegions\"]:
-		var region = ReferenceRect.new()
-		$button_image_container.add_child(region)
-		
-		region.name = loaded_region.name
-		
-		# we can't SET rect (only get it) so we set it like so
-		region.set_position(loaded_region.rect.position)
-		region.set_size(loaded_region.rect.size)
-		
-		# persist new nodes in tree
-		region.set_owner(get_tree().edited_scene_root)
-		
-		
-	
-#	print('loaded_data1', loaded_image)
-#	print('loaded_data2', loaded_data)
-#	print('loaded_data3', loaded_data.get_var())
-	
-	# deserialize the data from the file and load it into the scene tree
-	# 1) Reproduce the (named) button images (with correct atlas ref)
-	# 2) Reproduce the (named) polygons
-	
-	
-	
-	
-	
-
-	
-# WRITES shapes to disc in the target folder	
-# TODO: Extract all the serialize -> deserialize logic?
-func save_shapes_handler():
-	print(\"SAVE TO DISK\")
-	
-	
-	# Assert that it's safe to export
-	run_assertions_on_tree()
-	
-	# gather the data we want to save
-	# create data structure
-	# save it
-	
-	
-	print(\"###buttonImageRegions\", buttonImageRegions)
-	
-
-	
-#	var data = { \"key\": \"value\", \"another_key\": 123, \"lock\": Vector2() }
-	
-	var data = {\"imageData\": {}, \"clickZones\": [], \"buttonRegions\": []}
-	
-#	print('data', data)
-	var img_path = $TextureRect.texture.atlas.resource_path
-	
-	# capture image rect data
-	data[\"imageData\"] = {
-		\"src\": img_path,
-		\"size\": image.size, # total image size (no region restrictions)
-		\"region\": image.texture.region # region of image minus legend
-	}
-	
-	
-	# capture clickzone shapes
-	for zone in $click_zone_container.get_children():
-		data[\"clickZones\"].append({
-			# Vector2 is not supported by JSON
-			\"name\": zone.name,
-			\"pos_x\" : zone.position.x, 
-			\"pos_y\" : zone.position.y,
-			\"polygon\": zone.get_polygon()
-		})
-		
-		
-		
-	## capture button_image rects for subregions
-	for region in $button_image_container.get_children():
-		data[\"buttonRegions\"].append({
-			# Vector2 is not supported by JSON
-			\"name\": region.name,
-			\"rect\" : region.get_rect(), 
-		})
-
-
-
-#	buttonImageRegions
-		
-	## TODO: Do the same for subregions for button legend	
-	print('data2', data)
-	
-#	var packed = PackedDataContainer.new().pack(data)
-	
-	# prep the data
-#	var json = JSON.new()
-	# Check if there is any error while parsing the JSON string, skip in case of failure
-#	var parse_result = json.parse(json_string)
-#	var json_string = JSON.stringify(data)
-	
-	
-	# WAYYY to hard to use. So using JSON for now.
-	# Later use binary?
-#	https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html
-#	var packed = PackedDataContainer.new()
-#	print('packed', packed)
-#	packed.pack(data)
-	
-	
-	# create folder if it doesn't exist yet
-	DirAccess.make_dir_recursive_absolute(\"res://%s/src/\" % selected_folder)
-	
-	# save data file with shapes
-#	ResourceSaver.save(packed, \"%s/src/shape_data.res\" % dest_folder)
-	var save_shapes = FileAccess.open(\"%s/src/shape_data.txt\" % selected_folder, FileAccess.WRITE)
-	
-	# save as binary (non human readable, but preserves data stuctures)
-#	save_shapes.store_var(data, true)
-	
-#	https://www.gdquest.com/tutorial/godot/best-practices/save-game-formats/
-	# save human readable non-json format that prerves godot data types
-	# TODO consider saving different props on dipp lines...
-#	save_shapes.store_line(var_to_str(data))
-	save_shapes.store_string(var_to_str(data))
-	
-	
-#	save_shapes.store_line(var_to_str(data[\"clickZones\"]))
-	
-	
-	
-#	save_shapes.store_pascal_string(data)
-#	ResourceSaver.save(data, \"%s/src/shape_data.res\" % selected_folder)
-
-	
-	# save/copy image
-#
-	
-#	DirAccess.copy
-
-#	var dir = DirAccess.open(selected_folder + \"/src\")
-#	var img_content = FileAccess.open(img_path, FileAccess.READ)
-##	print('img', img_test)
-#	var dest_file = FileAccess.open(\"res://%s/src/img.png\" % dest_folder, FileAccess.WRITE)
-#	dest_file.store_buffer(img_content)
-#	dir.copy(img_path,\"res://%s/src\" % dest_folder);
-
-	## TODO: Move to separate function
-	print('image copy: ', img_path, \" -> res://%s/src/img.png\" % selected_folder) 
-	var res = DirAccess.copy_absolute(img_path, \"res://%s/src/img.png\" % selected_folder)
-	print('image copy status: ', res, img_path) # code 0 == SUCCESS!!!
-#	var directory = Directory.new()
-#	var dirErr = directory.open(basePath)
-#	if dirErr != OK:
-#		printerr(\"Couldn't open directory \" + basePath)
-#		return
-	
-	
-###################### assertion code
-# node name
-
-var assert_verify_matches
-
-## Runs the assertions on the tree before we export to ensure the nodes are properly set up and named
-func run_assertions_on_tree():
-	# wipe out assertion data structure
-	assert_verify_matches = {}
-	
-	for zone in $click_zone_container.get_children():
-		var name = zone.get_name()
-
-		# add up the canvas clickzones
-		if assert_verify_matches.has(name):
-			assert_verify_matches[name] += 1
-		else:
-			assert_verify_matches[name] = 1
-			
-			
-		#VERIFY: No clickZone positions should be OUTSIDE the canvas or on the edge...
-		assert(zone.position.x > 0 && zone.position.y > 0, \"ClickZones: %s has position at edge or off canvas. Please fix\" % zone)
-
-	# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
-	# we can create a dictionary and count that each one has 2
-
-#	print(\"i\", i)
-#	print('nodeNUm', clickZone.get_instance_id())
-
-#
-
-
-#	# count the right_rail button node names,
-	var legendButtons = $button_image_container.get_children()
-	for btn in legendButtons:
-		var btn_name = btn.get_name()
-		## TODO: Reuse this? in fn?
-		if assert_verify_matches.has(btn_name):
-			assert_verify_matches[btn_name] += 1
-		else:
-			assert_verify_matches[btn_name] = 1
-	
-	
-	#VERIFY: there should be exactly one of each currently in the clickzones
-	for zone in assert_verify_matches:
-		assert(assert_verify_matches[zone] == 2, \"ClickZones: %s has %s\" % [zone, assert_verify_matches[zone]])
-		
-	
-	
-	
-	
-	
-	
-## Auto calc center, and move the polygons there
-## Just fix all shapes for now...
-func auto_calc_shape_center_and_move_shape_there(clickZoneShape):
-	var centerOfShape = centroid_of_polygon(clickZoneShape.polygon)
-#	print(\"###centroid\", centerOfShape)
-	
-	## take center of shape (which is relative to polygon2d position, and
-	## adjust so new position is (0,0) based
-	## ie: Vector2(800,100) and (-500, 0) will result in
-	## Vector2(300,100) (* -1 flips the sign so we don't get double negative = pos)
-	var newPos = centerOfShape - clickZoneShape.position * -1
-	
-	# move position of shape to new center
-	move_polygon_handler(clickZoneShape, newPos)
-	
-# FIXME: Consider getting the new_position automatically from shape_gravity or similar...
-# then this could be, \"set_polygons_relative_to_shape_gravity_center_point
-# moves POSITION of area, and adjusts the polygon shape to balance that.
-func move_polygon_handler(selected_zone: Polygon2D, new_pos:Vector2):
-
-	# distance between old and new position and the distance we have to move each polygon
-	var delta = new_pos - selected_zone.position
-	print(\"delta to move: \", delta)
-	
-	# move the shape area to new position by delta
-	selected_zone.set_position(new_pos)
-	
-	
-	# move each polygon point in polygon shape to new delta relative to new area position
-	
-	for i in len(selected_zone.polygon): # move each point by delta
-		selected_zone.polygon[i] -= delta
-#		point = point + delta
-	
-	# assign modified clone of polygon to clickzone shape (because it was a copy)
-#	selected_clickzone.set_polygon(poly)
-
-
-
-
-# https://github.com/godotengine/godot/issues/58552#issuecomment-1053192791
-func centroid_of_polygon(poly_array: PackedVector2Array):
-	# stolen javascript solution from https://stackoverflow.com/a/43747218
-	var first = poly_array[0]; var last = poly_array[len(poly_array) - 1]
-	# original solution assumed first and last points are the same
-	# Godot doesn't do that, at least in BitMap.opaque_to_polygons()
-	if first != last:
-		poly_array.append(first)
-	# sum the area as we go
-	var twice_area: float = 0.0
-	# weighted sum of centroids of triangles; later divide by area
-	var coord: Vector2
-	var n_pts = len(poly_array)
-	# used inside loop
-	var p1: Vector2; var p2: Vector2; var j: float; var f: float
-	# iterate over triangles: (0, 1, 2), (0, 2, 3), ... (0, n-2, n-1)
-	# if one of the points is Point 0, resulting area/weight is 0 anyway
-	for i in range(0, n_pts):
-		j = posmod(i - 1, n_pts)
-		p1 = poly_array[i]; p2 = poly_array[j]
-		# the signed area of a triangle is the cross product of two of the sides divided by two
-		f = (p1 - first).cross(p2 - first)
-		twice_area += f
-		# add contribution to weighted sum of centers;
-		# p1 + p2 - 2 * first == (p1 - first) + (p2 - first)
-		coord += (p1 + p2 - 2 * first) * f
-	# multiply the total area by 3 (6 from actual area of polygon)
-	# (even though I don't know why)
-	f = twice_area * 3
-	# finally, divide the weighted sum of the coordinates by that area
-	var centroid = coord / f + first
-	return centroid
-
-
-	
-## warn in the GUI tree when hidden shapes are mismatched or misnamed
-#https://docs.godotengine.org/en/stable/tutorials/plugins/running_code_in_the_editor.html
-# Only works when opening the scene?
-#func _get_configuration_warnings():
-#	var warnings = []
-#
-#	if title == \"\":
-#		warnings.append(\"Please set `title` to a non-empty value.\")
-#
-#	if description.length() >= 100:
-#		warnings.append(\"`description` should be less than 100 characters long.\")
-#
-#	# Returning an empty array means \"no warning\".
-#	return warnings
-	
-	
-#	ResourceSaver.save(packed, \"%s/src/shape_data.res\" % dest_folder)
-	
-#	var scene_new = PackedScene.new()
-
-#	scene_new.pack(frog0)
-#	ResourceSaver.save(scene_new, \"res://00/stage_new.tscn\")
-	
-
-## UTILS #########################################################	
-## TODO: Make this a util we can include?!?
-
-# interesting!!!
-# @desc something
-# TODO: add assertion for num_sides
-# if num_sides is < 3 (triangle) then it won't show up. 4 is square. interesting...
-# https://ask.godotengine.org/81776/how-to-shape-polygon2d-into-a-circle
-#func generate_circle_polygon(radius: float, num_sides: int, pos: Vector2) -> PackedVector2Array:
-#	var angle_delta: float = (PI * 2) / num_sides
-#	var vector: Vector2 = Vector2(radius, 0)
-#	var polygon: PackedVector2Array
-#
-#	for _i in num_sides:
-#		polygon.append(vector + pos)
-#		vector = vector.rotated(angle_delta)
-#
-#	return polygon
-#
-#
-## Square...
-#
-## Capsule
-## A capsule is a circle, cut in half, with a rectangle shoved in the middle
-## https://github.com/godotengine/godot-proposals/issues/3495#issuecomment-960461612
-#func generate_capsule_polygon(radius: float, num_sides_for_ends: int, height: float) -> PackedVector2Array:
-#	var polygon: PackedVector2Array
-#
-#	var i_divisor: = float(num_sides_for_ends - 1)
-#
-##	https://www.mathsisfun.com/polar-cartesian-coordinates.html
-#
-#	for i in num_sides_for_ends:
-#		polygon.append(polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, height / 2))
-#	for i in num_sides_for_ends:
-#		polygon.append(-polar2cartesian(radius, (float(i) / i_divisor) * PI) + Vector2(0, -height / 2))
-#
-#	return polygon
-#
-#
-## https://stackoverflow.com/questions/76698768/how-to-use-polygon2d-node-in-godot-to-create-a-regular-polygon
-## https://www.mathsisfun.com/polar-cartesian-coordinates.html
-#func polar2cartesian(r, theta):
-#	var x = r * cos(theta)
-#	var y = r * sin(theta)
-#	return Vector2(x, y)
-#
-
-
-###################### assertion code
-# node name
-#		var name = clickZone.get_name()
-#
-#		# add up the canvas clickzones
-#		if assert_verify_matches.has(name):
-#			assert_verify_matches[name] += 1
-#		else:
-#			assert_verify_matches[name] = 1
-#
-#		# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
-#		# we can create a dictionary and count that each one has 2
-#
-#		print(\"i\", i)
-#		print('nodeNUm', clickZone.get_instance_id())
-
-#
-#RIFY: there should be exactly one of each currently in the clickzones
-#	for zone in assert_verify_matches:
-#		assert(assert_verify_matches[zone] == 1, \"ClickZones: %s has %s\" % [zone, assert_verify_matches[zone]])
-
-#	# count the right_rail button node names,
-#	var legendButtons = $HBoxContainer/right_rail/legend_for_hidden_objects.get_children()
-#	for btn in legendButtons:
-#		var btn_name = btn.get_name()
-#		## TODO: Reuse this? in fn?
-#		if assert_verify_matches.has(btn_name):
-#			assert_verify_matches[btn_name] += 1
-#		else:
-#			assert_verify_matches[btn_name] = 1
-#
-
-# Verify that each collision shape has position of 0,0
-		# we need to use parent for positioining so clickzones line up with visual part
-#		assert( int(shape.position.x) == 0 && int(shape.position.y) == 0, \"ERROR: Each child CollisionShape MUST be 0,0 to avoid clickZone drift: %s, shape name:%s\" % [shape.position, clickZone.name]);
-
-		# 2) verify each shape has a name
-		# throw when shape_names aren't assigned for each click zone
-		# https://ask.godotengine.org/54948/throw-exception-or-error
-		# confusing because eval is opposite for err
-#		var name = clickZone.shape_name
-#		assert( name != \"\", \"ERROR: You must give each clickZone a shape_name value.\");
-		
-		
-#		clickZone.shape_uid = i
-		
-		# listen to click for each click shape
-#		clickZone.connect('click_shape_clicked', on_shape_clicked)
-		
-		# hide all the click zones so they are invisble
-
-		# set alpha to 0 so click zones are invisible to user but still active
-#		clickZone.set_modulate(Color(1, 1, 1, 0))
-		
-
-
-
-
-# UTILS ---------------
-
-"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_06rk2"]
-atlas = ExtResource("2_jx8xw")
-region = Rect2(858, 2.08165e-12, 2144, 2143)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g1myp"]
-atlas = ExtResource("2_jx8xw")
-region = Rect2(0, 0, 2999, 2143)
+[ext_resource type="Script" path="res://00_tools/gen_shape_data.gd" id="1_1a05v"]
+[ext_resource type="Texture2D" uid="uid://dg6lld4jkh74" path="res://00_canvas_images/04.png" id="1_6r8ld"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0vyo0"]
+atlas = ExtResource("1_6r8ld")
+region = Rect2(953, 6, 2049, 2720)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ab7mm"]
+atlas = ExtResource("1_6r8ld")
+region = Rect2(0, 0, 2999, 2720)
 
 [node name="get_image_coords" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = SubResource("GDScript_434s2")
-new_position = Vector2(783, 329)
-selected_folder = "01"
+script = ExtResource("1_1a05v")
+move_all_zones_offset = Vector2(-950, 2.08165e-12)
+selected_folder = "04"
 metadata/_edit_lock_ = true
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 2999.0
-offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_06rk2")
+offset_bottom = 2446.0
+texture = SubResource("AtlasTexture_0vyo0")
 stretch_mode = 4
+metadata/_edit_lock_ = true
 
 [node name="TextureRect_w_legend" type="TextureRect" parent="."]
 visible = false
 layout_mode = 0
 offset_right = 2999.0
-offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_g1myp")
+offset_bottom = 2446.0
+texture = SubResource("AtlasTexture_ab7mm")
 stretch_mode = 4
 metadata/_edit_lock_ = true
 
@@ -716,67 +49,61 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-metadata/_edit_lock_ = true
 
-[node name="tablet" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1572.19, 871.763)
+[node name="bottle" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(474.25, 2178.55)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-21.193, -127.763, -7.19299, -122.763, 43.807, -97.7626, 57.807, -90.7626, 83.807, -74.7626, 98.807, -55.7626, 107.807, -36.7626, 108.807, -19.7626, 109.807, 8.23743, 105.807, 29.2374, 95.807, 51.2374, 78.807, 59.2374, 68.807, 60.2374, 82.807, 68.2374, 76.807, 76.2374, 63.807, 95.2374, 31.807, 111.237, 7.80701, 115.237, -19.193, 113.237, -40.193, 118.237, -52.193, 116.237, -63.193, 103.237, -80.193, 85.2374, -98.193, 55.2374, -109.193, 29.2374, -109.193, 19.2374, -93.193, 4.23743, -87.193, -18.7626, -87.193, -52.7626, -88.193, -76.7626, -83.193, -89.7626, -52.193, -109.763, -36.193, -120.763)
+polygon = PackedVector2Array(-31.253, 99.4487, -16.253, 102.449, -2.25293, 91.4487, 19.747, 39.4487, 33.747, -7.55127, 37.747, -28.5513, 32.747, -56.5513, 33.747, -71.5513, 49.747, -105.551, 65.747, -142.551, 42.747, -145.551, 27.747, -103.551, 17.747, -77.5513, 8.74707, -59.5513, -12.253, -49.5513, -26.253, -25.5513, -46.253, 41.4487, -55.253, 75.4487, -47.253, 90.4487)
 
-[node name="knight" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1889.74, 1776.63)
+[node name="bonbon" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(287.36, 1247.76)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-238.743, -168.632, -164.743, -235.632, -105.743, -270.632, -75.7434, -339.632, -27.7434, -367.632, 23.2566, -378.632, 50.2566, -480.632, 56.2566, -372.632, 103.257, -344.632, 140.257, -300.632, 159.257, -243.632, 151.257, -181.632, 123.257, -138.632, 119.257, -122.632, 163.257, -106.632, 185.257, -84.6322, 204.257, -54.6322, 209.257, -24.6322, 207.257, 6.3678, 191.257, 21.3678, 191.257, 61.3678, 198.257, 94.3678, 212.257, 100.368, 211.257, 120.368, 210.257, 135.368, 214.257, 172.368, 231.257, 183.368, 233.257, 279.368, 254.257, 318.368, 255.257, 369.368, 150.257, 366.368, 181.257, 290.368, 152.257, 200.368, 166.257, 183.368, 167.257, 142.368, 154.257, 130.368, 156.257, 113.368, 137.257, 13.3678, 110.257, 1.3678, 133.257, 107.368, 141.257, 150.368, 133.257, 204.368, 133.257, 232.368, 116.257, 367.368, 50.2566, 366.368, 44.2566, 305.368, 32.2566, 292.368, -15.7434, 291.368, -48.7434, 280.368, -61.7434, 282.368, -73.7434, 367.368, -128.743, 367.368, -124.743, 220.368, -128.743, 202.368, -125.743, 189.368, -139.743, 155.368, -134.743, 108.368, -104.743, 30.3678, -186.743, 87.3678, -191.743, 110.368, -207.743, 113.368, -224.743, 112.368, -224.743, 91.3678, -257.743, 56.3678, -280.743, 74.3678, -320.743, -7.6322, -358.743, -9.6322, -369.743, -15.6322, -351.743, -26.6322, -361.743, -38.6322, -372.743, -62.6322, -371.743, -81.6322, -361.743, -92.6322, -354.743, -107.632, -330.743, -111.632, -303.743, -106.632, -289.743, -86.6322, -291.743, -65.6322, -293.743, -49.6322, -250.743, 5.3678, -241.743, 21.3678, -243.743, 34.3678, -227.743, 46.3678, -203.743, 46.3678, -123.743, -13.6322, -109.743, -56.6322, -88.7434, -76.6322, -57.7434, -96.6322, -40.7434, -101.632, -77.7434, -104.632, -123.743, -104.632, -186.743, -104.632, -228.743, -111.632, -245.743, -136.632)
+polygon = PackedVector2Array(-44.3567, -12.7568, 42.6433, -25.7568, 44.6433, -13.7568, 58.6433, -22.7568, 70.6433, -23.7568, 69.6433, -16.7568, 62.6433, -10.7568, 71.6433, -3.75684, 65.6433, 1.24316, 68.6433, 3.24316, 70.6433, 9.24316, 62.6433, 11.2432, 55.6433, 8.24316, 42.6433, 1.24316, 44.6433, 14.2432, -37.3567, 24.2432, -38.3567, 14.2432, -50.3567, 17.2432, -67.3567, 25.2432, -71.3567, 21.2432, -69.3567, 14.2432, -62.3567, 14.2432, -65.3567, 12.2432, -72.3567, 12.2432, -75.3567, 8.24316, -71.3567, 3.24316, -66.3567, 3.24316, -68.3567, -0.756836, -73.3567, -2.75684, -72.3567, -8.75684, -66.3567, -8.75684, -59.3567, -7.75684, -45.3567, -0.756836)
 
-[node name="sword" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(727.258, 416.336)
+[node name="cherry" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(1656.41, 2247.42)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(144.742, 26.6639, 66.7424, 16.6639, -3.25757, -5.33606, -60.2576, -28.3361, -50.2576, -46.3361, -53.2576, -58.3361, -63.2576, -63.3361, -72.2576, -59.3361, -73.2576, -49.3361, -63.2576, -43.3361, -64.2576, -53.3361, -57.2576, -43.3361, -68.2576, -35.3361, -89.2576, -44.3361, -105.258, -54.3361, -111.258, -65.3361, -117.258, -57.3361, -116.258, -49.3361, -105.258, -41.3361, -78.2576, -22.3361, -84.2576, -12.3361, -86.2576, 0.66394, -72.2576, 4.66394, -65.2576, -1.33606, -70.2576, -6.33606, -80.2576, -4.33606, -70.2576, -22.3361, -48.2576, -3.33606, -14.2576, 15.6639, 33.7424, 30.6639, 74.7424, 38.6639, 100.742, 38.6639, 122.742, 35.6639)
+polygon = PackedVector2Array(-47.4065, 33.5827, -58.4065, 29.5827, -68.4065, 23.5827, -72.4065, 13.5827, -72.4065, 3.58276, -66.4065, -4.41724, -56.4065, -9.41724, -48.4065, -11.4173, -39.4065, -11.4173, -25.4065, -23.4173, -9.40649, -35.4173, -0.406494, -40.4173, 15.5935, -46.4173, 28.5935, -48.4173, 7.59351, -55.4173, -6.40649, -62.4173, -9.40649, -70.4173, -5.40649, -73.4173, -0.406494, -73.4173, 7.59351, -71.4173, 23.5935, -65.4173, 37.5935, -56.4173, 46.5935, -48.4173, 34.5935, -38.4173, 24.5935, -27.4173, 18.5935, -17.4173, 16.5935, -10.4173, 20.5935, -11.4173, 28.5935, -11.4173, 39.5935, -9.41724, 50.5935, -4.41724, 59.5935, 4.58276, 63.5935, 11.5827, 63.5935, 21.5827, 59.5935, 28.5827, 53.5935, 33.5827, 42.5935, 37.5827, 29.5935, 38.5827, 18.5935, 34.5827, 10.5935, 29.5827, 4.59351, 23.5827, 1.59351, 14.5827, 1.59351, 6.58276, 4.59351, -0.417236, 7.59351, -4.41724, 11.5935, -6.41724, 14.5935, -9.41724, 14.5935, -15.4173, 17.5935, -22.4173, 25.5935, -34.4173, 39.5935, -46.4173, 12.5935, -40.4173, -0.406494, -36.4173, -12.4065, -29.4173, -35.4065, -9.41724, -29.4065, -9.41724, -21.4065, -5.41724, -14.4065, 1.58276, -11.4065, 11.5827, -14.4065, 22.5827, -25.4065, 31.5827, -34.4065, 33.5827)
 
-[node name="sarcophagus" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(225.062, 936.593)
+[node name="turkey_leg" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(1775.52, 1322.66)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-98.0615, -64.5925, -94.0615, -122.593, -86.0615, -173.593, -73.0615, -204.593, -53.0615, -229.593, -29.0615, -241.593, -1.06152, -245.593, 26.9385, -241.593, 46.9385, -229.593, 63.9385, -208.593, 78.9385, -175.593, 86.9385, -142.593, 89.9385, -104.593, 89.9385, -62.5925, 88.9385, -26.5925, 54.9385, -21.5925, 67.9385, 112.407, 57.9385, 169.407, 52.9385, 210.407, 55.9385, 235.407, 66.9385, 259.407, 76.9385, 273.407, 80.9385, 287.407, 79.9385, 308.407, -0.0615234, 312.407, -24.0615, 311.407, -38.0615, 282.407, -52.0615, 281.407, -73.0615, 288.407, -71.0615, 253.407, -46.0615, 261.407, -36.0615, 261.407, -36.0615, 268.407, -21.0615, 274.407, -10.0615, 271.407, -1.06152, 259.407, 1.93848, 243.407, -1.06152, 223.407, -11.0615, 203.407, -4.06152, 184.407, -0.0615234, 169.407, -11.0615, 154.407, -29.0615, 143.407, -44.0615, 138.407, -44.0615, 124.407, -43.0615, 111.407, -56.0615, 103.407, -64.0615, 101.407, -80.0615, 51.4075, -91.0615, 14.4075, -96.0615, -24.5925, -98.0615, -44.5925)
+polygon = PackedVector2Array(-68.5198, 27.3419, -63.5198, 29.3419, -50.5198, 26.3419, 15.4802, 11.3419, 72.4802, 8.34192, 78.4802, 16.3419, 82.4802, 23.3419, 88.4802, 24.3419, 91.4802, 18.3419, 90.4802, 10.3419, 87.4802, 4.34192, 83.4802, 0.341919, 88.4802, -7.65808, 85.4802, -17.6581, 76.4802, -18.6581, 71.4802, -11.6581, 67.4802, -5.65808, 32.4802, -2.65808, -24.5198, -34.6581, -38.5198, -26.6581, -54.5198, -8.65808, -62.5198, 9.34192)
 
-[node name="painting" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(2065.86, 260.904)
+[node name="cheese" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(822.06, 662.76)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(75.1357, -119.904, 75.1357, 118.096, 21.1357, 115.096, -35.8643, 119.096, -50.8643, 112.096, -54.8643, 125.096, -66.8643, 135.096, -80.8643, 133.096, -88.8643, 123.096, -87.8643, 109.096, -80.8643, 104.096, -70.8643, 100.096, -70.8643, -23.9035, -65.8643, -97.9035, -80.8643, -100.904, -85.8643, -113.904, -84.8643, -127.904, -72.8643, -130.904, -64.8643, -124.904, -57.8643, -118.904)
+polygon = PackedVector2Array(-72.059, 19.2399, -34.059, -30.7601, 0.94104, -64.7601, 33.941, -47.7601, 64.941, -27.7601, 58.941, 34.2399, -69.059, 51.2399)
 
-[node name="axe" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(736.316, 326.999)
+[node name="ice_cream" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(1017.87, 1857.48)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1.68372, -11.9993, 115.684, 39.0007, 122.684, 37.0007, 123.684, 28.0007, 43.6837, -2.99927, 7.68372, -22.9993, 7.68372, -31.9993, 12.6837, -38.9993, 15.6837, -41.9993, 9.68372, -51.9993, 10.6837, -66.9993, 4.68372, -58.9993, -2.31628, -52.9993, -12.3163, -48.9993, -8.31628, -45.9993, -9.31628, -40.9993, -15.3163, -37.9993, -20.3163, -36.9993, -25.3163, -39.9993, -30.3163, -36.9993, -32.3163, -32.9993, -28.3163, -27.9993, -22.3163, -24.9993, -28.3163, -12.9993, -37.3163, -4.99927, -51.3163, -4.99927, -63.3163, -8.99927, -68.3163, -18.9993, -69.3163, -27.9993, -73.3163, -21.9993, -74.3163, -14.9993, -73.3163, -4.99927, -68.3163, 5.00073, -58.3163, 17.0007, -42.3163, 29.0007, -23.3163, 36.0007, -4.31628, 35.0007, 9.68372, 32.0007, 16.6837, 23.0007, 5.68372, 22.0007, -3.31628, 15.0007, -5.31628, 0.000732422, -2.31628, -6.99927)
+polygon = PackedVector2Array(41.1292, 107.515, -44.8708, -10.4849, -54.8708, -27.4849, -54.8708, -41.4849, -47.8708, -51.4849, -35.8708, -59.4849, -20.8708, -59.4849, -10.8708, -54.4849, -5.87085, -49.4849, 3.12915, -54.4849, 12.1292, -55.4849, 21.1292, -54.4849, 27.1292, -49.4849, 33.1292, -41.4849, 34.1292, -28.4849, 31.1292, -20.4849, 30.1292, -15.4849, 34.1292, -15.4849, 35.1292, 61.5151, 37.1292, 81.5151)
 
-[node name="bones" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1241, 1477.44)
+[node name="onion" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(654.56, 1193.54)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-57.9971, 33.5632, -44.9971, 19.5632, -26.9971, 10.5632, -19.9971, 15.5632, -12.9971, 8.56323, 9.00293, 27.5632, 10.0029, 35.5632, 15.0029, 32.5632, 17.0029, 28.5632, 22.0029, 22.5632, 8.00293, 17.5632, 3.00293, 11.5632, 41.0029, 19.5632, 57.0029, 24.5632, 66.0029, 24.5632, 63.0029, 16.5632, 60.0029, 13.5632, 58.0029, 5.56323, 49.0029, 3.56323, 45.0029, 10.5632, 1.00293, 2.56323, 33.0029, -10.4368, 43.0029, -5.43677, 54.0029, -6.43677, 57.0029, -14.4368, 51.0029, -22.4368, 40.0029, -24.4368, 43.0029, -34.4368, 34.0029, -41.4368, 26.0029, -40.4368, 23.0029, -29.4368, 24.0029, -25.4368, -19.9971, -9.43677, -35.9971, -20.4368, -40.9971, -31.4368, -42.9971, -25.4368, -46.9971, -22.4368, -42.9971, -16.4368, -28.9971, -6.43677, -45.9971, 1.56323, -57.9971, -4.43677, -65.9971, -0.436768, -66.9971, 8.56323, -54.9971, 15.5632, -65.9971, 17.5632, -66.9971, 24.5632, -66.9971, 31.5632)
+polygon = PackedVector2Array(-19.5588, -7.53821, -25.5588, -4.53821, -30.5588, 1.46179, -34.5588, 6.46179, -37.5588, 19.4618, -36.5588, 26.4618, -33.5588, 34.4618, -27.5588, 43.4618, -19.5588, 50.4618, -11.5588, 56.4618, -3.55884, 62.4618, 2.44116, 74.4618, 2.44116, 83.4618, 7.44116, 79.4618, 7.44116, 72.4618, 4.44116, 65.4618, 4.44116, 57.4618, 10.4412, 52.4618, 19.4412, 48.4618, 32.4412, 36.4618, 38.4412, 27.4618, 41.4412, 15.4618, 40.4412, 3.46179, 36.4412, -6.53821, 27.4412, -14.5382, 21.4412, -18.5382, 14.4412, -19.5382, 15.4412, -26.5382, 23.4412, -33.5382, 28.4412, -39.5382, 33.4412, -51.5382, 25.4412, -44.5382, 18.4412, -40.5382, 18.4412, -52.5382, 12.4412, -61.5382, 2.44116, -71.5382, -1.55884, -79.5382, -3.55884, -76.5382, -3.55884, -72.5382, -3.55884, -67.5382, -2.55884, -62.5382, 0.441162, -57.5382, 2.44116, -49.5382, 1.44116, -42.5382, -0.558838, -44.5382, -2.55884, -49.5382, -6.55884, -55.5382, -11.5588, -63.5382, -12.5588, -75.5382, -10.5588, -78.5382, -11.5588, -81.5382, -14.5588, -73.5382, -15.5588, -66.5382, -20.5588, -71.5382, -20.5588, -65.5382, -24.5588, -57.5382, -29.5588, -47.5382, -28.5588, -38.5382, -24.5588, -32.5382, -17.5588, -25.5382, -16.5588, -21.5382, -20.5588, -23.5382, -29.5588, -28.5382, -36.5588, -33.5382, -36.5588, -29.5382, -33.5588, -22.5382, -29.5588, -17.5382, -19.5588, -11.5382)
 
-[node name="lamp" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(608.859, 1045.73)
+[node name="hot_dog" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(1474.15, 176.841)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-68.8595, -30.7267, -46.8595, -17.7267, -32.8595, -15.7267, -14.8595, -18.7267, 0.140503, -21.7267, 2.1405, -26.7267, -3.8595, -29.7267, -0.859497, -35.7267, 8.1405, -34.7267, 12.1405, -31.7267, 11.1405, -27.7267, 9.1405, -24.7267, 11.1405, -21.7267, 24.1405, -17.7267, 32.1405, -15.7267, 40.1405, -21.7267, 45.1405, -21.7267, 52.1405, -19.7267, 55.1405, -13.7267, 57.1405, -7.72668, 54.1405, -2.72668, 48.1405, 2.27332, 40.1405, 4.27332, 40.1405, 12.2733, 36.1405, 19.2733, 28.1405, 26.2733, 19.1405, 30.2733, 10.1405, 31.2733, 10.1405, 35.2733, 15.1405, 36.2733, 15.1405, 36.2733, 18.1405, 40.2733, 13.1405, 43.2733, -4.8595, 41.2733, -9.8595, 37.2733, -3.8595, 34.2733, -0.859497, 29.2733, -16.8595, 23.2733, -24.8595, 12.2733, -28.8595, 4.27332, -44.8595, -1.72668, -60.8595, -11.7267, -71.8595, -19.7267, -80.8595, -30.7267, -74.8595, -33.7267)
+polygon = PackedVector2Array(-48.1475, -14.8409, -52.1475, -7.8409, -52.1475, 3.1591, -47.1475, 14.1591, -39.1475, 22.1591, -25.1475, 29.1591, -10.1475, 31.1591, 4.85254, 32.1591, 19.8525, 30.1591, 32.8525, 27.1591, 41.8525, 21.1591, 48.8525, 12.1591, 50.8525, 1.1591, 46.8525, -4.8409, 53.8525, -9.8409, 53.8525, -15.8409, 52.8525, -19.8409, 45.8525, -19.8409, 44.8525, -23.8409, 42.8525, -27.8409, 35.8525, -27.8409, 24.8525, -24.8409, 5.85254, -24.8409, -10.1475, -28.8409, -18.1475, -31.8409, -24.1475, -33.8409, -34.1475, -31.8409, -39.1475, -27.8409, -41.1475, -23.8409, -41.1475, -17.8409)
 
-[node name="egg" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(467.716, 1009.23)
+[node name="carrot" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(924.09, 937.095)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(1.28369, -66.2297, 14.2837, -63.2297, 24.2837, -56.2297, 29.2837, -46.2297, 34.2837, -34.2297, 38.2837, -16.2297, 40.2837, 0.770325, 36.2837, 14.7703, 28.2837, 26.7703, 17.2837, 32.7703, 8.28369, 38.7703, 7.28369, 50.7703, 10.2837, 58.7703, 18.2837, 64.7703, 27.2837, 69.7703, 22.2837, 76.7703, 11.2837, 80.7703, -3.71631, 82.7703, -19.7163, 76.7703, -25.7163, 71.7703, -19.7163, 64.7703, -12.7163, 56.7703, -10.7163, 48.7703, -9.71631, 39.7703, -10.7163, 35.7703, -24.7163, 28.7703, -32.7163, 18.7703, -37.7163, 5.77032, -39.7163, -7.22968, -39.7163, -22.2297, -34.7163, -37.2297, -27.7163, -49.2297, -18.7163, -58.2297, -9.71631, -63.2297)
+polygon = PackedVector2Array(66.9128, 113.905, 34.9128, 73.905, -6.08716, 35.905, -36.0872, -0.0949707, -42.0872, -21.095, -41.0872, -38.095, -57.0872, -64.095, -64.0872, -76.095, -68.0872, -90.095, -66.0872, -91.095, -60.0872, -87.095, -63.0872, -92.095, -66.0872, -103.095, -67.0872, -112.095, -64.0872, -114.095, -58.0872, -100.095, -53.0872, -90.095, -47.0872, -82.095, -50.0872, -90.095, -56.0872, -110.095, -53.0872, -120.095, -46.0872, -103.095, -29.0872, -51.095, -7.08716, -45.095, 3.91284, -37.095, 17.9128, -24.095, 28.9128, -7.09497, 38.9128, 14.905, 53.9128, 49.905, 61.9128, 80.905)
 
-[node name="bust" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1138.45, 426.084)
+[node name="burger" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(1789.44, 964.686)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-69.4506, -151.084, -72.4506, -167.084, -59.4506, -182.084, -60.4506, -196.084, -50.4506, -204.084, -37.4506, -210.084, -30.4506, -211.084, -19.4506, -221.084, -9.45056, -224.084, 7.54944, -221.084, 21.5494, -221.084, 34.5494, -216.084, 37.5494, -205.084, 37.5494, -194.084, 45.5494, -190.084, 45.5494, -179.084, 38.5494, -172.084, 29.5494, -168.084, 32.5494, -149.084, 30.5494, -128.084, 31.5494, -119.084, 34.5494, -110.084, 26.5494, -102.084, 12.5494, -99.0844, 10.5494, -91.0844, 26.5494, -88.0844, 31.5494, -92.0844, 41.5494, -91.0844, 44.5494, -84.0844, 41.5494, -76.0844, 32.5494, -75.0844, 28.5494, -52.0844, 19.5494, -34.0844, 10.5494, -22.0844, 7.54944, -11.0844, 17.5494, -2.08441, 26.5494, -2.08441, 26.5494, 3.91559, 39.5494, 11.9156, 40.5494, 27.9156, 31.5494, 26.9156, 49.5494, 35.9156, 50.5494, 45.9156, 51.5494, 52.9156, 60.5494, 55.9156, 60.5494, 69.9156, 34.5494, 111.916, 34.5494, 127.916, 94.5494, 144.916, 90.5494, 184.916, -18.4506, 188.916, -64.4506, 173.916, -62.4506, 138.916, -47.4506, 142.916, -44.4506, 133.916, -43.4506, 123.916, -36.4506, 119.916, -36.4506, 101.916, -38.4506, 87.9156, -51.4506, 69.9156, -55.4506, 57.9156, -47.4506, 48.9156, -44.4506, 34.9156, -39.4506, 27.9156, -43.4506, 19.9156, -43.4506, 10.9156, -33.4506, 3.91559, -32.4506, -4.08441, -14.4506, -9.08441, -15.4506, -15.0844, -31.4506, -21.0844, -40.4506, -43.0844, -45.4506, -64.0844, -48.4506, -76.0844, -23.4506, -86.0844, -33.4506, -126.084, -43.4506, -122.084, -52.4506, -125.084, -55.4506, -131.084, -56.4506, -139.084, -64.4506, -143.084)
+polygon = PackedVector2Array(-2.44189, 40.3142, 12.5581, 38.3142, 28.5581, 31.3142, 36.5581, 23.3142, 40.5581, 11.3142, 41.5581, 3.31421, 49.5581, -3.68579, 48.5581, -6.68579, 44.5581, -5.68579, 40.5581, -3.68579, 40.5581, -12.6858, 34.5581, -25.6858, 29.5581, -32.6858, 21.5581, -37.6858, 10.5581, -40.6858, -2.44189, -39.6858, -10.4419, -38.6858, -20.4419, -35.6858, -33.4419, -27.6858, -39.4419, -18.6858, -41.4419, -7.68579, -40.4419, 9.31421, -40.4419, 22.3142, -33.4419, 30.3142, -28.4419, 34.3142, -20.4419, 37.3142)
 
-[node name="urn" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1567.2, 1123.59)
+[node name="racoon" type="Polygon2D" parent="click_zone_container"]
+position = Vector2(1328.84, 855.457)
 color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(0.797852, 102.406, -13.2021, 98.4065, -6.20215, 92.4065, -6.20215, 85.4065, -17.2021, 71.4065, -28.2021, 30.4065, -33.2021, -5.59351, -52.2021, -34.5935, -57.2021, -64.5935, -50.2021, -64.5935, -43.2021, -42.5935, -32.2021, -24.5935, -22.2021, -29.5935, -16.2021, -40.5935, -13.2021, -55.5935, -12.2021, -80.5935, -20.2021, -90.5935, -11.2021, -94.5935, -1.20215, -93.5935, 10.7979, -88.5935, 1.79785, -80.5935, 1.79785, -65.5935, 2.79785, -55.5935, 15.7979, -66.5935, 32.7979, -65.5935, 43.7979, -59.5935, 43.7979, -44.5935, 39.7979, -27.5935, 26.7979, -13.5935, 26.7979, 22.4065, 26.7979, 50.4065, 20.7979, 71.4065, 11.7979, 81.4065, 7.79785, 87.4065, 18.7979, 94.4065, 10.7979, 100.406)
-
-[node name="portrait" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(127.881, 279.355)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-129.881, -145.355, 85.1186, -181.355, 125.119, -186.355, 119.119, 98.6447, 114.119, 183.645, -129.881, 153.645)
+polygon = PackedVector2Array(-34.8362, 59.5426, -11.8362, 50.5426, 5.16382, 51.5426, 21.1638, 63.5426, 38.1638, 57.5426, 38.1638, 9.5426, 41.1638, 6.5426, 50.1638, -2.4574, 53.1638, -6.4574, 53.1638, -10.4574, 58.1638, -11.4574, 59.1638, -13.4574, 63.1638, -14.4574, 61.1638, -17.4574, 61.1638, -20.4574, 66.1638, -19.4574, 64.415, -22.7896, 60.1638, -25.4574, 68.1638, -26.4574, 69.1638, -28.4574, 13.1638, -46.4574, -2.83618, -45.4574, -12.8362, -43.4574, -19.8362, -42.4574, -23.8362, -39.4574, -36.8362, -59.4574, -42.8362, -64.4574, -44.8362, -62.4574, -46.8362, -58.4574, -47.8362, -49.4574, -45.8362, -32.4574, -53.8362, -28.4574, -64.8362, -18.4574, -63.8362, -15.4574, -59.8362, -14.4574, -60.8362, -12.4574, -61.8362, -8.4574, -58.0571, -9.06659, -55.8362, -5.4574, -52.8362, -3.4574, -51.8362, 1.5426, -48.8362, -0.457397, -45.8362, 1.5426, -29.8362, 13.5426, -34.8362, 19.5426)
 
 [node name="button_image_container" type="Control" parent="."]
 layout_mode = 1
@@ -786,86 +113,79 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="tablet" type="ReferenceRect" parent="button_image_container"]
+[node name="bottle" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 108.0
-offset_top = 389.0
-offset_right = 366.0
-offset_bottom = 624.0
+offset_left = 112.0
+offset_top = 809.0
+offset_right = 288.0
+offset_bottom = 1168.0
 
-[node name="knight" type="ReferenceRect" parent="button_image_container"]
+[node name="onion" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 383.0
-offset_top = 353.0
-offset_right = 810.0
-offset_bottom = 904.0
+offset_left = 287.0
+offset_top = 903.0
+offset_right = 422.0
+offset_bottom = 1196.0
 
-[node name="sword" type="ReferenceRect" parent="button_image_container"]
+[node name="ice_cream" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 135.0
-offset_top = 630.0
-offset_right = 473.0
-offset_bottom = 806.0
+offset_left = 437.0
+offset_top = 880.0
+offset_right = 596.0
+offset_bottom = 1173.0
 
-[node name="sarcophagus" type="ReferenceRect" parent="button_image_container"]
+[node name="cheese" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 143.0
-offset_top = 848.0
-offset_right = 361.0
-offset_bottom = 1365.0
+offset_left = 611.0
+offset_top = 859.0
+offset_right = 853.0
+offset_bottom = 1066.0
 
-[node name="painting" type="ReferenceRect" parent="button_image_container"]
+[node name="bonbon" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 430.0
-offset_top = 919.0
-offset_right = 732.0
-offset_bottom = 1213.0
+offset_left = 641.0
+offset_top = 1076.0
+offset_right = 865.0
+offset_bottom = 1186.0
 
-[node name="axe" type="ReferenceRect" parent="button_image_container"]
+[node name="hot_dog" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 467.0
-offset_top = 1228.0
-offset_right = 745.0
-offset_bottom = 1401.0
+offset_left = 99.0
+offset_top = 1201.0
+offset_right = 304.0
+offset_bottom = 1342.0
 
-[node name="bones" type="ReferenceRect" parent="button_image_container"]
+[node name="cherry" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 93.0
-offset_top = 1432.0
-offset_right = 340.0
-offset_bottom = 1564.0
+offset_left = 220.0
+offset_top = 1302.0
+offset_right = 429.0
+offset_bottom = 1488.0
 
-[node name="lamp" type="ReferenceRect" parent="button_image_container"]
+[node name="carrot" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 370.0
-offset_top = 1454.0
-offset_right = 556.0
-offset_bottom = 1573.0
+offset_left = 402.0
+offset_top = 1180.0
+offset_right = 583.0
+offset_bottom = 1485.0
 
-[node name="egg" type="ReferenceRect" parent="button_image_container"]
+[node name="burger" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 573.0
-offset_top = 1451.0
-offset_right = 743.0
-offset_bottom = 1659.0
+offset_left = 643.0
+offset_top = 1317.0
+offset_right = 846.0
+offset_bottom = 1495.0
 
-[node name="bust" type="ReferenceRect" parent="button_image_container"]
+[node name="turkey_leg" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 81.0
-offset_top = 1634.0
-offset_right = 289.0
-offset_bottom = 2053.0
+offset_left = 581.0
+offset_top = 1207.0
+offset_right = 848.0
+offset_bottom = 1323.0
 
-[node name="urn" type="ReferenceRect" parent="button_image_container"]
+[node name="racoon" type="ReferenceRect" parent="button_image_container"]
 layout_mode = 0
-offset_left = 340.0
-offset_top = 1647.0
-offset_right = 476.0
-offset_bottom = 1950.0
-
-[node name="portrait" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 507.0
-offset_top = 1702.0
-offset_right = 793.0
-offset_bottom = 2072.0
+offset_left = 107.0
+offset_top = 1699.0
+offset_right = 854.0
+offset_bottom = 2323.0

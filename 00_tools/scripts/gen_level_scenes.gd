@@ -6,7 +6,7 @@ extends EditorScript
 
 
 ## Folder where we read the ./src folder and generate the stage.tscn file for that folder in ../
-var SELECTED_FOLDER = "*" # res://${num}/src
+var SELECTED_FOLDER = "04" # res://${num}/src
 var ALL_FOLDERS = ["01", "02"]
 
 # Used to (re-)generate a level
@@ -258,7 +258,7 @@ func generate_scene_file_for_level(target_folder):
 #		btn.set_icon(btnAtlasTexture)
 		btn.icon = btnAtlasTexture
 		btn.flat = true #makes bg white
-		print('###buttonRegionRect: ', buttonRegionRect.name)
+#		print('###buttonRegionRect: ', buttonRegionRect.name)
 		btn.name = buttonRegionRect.name # bring over the node name (obj name)
 #		btn.disabled = true
 
@@ -279,11 +279,52 @@ func generate_scene_file_for_level(target_folder):
 			
 	# todo: make flatten algo
 	
+
+	# run assertions before saving
+	# tode move to external function
+	# count the right_rail button node names,
+	var clickZones = clickZoneContainer.get_children()
+	var rightRailButtons = rightRailButtonContainer.get_children()
+	var assert_verify_matches = {}
+	var assertions_failed = false
+	
+	# gather up clickzones
+	for zone in clickZones:
+		var zone_name = zone.get_name()
+		## TODO: Reuse this? in fn?
+		if assert_verify_matches.has(zone_name):
+			assert_verify_matches[zone_name] += 1
+		else:
+			assert_verify_matches[zone_name] = 1
+	
+	# gather up right rail buttons
+	for btn in rightRailButtons:
+		var btn_name = btn.get_name()
+		## TODO: Reuse this? in fn?
+		if assert_verify_matches.has(btn_name):
+			assert_verify_matches[btn_name] += 1
+		else:
+			assert_verify_matches[btn_name] = 1
+	
+	
+	#VERIFY: there should be exactly one of each currently in the clickzones
+	for zone in assert_verify_matches:
+		var assertion_result = assert_verify_matches[zone] == 2
+		assertions_failed = !assertion_result
+		assert(assertion_result, "ClickZones: %s has %s" % [zone, assert_verify_matches[zone]])
+
+
+	# STOP saving if assertions failed
+	if(assertions_failed):
+		print('### ERROR: BAILING.############ ')
+		return
 	
 	# SAVE new tree as scene
 	var scene_new = PackedScene.new()
 	scene_new.pack(scene)
 	ResourceSaver.save(scene_new, "res://%s/stage.tscn" % target_folder)
+	
+	print('SUCCESS: ', "res://%s/stage.tscn" % target_folder)
 	
 	
 	# FIXME: or we can just load that and INSTANTIATE it... 

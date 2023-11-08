@@ -36,6 +36,7 @@ extends Control
 # then we can move it around etc...
 # Clicking save would serialize and save to a resource with simple objects (class needed?)
 
+## test comment
 @export var add_clickzone = false :
 	get:
 		return add_clickzone
@@ -43,28 +44,28 @@ extends Control
 		add_clickzone_handler()
 		add_clickzone = false
 
-@export_category("Move Polygon Shape set") #######################		
-## Readonly. Usually set to center of the shape
-@export var new_position = Vector2(0,0) : 
-	get:
-		return get_node("Marker2D").position
-	set(value):
-		get_node("Marker2D").set_position(new_position)
-		#update?
+@export_category("Adjust position for all click_zones") #######################		
+
+## test 
+@export var move_all_zones_offset = Vector2(0,0) 
 
 ## Clickzone we want to move the position of
-@export var selected_clickzone: Polygon2D
+#@export var selected_clickzone: Polygon2D
 
 ## on enter make the movement. Or just convert this to the movement with another button?
 ## ACTION: Moves polygon from current position to New Position ^ 
 ## and sets the each polygon point relative to the new center point based on new position
-@export var move_polygon_set = false :
+@export var move_all_clickzones = false :
 	get:
 		return load_shapes
 	set(value):
-		move_polygon_handler(selected_clickzone, new_position)
-		move_polygon_set = false
+		# adjust all shapes by 
+		for zone in get_node("click_zone_container").get_children():
+			# REQUIRES that polygons be centered first (via "auto_move_to_center")
+			zone.position += move_all_zones_offset 
+		move_all_clickzones = false
 
+# TODO: make this happen automagically during export. See if the shape is off, then move it 
 ## Automagically detect centroid of the shape, and move the polygon position there
 ## then move all the polygons so they are relative to that 0,0 center
 @export var auto_move_to_center  = false :
@@ -101,6 +102,42 @@ extends Control
 		save_shapes = false
 
 
+
+# hacky way to shortcut creating a plugin w/o creating a proper plugin 
+# need to make a proper plugin for this?
+#extends EditorPlugin
+
+
+
+# use poly POSITION as center point
+# use polygon for shaping
+# save to disk
+
+
+# 1. Add on-screen buttons (in a panel?)
+# 2. CREATE clickzone
+# 3. Renders it on screen via right rail...
+# 4. Adds it to the array? (do we need to export it?)
+# Q: Can we have the code update the right rail thing?
+# 5. Renders it on the page and then we can control it.
+# 6. Manipulating it updates the array
+# Maybe we try to do it w/o exported thing first. THEN we add a "SAVE" button...
+# how do we name each shape?
+# we can manually name the node... Yes.
+
+#@export var image_regions: Array Rect2
+#@export(Array, Rect2) var image_regions
+
+#export(Array, AtlasTexture) var textures
+
+
+
+
+## add a button to add another item
+# TODO: 
+# add a new poly with a basic shape (square?)
+# then we can move it around etc...
+# Clicking save would serialize and save to a resource with simple objects (class needed?)
 
 
 
@@ -474,6 +511,7 @@ func auto_calc_shape_center_and_move_shape_there(clickZoneShape):
 # FIXME: Consider getting the new_position automatically from shape_gravity or similar...
 # then this could be, "set_polygons_relative_to_shape_gravity_center_point
 # moves POSITION of area, and adjusts the polygon shape to balance that.
+## @ shouldMoveShape - boolean. If set to true, it'll actually move the shape and not just center the position with the polygons
 func move_polygon_handler(selected_zone: Polygon2D, new_pos:Vector2):
 
 	# distance between old and new position and the distance we have to move each polygon
@@ -483,15 +521,14 @@ func move_polygon_handler(selected_zone: Polygon2D, new_pos:Vector2):
 	# move the shape area to new position by delta
 	selected_zone.set_position(new_pos)
 	
-	
 	# move each polygon point in polygon shape to new delta relative to new area position
-	
 	for i in len(selected_zone.polygon): # move each point by delta
 		selected_zone.polygon[i] -= delta
 #		point = point + delta
 	
 	# assign modified clone of polygon to clickzone shape (because it was a copy)
 #	selected_clickzone.set_polygon(poly)
+
 
 
 
@@ -663,4 +700,5 @@ func centroid_of_polygon(poly_array: PackedVector2Array):
 
 
 # UTILS ---------------
+
 

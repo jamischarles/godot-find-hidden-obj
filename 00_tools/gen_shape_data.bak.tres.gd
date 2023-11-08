@@ -1,9 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnvvlff0s1ork"]
-
-[ext_resource type="Texture2D" uid="uid://bpwphtkeq6rxm" path="res://00_canvas_images/02.png" id="2_8g7qv"]
-
-[sub_resource type="GDScript" id="GDScript_434s2"]
-script/source = "@tool # only runs when we have the associated node selected _click_zones
+@tool # only runs when we have the associated node selected _click_zones
 extends Control
 # hacky way to shortcut creating a plugin w/o creating a proper plugin 
 # need to make a proper plugin for this?
@@ -23,7 +18,7 @@ extends Control
 # Q: Can we have the code update the right rail thing?
 # 5. Renders it on the page and then we can control it.
 # 6. Manipulating it updates the array
-# Maybe we try to do it w/o exported thing first. THEN we add a \"SAVE\" button...
+# Maybe we try to do it w/o exported thing first. THEN we add a "SAVE" button...
 # how do we name each shape?
 # we can manually name the node... Yes.
 
@@ -48,13 +43,13 @@ extends Control
 		add_clickzone_handler()
 		add_clickzone = false
 
-@export_category(\"Move Polygon Shape set\") #######################		
+@export_category("Move Polygon Shape set") #######################		
 ## Readonly. Usually set to center of the shape
 @export var new_position = Vector2(0,0) : 
 	get:
-		return get_node(\"Marker2D\").position
+		return get_node("Marker2D").position
 	set(value):
-		get_node(\"Marker2D\").set_position(new_position)
+		get_node("Marker2D").set_position(new_position)
 		#update?
 
 ## Clickzone we want to move the position of
@@ -80,13 +75,13 @@ extends Control
 		auto_move_to_center = false
 		
 		## for now just loop and fix ALL the clickzone center points
-		for zone in get_node(\"click_zone_container\").get_children():
+		for zone in get_node("click_zone_container").get_children():
 			auto_calc_shape_center_and_move_shape_there(zone)
 		
 
 
 		
-@export_category(\"Load & Save\") #########################
+@export_category("Load & Save") #########################
 ## To LOAD shapes from and SAVE shapes and image to
 @export var selected_folder: String
 ## LOADS new shapes from selected_folder
@@ -148,7 +143,7 @@ func add_clickzone_handler():
 	poly.color.a = .5
 	$click_zone_container.add_child(poly)
 	
-	poly.set_name(\"new_poly\")
+	poly.set_name("new_poly")
 	
 	var polygon: PackedVector2Array
 	
@@ -172,7 +167,7 @@ func add_clickzone_handler():
 #	var editor = EditorInterface
 #	var sec = editor.get_editor_interface()
 	
-#	print(\"##editor\", sec)
+#	print("##editor", sec)
 		# TODO: Add a check here
 #	EditorPlugin.new().get_editor_interface().set_selection(poly)
 #	self.get_editor_interface().get_selection()
@@ -181,7 +176,7 @@ func add_clickzone_handler():
 	
 	
 	var editor = EditorPlugin.new().get_editor_interface()
-	print(\"##\", editor)
+	print("##", editor)
 ##	editor.edit_node(poly)
 ##	editor.add_node(poly)
 #
@@ -191,23 +186,23 @@ func add_clickzone_handler():
 	sel.add_node(poly)
 #
 ##	EditorInterface.
-#	print(\"ADD CLICKZONE\")
+#	print("ADD CLICKZONE")
 	
 # allows us to load (READ) (and save) shapes from a target folder...	
 # input/output folder should be the same
-# but we can say \"LOAD\" and \"SAVE\" separately
+# but we can say "LOAD" and "SAVE" separately
 func load_shapes_handler():
 	# load the data file
 	# load the image
 	
 	
 	
-#	var loaded_data = load(\"res://02/src/shape_data\")
-	var loaded_data_raw = FileAccess.open(\"%s/src/shape_data.txt\" % selected_folder, FileAccess.READ)
+#	var loaded_data = load("res://02/src/shape_data")
+	var loaded_data_raw = FileAccess.open("%s/src/shape_data.txt" % selected_folder, FileAccess.READ)
 	var loaded_data = str_to_var(loaded_data_raw.get_as_text()) # deserialize back into the data structure
 	
 	# EXPECT this to ref the 00_canvas_images location (backups for all images)
-	var loaded_image = load(loaded_data[\"imageData\"].src)
+	var loaded_image = load(loaded_data["imageData"].src)
 	
 	
 	# set up 2 images (1 full, 1 with legend hidden)
@@ -215,13 +210,13 @@ func load_shapes_handler():
 	atlasTexture.atlas = loaded_image
 	# set atlas region to entire image (for now)
 #	atlasTexture.region = Rect2(0, 0, atlasTexture.atlas.get_width(), atlasTexture.atlas.get_height())
-	atlasTexture.region = loaded_data[\"imageData\"].region
+	atlasTexture.region = loaded_data["imageData"].region
 	
 	# assign new image to the 2 image nodes
 	$TextureRect.texture = atlasTexture
 	
-	var w = loaded_data[\"imageData\"].size.x
-	var h = loaded_data[\"imageData\"].size.y
+	var w = loaded_data["imageData"].size.x
+	var h = loaded_data["imageData"].size.y
 	$TextureRect_w_legend.texture = atlasTexture.duplicate()
 	$TextureRect_w_legend.texture.set_region(Rect2(0,0, w, h)) # full height of img
 
@@ -233,14 +228,14 @@ func load_shapes_handler():
 		$click_zone_container.remove_child(zone)
 	
 	# create clickzones from stored data
-	for zoneData in loaded_data[\"clickZones\"]:
+	for zoneData in loaded_data["clickZones"]:
 		var poly = Polygon2D.new()
 		# attach to tree
 		$click_zone_container.add_child(poly)
 		
 		poly.name = zoneData.name
-		poly.position = Vector2(zoneData[\"pos_x\"], zoneData[\"pos_y\"])
-		poly.polygon = zoneData[\"polygon\"]
+		poly.position = Vector2(zoneData["pos_x"], zoneData["pos_y"])
+		poly.polygon = zoneData["polygon"]
 		# turn transparency down
 		poly.color.a = .5
 		
@@ -254,7 +249,7 @@ func load_shapes_handler():
 		$button_image_container.remove_child(rect)	
 		
 	# create button_image reference rects from stored data
-	for loaded_region in loaded_data[\"buttonRegions\"]:
+	for loaded_region in loaded_data["buttonRegions"]:
 		var region = ReferenceRect.new()
 		$button_image_container.add_child(region)
 		
@@ -286,7 +281,7 @@ func load_shapes_handler():
 # WRITES shapes to disc in the target folder	
 # TODO: Extract all the serialize -> deserialize logic?
 func save_shapes_handler():
-	print(\"SAVE TO DISK\")
+	print("SAVE TO DISK")
 	
 	
 	# Assert that it's safe to export
@@ -297,43 +292,43 @@ func save_shapes_handler():
 	# save it
 	
 	
-	print(\"###buttonImageRegions\", buttonImageRegions)
+	print("###buttonImageRegions", buttonImageRegions)
 	
 
 	
-#	var data = { \"key\": \"value\", \"another_key\": 123, \"lock\": Vector2() }
+#	var data = { "key": "value", "another_key": 123, "lock": Vector2() }
 	
-	var data = {\"imageData\": {}, \"clickZones\": [], \"buttonRegions\": []}
+	var data = {"imageData": {}, "clickZones": [], "buttonRegions": []}
 	
 #	print('data', data)
 	var img_path = $TextureRect.texture.atlas.resource_path
 	
 	# capture image rect data
-	data[\"imageData\"] = {
-		\"src\": img_path,
-		\"size\": image.size, # total image size (no region restrictions)
-		\"region\": image.texture.region # region of image minus legend
+	data["imageData"] = {
+		"src": img_path,
+		"size": image.size, # total image size (no region restrictions)
+		"region": image.texture.region # region of image minus legend
 	}
 	
 	
 	# capture clickzone shapes
 	for zone in $click_zone_container.get_children():
-		data[\"clickZones\"].append({
+		data["clickZones"].append({
 			# Vector2 is not supported by JSON
-			\"name\": zone.name,
-			\"pos_x\" : zone.position.x, 
-			\"pos_y\" : zone.position.y,
-			\"polygon\": zone.get_polygon()
+			"name": zone.name,
+			"pos_x" : zone.position.x, 
+			"pos_y" : zone.position.y,
+			"polygon": zone.get_polygon()
 		})
 		
 		
 		
 	## capture button_image rects for subregions
 	for region in $button_image_container.get_children():
-		data[\"buttonRegions\"].append({
+		data["buttonRegions"].append({
 			# Vector2 is not supported by JSON
-			\"name\": region.name,
-			\"rect\" : region.get_rect(), 
+			"name": region.name,
+			"rect" : region.get_rect(), 
 		})
 
 
@@ -361,11 +356,11 @@ func save_shapes_handler():
 	
 	
 	# create folder if it doesn't exist yet
-	DirAccess.make_dir_recursive_absolute(\"res://%s/src/\" % selected_folder)
+	DirAccess.make_dir_recursive_absolute("res://%s/src/" % selected_folder)
 	
 	# save data file with shapes
-#	ResourceSaver.save(packed, \"%s/src/shape_data.res\" % dest_folder)
-	var save_shapes = FileAccess.open(\"%s/src/shape_data.txt\" % selected_folder, FileAccess.WRITE)
+#	ResourceSaver.save(packed, "%s/src/shape_data.res" % dest_folder)
+	var save_shapes = FileAccess.open("%s/src/shape_data.txt" % selected_folder, FileAccess.WRITE)
 	
 	# save as binary (non human readable, but preserves data stuctures)
 #	save_shapes.store_var(data, true)
@@ -377,12 +372,12 @@ func save_shapes_handler():
 	save_shapes.store_string(var_to_str(data))
 	
 	
-#	save_shapes.store_line(var_to_str(data[\"clickZones\"]))
+#	save_shapes.store_line(var_to_str(data["clickZones"]))
 	
 	
 	
 #	save_shapes.store_pascal_string(data)
-#	ResourceSaver.save(data, \"%s/src/shape_data.res\" % selected_folder)
+#	ResourceSaver.save(data, "%s/src/shape_data.res" % selected_folder)
 
 	
 	# save/copy image
@@ -390,21 +385,21 @@ func save_shapes_handler():
 	
 #	DirAccess.copy
 
-#	var dir = DirAccess.open(selected_folder + \"/src\")
+#	var dir = DirAccess.open(selected_folder + "/src")
 #	var img_content = FileAccess.open(img_path, FileAccess.READ)
 ##	print('img', img_test)
-#	var dest_file = FileAccess.open(\"res://%s/src/img.png\" % dest_folder, FileAccess.WRITE)
+#	var dest_file = FileAccess.open("res://%s/src/img.png" % dest_folder, FileAccess.WRITE)
 #	dest_file.store_buffer(img_content)
-#	dir.copy(img_path,\"res://%s/src\" % dest_folder);
+#	dir.copy(img_path,"res://%s/src" % dest_folder);
 
 	## TODO: Move to separate function
-	print('image copy: ', img_path, \" -> res://%s/src/img.png\" % selected_folder) 
-	var res = DirAccess.copy_absolute(img_path, \"res://%s/src/img.png\" % selected_folder)
+	print('image copy: ', img_path, " -> res://%s/src/img.png" % selected_folder) 
+	var res = DirAccess.copy_absolute(img_path, "res://%s/src/img.png" % selected_folder)
 	print('image copy status: ', res, img_path) # code 0 == SUCCESS!!!
 #	var directory = Directory.new()
 #	var dirErr = directory.open(basePath)
 #	if dirErr != OK:
-#		printerr(\"Couldn't open directory \" + basePath)
+#		printerr("Couldn't open directory " + basePath)
 #		return
 	
 	
@@ -429,12 +424,12 @@ func run_assertions_on_tree():
 			
 			
 		#VERIFY: No clickZone positions should be OUTSIDE the canvas or on the edge...
-		assert(zone.position.x > 0 && zone.position.y > 0, \"ClickZones: %s has position at edge or off canvas. Please fix\" % zone)
+		assert(zone.position.x > 0 && zone.position.y > 0, "ClickZones: %s has position at edge or off canvas. Please fix" % zone)
 
 	# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
 	# we can create a dictionary and count that each one has 2
 
-#	print(\"i\", i)
+#	print("i", i)
 #	print('nodeNUm', clickZone.get_instance_id())
 
 #
@@ -453,7 +448,7 @@ func run_assertions_on_tree():
 	
 	#VERIFY: there should be exactly one of each currently in the clickzones
 	for zone in assert_verify_matches:
-		assert(assert_verify_matches[zone] == 2, \"ClickZones: %s has %s\" % [zone, assert_verify_matches[zone]])
+		assert(assert_verify_matches[zone] == 2, "ClickZones: %s has %s" % [zone, assert_verify_matches[zone]])
 		
 	
 	
@@ -465,7 +460,7 @@ func run_assertions_on_tree():
 ## Just fix all shapes for now...
 func auto_calc_shape_center_and_move_shape_there(clickZoneShape):
 	var centerOfShape = centroid_of_polygon(clickZoneShape.polygon)
-#	print(\"###centroid\", centerOfShape)
+#	print("###centroid", centerOfShape)
 	
 	## take center of shape (which is relative to polygon2d position, and
 	## adjust so new position is (0,0) based
@@ -477,13 +472,13 @@ func auto_calc_shape_center_and_move_shape_there(clickZoneShape):
 	move_polygon_handler(clickZoneShape, newPos)
 	
 # FIXME: Consider getting the new_position automatically from shape_gravity or similar...
-# then this could be, \"set_polygons_relative_to_shape_gravity_center_point
+# then this could be, "set_polygons_relative_to_shape_gravity_center_point
 # moves POSITION of area, and adjusts the polygon shape to balance that.
 func move_polygon_handler(selected_zone: Polygon2D, new_pos:Vector2):
 
 	# distance between old and new position and the distance we have to move each polygon
 	var delta = new_pos - selected_zone.position
-	print(\"delta to move: \", delta)
+	print("delta to move: ", delta)
 	
 	# move the shape area to new position by delta
 	selected_zone.set_position(new_pos)
@@ -542,22 +537,22 @@ func centroid_of_polygon(poly_array: PackedVector2Array):
 #func _get_configuration_warnings():
 #	var warnings = []
 #
-#	if title == \"\":
-#		warnings.append(\"Please set `title` to a non-empty value.\")
+#	if title == "":
+#		warnings.append("Please set `title` to a non-empty value.")
 #
 #	if description.length() >= 100:
-#		warnings.append(\"`description` should be less than 100 characters long.\")
+#		warnings.append("`description` should be less than 100 characters long.")
 #
-#	# Returning an empty array means \"no warning\".
+#	# Returning an empty array means "no warning".
 #	return warnings
 	
 	
-#	ResourceSaver.save(packed, \"%s/src/shape_data.res\" % dest_folder)
+#	ResourceSaver.save(packed, "%s/src/shape_data.res" % dest_folder)
 	
 #	var scene_new = PackedScene.new()
 
 #	scene_new.pack(frog0)
-#	ResourceSaver.save(scene_new, \"res://00/stage_new.tscn\")
+#	ResourceSaver.save(scene_new, "res://00/stage_new.tscn")
 	
 
 ## UTILS #########################################################	
@@ -622,13 +617,13 @@ func centroid_of_polygon(poly_array: PackedVector2Array):
 #		# TODO: add assertion to ensures there's a matching pair for each one... (same shape and size)?
 #		# we can create a dictionary and count that each one has 2
 #
-#		print(\"i\", i)
+#		print("i", i)
 #		print('nodeNUm', clickZone.get_instance_id())
 
 #
 #RIFY: there should be exactly one of each currently in the clickzones
 #	for zone in assert_verify_matches:
-#		assert(assert_verify_matches[zone] == 1, \"ClickZones: %s has %s\" % [zone, assert_verify_matches[zone]])
+#		assert(assert_verify_matches[zone] == 1, "ClickZones: %s has %s" % [zone, assert_verify_matches[zone]])
 
 #	# count the right_rail button node names,
 #	var legendButtons = $HBoxContainer/right_rail/legend_for_hidden_objects.get_children()
@@ -643,14 +638,14 @@ func centroid_of_polygon(poly_array: PackedVector2Array):
 
 # Verify that each collision shape has position of 0,0
 		# we need to use parent for positioining so clickzones line up with visual part
-#		assert( int(shape.position.x) == 0 && int(shape.position.y) == 0, \"ERROR: Each child CollisionShape MUST be 0,0 to avoid clickZone drift: %s, shape name:%s\" % [shape.position, clickZone.name]);
+#		assert( int(shape.position.x) == 0 && int(shape.position.y) == 0, "ERROR: Each child CollisionShape MUST be 0,0 to avoid clickZone drift: %s, shape name:%s" % [shape.position, clickZone.name]);
 
 		# 2) verify each shape has a name
 		# throw when shape_names aren't assigned for each click zone
 		# https://ask.godotengine.org/54948/throw-exception-or-error
 		# confusing because eval is opposite for err
 #		var name = clickZone.shape_name
-#		assert( name != \"\", \"ERROR: You must give each clickZone a shape_name value.\");
+#		assert( name != "", "ERROR: You must give each clickZone a shape_name value.");
 		
 		
 #		clickZone.shape_uid = i
@@ -669,179 +664,3 @@ func centroid_of_polygon(poly_array: PackedVector2Array):
 
 # UTILS ---------------
 
-"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2oqk5"]
-atlas = ExtResource("2_8g7qv")
-region = Rect2(2.08165e-12, 2.08165e-12, 3000, 975)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_etu5q"]
-atlas = ExtResource("2_8g7qv")
-region = Rect2(0, 0, 3000, 1350)
-
-[node name="get_image_coords" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-script = SubResource("GDScript_434s2")
-new_position = Vector2(783, 329)
-selected_folder = "02"
-metadata/_edit_lock_ = true
-
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 2999.0
-offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_2oqk5")
-stretch_mode = 4
-
-[node name="TextureRect_w_legend" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 2999.0
-offset_bottom = 1350.0
-texture = SubResource("AtlasTexture_etu5q")
-stretch_mode = 4
-metadata/_edit_lock_ = true
-
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(783, 329)
-gizmo_extents = 117.1
-
-[node name="click_zone_container" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-metadata/_edit_lock_ = true
-
-[node name="sheep" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(321.48, 186.238)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-24.4797, -24.2376, 11.5203, -24.2376, 31.5203, 4.76239, 6.52029, 30.7624, -16.4797, 17.7624, -25.4797, 6.76239)
-
-[node name="turtle" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(2712.23, 179.271)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-31.2305, -4.27112, -41.2305, 14.7289, -37.2305, 29.7289, 15.7695, 34.7289, 44.7695, -1.27112, 23.7695, -28.2711, 4.76953, -40.2711, -21.2305, -33.2711)
-
-[node name="hippo" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(2290.51, 397.741)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-47.5056, -5.74127, -70.5056, -0.741272, -75.5056, 12.2587, -65.5056, 34.2587, -25.5056, 35.2587, -22.5056, 28.2587, 29.4944, 40.2587, 60.4944, 15.2587, 61.4944, -19.7413, 44.4944, -38.7413, 14.4944, -44.7413, -20.5056, -36.7413, -37.5056, -23.7413)
-
-[node name="pig" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1451.41, 907.708)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-36.4128, -22.708, -8.41284, -35.708, 25.5872, -25.708, 42.5872, -10.708, 49.5872, 5.29199, 49.5872, 15.292, 44.5872, 28.292, 33.5872, 32.292, 13.5872, 34.292, -20.4128, 24.292, -43.4128, 9.29199, -55.4128, 2.29199, -53.4128, -17.708, -44.4128, -24.708)
-
-[node name="bull" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1639.09, 489.521)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-69.0939, -43.5208, -67.0939, -32.5208, -57.0939, -19.5208, -47.0939, -13.5208, -37.0939, -12.5208, -37.0939, 4.47919, -37.0939, 14.4792, -34.0939, 26.4792, -29.0939, 30.4792, -24.0939, 29.4792, -19.0939, 23.4792, -16.0939, 28.4792, -14.0939, 37.4792, -10.0939, 46.4792, -7.09387, 39.4792, -8.09387, 31.4792, -6.09387, 26.4792, -4.09387, 35.4792, -2.09387, 43.4792, 0.906128, 43.4792, 0.906128, 37.4792, 1.90613, 28.4792, 16.9061, 26.4792, 35.9061, 24.4792, 39.9061, 38.4792, 41.9061, 38.4792, 44.9061, 30.4792, 47.9061, 36.4792, 51.9061, 32.4792, 52.9061, 20.4792, 49.9061, 6.47919, 43.9061, -5.52081, 37.9061, -16.5208, 26.9061, -22.5208, 14.9061, -23.5208, 3.90613, -22.5208, -5.09387, -20.5208, -15.0939, -18.5208, -2.09387, -29.5208, 4.90613, -42.5208, 9.90613, -56.5208, 9.90613, -68.5208, 4.90613, -55.5208, -2.09387, -42.5208, -13.0939, -32.5208, -24.0939, -27.5208, -39.0939, -25.5208, -51.0939, -27.5208, -59.0939, -33.5208, -63.0939, -37.5208)
-
-[node name="elephant" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(643.338, 399.559)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-66.3383, -6.55869, -71.3383, 2.44131, -69.3383, 15.4413, -64.3383, 26.4413, -53.3383, 29.4413, -41.3383, 29.4413, -31.3383, 23.4413, -27.3383, 21.4413, -20.3383, 23.4413, -20.3383, 32.4413, -17.3383, 35.4413, -10.3383, 32.4413, -8.33826, 27.4413, -7.33826, 33.4413, -2.33826, 39.4413, 4.66174, 33.4413, 4.66174, 27.4413, 25.6617, 25.4413, 36.6617, 22.4413, 37.6617, 30.4413, 40.6617, 31.4413, 44.6617, 18.4413, 46.6617, 15.4413, 50.6617, 21.4413, 55.6617, 21.4413, 55.6617, 13.4413, 53.6617, 8.44131, 57.6617, -7.55869, 50.6617, -21.5587, 40.6617, -26.5587, 29.6617, -28.5587, 20.6617, -28.5587, 5.66174, -34.5587, -3.33826, -34.5587, -9.33826, -24.5587, -15.3383, -31.5587, -23.3383, -37.5587, -31.3383, -37.5587, -39.3383, -31.5587, -41.3383, -19.5587, -35.3383, -13.5587, -38.3383, 3.44131, -40.3383, 16.4413, -52.3383, 19.4413, -60.3383, 11.4413, -61.3383, 3.44131, -61.3383, -3.55869)
-
-[node name="lion" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1758.39, 231.802)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-55.3876, -25.8021, -57.3876, -18.8021, -54.3876, -11.8021, -47.3876, -5.80214, -53.3876, -1.80214, -54.3876, 7.19786, -49.3876, 14.1979, -39.3876, 16.1979, -41.3876, 24.1979, -38.3876, 30.1979, -33.3876, 31.1979, -31.3876, 34.1979, -32.3876, 42.1979, -31.3876, 47.1979, -27.3876, 46.1979, -22.3876, 41.1979, -20.3876, 38.1979, -11.3876, 39.1979, -5.38757, 36.1979, -5.38757, 44.1979, -5.38757, 52.1979, 1.61243, 48.1979, 7.61243, 38.1979, 12.6124, 31.1979, 14.6124, 24.1979, 26.6124, 21.1979, 39.6124, 19.1979, 48.6124, 18.1979, 52.6124, 26.1979, 56.6124, 35.1979, 62.6124, 38.1979, 65.6124, 33.1979, 62.6124, 17.1979, 68.6124, 21.1979, 74.6124, 25.1979, 78.6124, 25.1979, 79.6124, 20.1979, 77.6124, 15.1979, 66.6124, 9.19786, 63.6124, 4.19786, 62.6124, -3.80214, 58.6124, -9.80214, 52.6124, -13.8021, 34.6124, -12.8021, 24.6124, -11.8021, 20.6124, -14.8021, 25.6124, -24.8021, 24.6124, -29.8021, 20.6124, -33.8021, 14.6124, -32.8021, 11.6124, -29.8021, 9.61243, -38.8021, 2.61243, -41.8021, -2.38757, -38.8021, -9.38757, -46.8021, -16.3876, -47.8021, -22.3876, -45.8021, -23.3876, -42.8021, -31.3876, -43.8021, -37.3876, -41.8021, -38.3876, -36.8021, -38.3876, -32.8021, -46.3876, -32.8021, -51.3876, -28.8021)
-
-[node name="deer" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(131.972, 707.038)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-50.9716, -58.0378, -62.9716, -50.0378, -65.9716, -42.0378, -62.9716, -34.0378, -48.9716, -30.0378, -35.9716, -30.0378, -33.9716, -19.0378, -32.9716, -6.03778, -35.9716, 9.96222, -38.9716, 23.9622, -45.9716, 35.9622, -51.9716, 47.9622, -48.9716, 52.9622, -42.9716, 47.9622, -36.9716, 39.9622, -31.9716, 32.9622, -26.9716, 31.9622, -26.9716, 37.9622, -29.9716, 45.9622, -35.9716, 52.9622, -40.9716, 59.9622, -37.9716, 63.9622, -30.9716, 59.9622, -20.9716, 54.9622, -9.97157, 48.9622, -0.971573, 50.9622, 4.02843, 59.9622, 1.02843, 68.9622, -3.97157, 77.9622, -10.9716, 85.9622, -8.97157, 90.9622, 0.0284271, 86.9622, 8.02843, 80.9622, 18.0284, 74.9622, 21.0284, 78.9622, 17.0284, 86.9622, 6.02843, 99.9622, 6.02843, 105.962, 11.0284, 104.962, 19.0284, 100.962, 28.0284, 93.9622, 37.0284, 81.9622, 42.0284, 66.9622, 42.0284, 51.9622, 38.0284, 40.9622, 30.0284, 31.9622, 15.0284, 18.9622, 6.02843, 9.96222, 3.02843, -4.03778, 3.02843, -16.0378, 4.02843, -29.0378, 1.02843, -43.0378, -2.97157, -51.0378, 25.0284, -69.0378, 55.0284, -65.0378, 60.0284, -50.0378, 66.0284, -42.0378, 74.0284, -40.0378, 73.0284, -44.0378, 66.0284, -48.0378, 61.0284, -64.0378, 83.0284, -57.0378, 101.028, -47.0378, 102.028, -54.0378, 96.0284, -56.0378, 107.028, -59.0378, 107.028, -64.0378, 93.0284, -63.0378, 81.0284, -67.0378, 103.028, -73.0378, 103.028, -78.0378, 74.0284, -69.0378, 49.0284, -73.0378, 38.0284, -74.0378, 30.0284, -74.0378, 14.0284, -70.0378, 6.02843, -65.0378, -5.97157, -56.0378, -14.9716, -62.0378, 6.02843, -89.0378, 20.0284, -94.0378, 26.0284, -93.0378, 32.0284, -83.0378, 33.0284, -92.0378, 38.0284, -93.0378, 17.0284, -100.038, 26.0284, -103.038, 15.0284, -104.038, 6.02843, -98.0378, -5.97157, -85.0378, -19.9716, -63.0378, -35.9716, -66.0378, -44.9716, -64.0378)
-
-[node name="fish" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(529.167, 90.4457)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-27.1668, 64.5543, -5.16681, 51.5543, 6.83319, 35.5543, 19.8332, 10.5543, 23.8332, -11.4457, 25.8332, -29.4457, 27.8332, -49.4457, 39.8332, -49.4457, 48.8332, -56.4457, 49.8332, -63.4457, 40.8332, -64.4457, 31.8332, -61.4457, 26.8332, -55.4457, 21.8332, -67.4457, 14.8332, -69.4457, 13.8332, -62.4457, 17.8332, -52.4457, 2.83319, -39.4457, -10.1668, -26.4457, -21.1668, -11.4457, -28.1668, 6.55429, -32.1668, 22.5543, -32.1668, 38.5543, -31.1668, 54.5543)
-
-[node name="giraffe" type="Polygon2D" parent="click_zone_container"]
-position = Vector2(1028.77, 126.533)
-color = Color(1, 1, 1, 0.5)
-polygon = PackedVector2Array(-19.7748, -66.533, -16.7748, -61.533, -8.77478, -58.533, 2.22522, -56.533, 1.22522, -43.533, -6.77478, -18.533, -12.7748, 3.46698, -18.7748, 30.467, -24.7748, 54.467, -27.7748, 72.467, -29.7748, 82.467, -28.7748, 85.467, -25.7748, 80.467, -25.7748, 75.467, -20.7748, 76.467, -21.7748, 84.467, -19.7748, 87.467, -15.7748, 77.467, -8.77478, 77.467, 1.22522, 79.467, 1.22522, 86.467, 2.22522, 88.467, 5.22522, 81.467, 8.22522, 82.467, 9.22522, 89.467, 11.2252, 89.467, 12.2252, 80.467, 12.2252, 68.467, 10.2252, 59.467, 5.22522, 50.467, -1.77478, 42.467, -0.77478, 37.467, 7.22522, -3.53302, 16.2252, -41.533, 20.2252, -58.533, 26.2252, -55.533, 34.2252, -55.533, 39.2252, -57.533, 36.2252, -62.533, 30.2252, -64.533, 25.2252, -63.533, 30.2252, -72.533, 32.2252, -81.533, 31.2252, -87.533, 28.2252, -89.533, 25.2252, -88.533, 23.2252, -84.533, 21.2252, -75.533, 15.2252, -74.533, 15.2252, -84.533, 13.2252, -91.533, 10.2252, -92.533, 9.22522, -88.533, 8.22522, -80.533, 8.22522, -76.533, -6.77478, -74.533, -15.7748, -72.533, -19.7748, -69.533)
-
-[node name="button_image_container" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="sheep" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 44.0
-offset_top = 1096.0
-offset_right = 230.0
-offset_bottom = 1290.0
-
-[node name="turtle" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 238.0
-offset_top = 1142.0
-offset_right = 410.0
-offset_bottom = 1313.0
-
-[node name="hippo" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 411.0
-offset_top = 1109.0
-offset_right = 643.0
-offset_bottom = 1304.0
-
-[node name="pig" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 665.0
-offset_top = 1119.0
-offset_right = 847.0
-offset_bottom = 1304.0
-
-[node name="bull" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 834.0
-offset_top = 1089.0
-offset_right = 1068.0
-offset_bottom = 1315.0
-
-[node name="elephant" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 1074.0
-offset_top = 1129.0
-offset_right = 1283.0
-offset_bottom = 1314.0
-
-[node name="lion" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 1290.0
-offset_top = 1090.0
-offset_right = 1547.0
-offset_bottom = 1298.0
-
-[node name="deer" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 1560.0
-offset_top = 1013.0
-offset_right = 1756.0
-offset_bottom = 1299.0
-
-[node name="fish" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 1751.0
-offset_top = 1098.0
-offset_right = 1860.0
-offset_bottom = 1298.0
-
-[node name="giraffe" type="ReferenceRect" parent="button_image_container"]
-layout_mode = 0
-offset_left = 1861.0
-offset_top = 1013.0
-offset_right = 2004.0
-offset_bottom = 1308.0
