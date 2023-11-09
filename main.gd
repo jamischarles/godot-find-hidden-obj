@@ -1,12 +1,26 @@
 extends Node2D
 
+var in_app_store
+
 # scroll pos when button press starts
 var startScrollPos
 
-@onready var levelImageButtons = $ScrollContainer/VBoxContainer/MarginContainer/level_images.get_children()
+@onready var levelImageButtons: Array[Node] = $ScrollContainer/VBoxContainer/MarginContainer/level_images.get_children()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	# assert TODO: Wrap this in editor checks
+	var last_level_button_name = levelImageButtons[-2].name # account for "more"
+	assert(last_level_button_name == Global.highest_level, "Level count mismatch. Please update 'highest_level' in global.gd to match number of levels in main.tscn")
+	
+	
+	if Engine.has_singleton("InAppStore"):
+		in_app_store = Engine.get_singleton("InAppStore")
+		print("##IN APP STORE WORKS!!!!", in_app_store)
+	else:
+		print("##iOS IAP plugin is not available on this platform.")
+	
+	
 	var buttons = levelImageButtons
 	# scrolling to a node. This works pretty well...
 #	await get_tree().process_frame
