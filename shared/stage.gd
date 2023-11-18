@@ -73,8 +73,8 @@ func panImage():
 	
 	# then animate coming back to top left corner
 	var tween = get_tree().create_tween()
-	tween.parallel().tween_property(scrollContainer, "scroll_horizontal", 0, 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.15)
-	tween.parallel().tween_property(scrollContainer, "scroll_vertical", 0, 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.15)
+	tween.parallel().tween_property(scrollContainer, "scroll_horizontal", 0, 2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.05)
+	tween.parallel().tween_property(scrollContainer, "scroll_vertical", 0, 2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.05)
 	tween.tween_callback(onPanDone)
 	
 # fad in 
