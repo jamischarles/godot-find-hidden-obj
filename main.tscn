@@ -1,15 +1,18 @@
-[gd_scene load_steps=16 format=3 uid="uid://d4k8eyst13hus"]
+[gd_scene load_steps=22 format=3 uid="uid://d4k8eyst13hus"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gcarg"]
 [ext_resource type="Texture2D" uid="uid://pxtn1xo7i110" path="res://00_canvas_images/01.png" id="2_b7eht"]
 [ext_resource type="Texture2D" uid="uid://cby70mdkyt07l" path="res://00_art/home_screen_backdrop.png" id="2_je6l4"]
-[ext_resource type="Texture2D" uid="uid://q6sjqkh0gvfj" path="res://05/src/img.png" id="2_vqswn"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="3_sso1d"]
 [ext_resource type="Texture2D" uid="uid://bpwphtkeq6rxm" path="res://00_canvas_images/02.png" id="3_t1rf1"]
 [ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="4_3xdaj"]
 [ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="5_akn88"]
 [ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="6_uc1ic"]
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="7_lln70"]
+[ext_resource type="Texture2D" uid="uid://dji5fu03n8hgi" path="res://00_canvas_images/03.png" id="10_mj2v2"]
+[ext_resource type="Texture2D" uid="uid://dg6lld4jkh74" path="res://00_canvas_images/04.png" id="11_6juf2"]
+[ext_resource type="Texture2D" uid="uid://2tn0frcacb0w" path="res://00_canvas_images/05.png" id="12_brakc"]
+[ext_resource type="Texture2D" uid="uid://c3tbygx7l67x3" path="res://00_canvas_images/06.png" id="13_7if1e"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_amenn"]
 
@@ -19,11 +22,20 @@
 atlas = ExtResource("7_lln70")
 region = Rect2(5, 196, 86, 25)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6km7c"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_70rns"]
+Panel/styles/panel = SubResource("StyleBoxFlat_6km7c")
+
 [sub_resource type="Theme" id="Theme_la1nr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6frhe"]
 atlas = ExtResource("2_b7eht")
 region = Rect2(860, 4, 2140, 1088)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wdkal"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="Level Selector" type="Node2D"]
 script = ExtResource("1_gcarg")
@@ -75,13 +87,11 @@ texture = SubResource("CompressedTexture2D_amenn")
 visible = false
 position = Vector2(1234, -198)
 scale = Vector2(0.290947, 0.290947)
-texture = ExtResource("2_vqswn")
 
 [node name="Img4" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
 visible = false
 position = Vector2(240.967, 500.125)
 scale = Vector2(0.367592, 0.367592)
-texture = ExtResource("2_vqswn")
 
 [node name="Img2" type="Sprite2D" parent="ScrollContainer/VBoxContainer/PanelContainer/Backdrop"]
 visible = false
@@ -275,11 +285,21 @@ tooltip_text = "Play"
 texture_normal = SubResource("AtlasTexture_obe8l")
 stretch_mode = 0
 
+[node name="clear_purchase" type="Button" parent="ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "Clear  Purchases"
+
 [node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="level_container" type="VBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_70rns")
+
+[node name="FreeSectionMargin" type="MarginContainer" parent="ScrollContainer/VBoxContainer/level_container"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 100
@@ -287,12 +307,13 @@ theme_override_constants/margin_top = 200
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
-[node name="level_images" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/MarginContainer"]
+[node name="free_levels" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/level_container/FreeSectionMargin"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = SubResource("Theme_la1nr")
 theme_override_constants/separation = 100
 
-[node name="01" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
+[node name="01" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/FreeSectionMargin/free_levels"]
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
 mouse_filter = 1
@@ -300,7 +321,7 @@ texture_normal = SubResource("AtlasTexture_6frhe")
 ignore_texture_size = true
 stretch_mode = 6
 
-[node name="02" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
+[node name="02" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/FreeSectionMargin/free_levels"]
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
 size_flags_vertical = 3
@@ -309,12 +330,89 @@ texture_normal = ExtResource("3_t1rf1")
 ignore_texture_size = true
 stretch_mode = 6
 
-[node name="more" type="Control" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images"]
+[node name="03" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/FreeSectionMargin/free_levels"]
+clip_contents = true
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("10_mj2v2")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="PaidSectionPanel" type="PanelContainer" parent="ScrollContainer/VBoxContainer/level_container"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_wdkal")
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="paid_levels" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = SubResource("Theme_la1nr")
+theme_override_constants/separation = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 70
+
+[node name="unlock_button" type="Button" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "Unlock all 7 levels"
+
+[node name="restore_button" type="Button" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "Restore Purchases"
+
+[node name="04" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
+clip_contents = true
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("11_6juf2")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="05" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
+clip_contents = true
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("12_brakc")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="06" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
+clip_contents = true
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("13_7if1e")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="more" type="Control" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
 mouse_filter = 1
 
-[node name="more" type="TextureButton" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images/more"]
+[node name="more" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/more"]
 modulate = Color(1, 1, 1, 0.0980392)
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
@@ -326,7 +424,7 @@ texture_normal = SubResource("AtlasTexture_6frhe")
 ignore_texture_size = true
 stretch_mode = 6
 
-[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/MarginContainer/level_images/more"]
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/more"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
