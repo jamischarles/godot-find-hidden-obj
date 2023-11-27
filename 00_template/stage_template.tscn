@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="3_f5emm"]
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="4_5kjb0"]
 [ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_8moym"]
-[ext_resource type="Texture2D" uid="uid://c6adjm5glqpkr" path="res://02/src/img.png" id="6_npvy8"]
 [ext_resource type="Script" path="res://shared/TouchFeedback.gd" id="7_5alox"]
+[ext_resource type="Texture2D" uid="uid://c6adjm5glqpkr" path="res://05/src/img.png" id="7_8s4l4"]
 [ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="8_7bt8j"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_pc7wy"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="10_pdkhc"]
@@ -33,7 +33,7 @@ region = Rect2(36, 69, 24, 25)
 texture = SubResource("AtlasTexture_tmfsv")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ny3j"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(2.08165e-12, 2.08165e-12, 3000, 975)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w3wpm"]
@@ -79,43 +79,43 @@ bg_color = Color(1, 1, 1, 1)
 LineEdit/colors/selection_color = Color(0.709804, 0.411765, 0.27451, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0bgdj"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(44, 1096, 186, 194)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vdd32"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(238, 1142, 172, 171)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdix3"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(411, 1109, 232, 195)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eyyo3"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(665, 1119, 182, 185)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ro615"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(834, 1089, 234, 226)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0md13"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(1074, 1129, 209, 185)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mjxhm"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(1290, 1090, 257, 208)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hm8kn"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(1560, 1013, 196, 286)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0tqn2"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(1751, 1098, 109, 200)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4xsbq"]
-atlas = ExtResource("6_npvy8")
+atlas = ExtResource("7_8s4l4")
 region = Rect2(1861, 1013, 143, 295)
 
 [sub_resource type="SystemFont" id="SystemFont_10jck"]
@@ -207,7 +207,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
 
-[node name="ImageContainer" type="AspectRatioContainer" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
+[node name="ImageContainer" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -215,17 +215,20 @@ anchor_bottom = 1.0
 offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
-alignment_horizontal = 0
-alignment_vertical = 0
 
 [node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 texture_filter = 3
+custom_minimum_size = Vector2(1623, 2.08165e-12)
 layout_mode = 2
+offset_right = 3000.0
+offset_bottom = 989.0
 texture = SubResource("AtlasTexture_4ny3j")
-stretch_mode = 2
 
 [node name="click_zone_container" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 layout_mode = 2
+anchors_preset = 0
+offset_right = 989.0
+offset_bottom = 989.0
 mouse_filter = 1
 
 [node name="sheep" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]

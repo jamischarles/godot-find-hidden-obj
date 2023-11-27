@@ -1,18 +1,26 @@
-[gd_scene load_steps=22 format=3 uid="uid://d4k8eyst13hus"]
+[gd_scene load_steps=32 format=3 uid="uid://d4k8eyst13hus"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gcarg"]
-[ext_resource type="Texture2D" uid="uid://pxtn1xo7i110" path="res://00_canvas_images/01.png" id="2_b7eht"]
+[ext_resource type="Texture2D" uid="uid://db1opd12pdk51" path="res://00_canvas_images/01.png" id="2_b7eht"]
 [ext_resource type="Texture2D" uid="uid://cby70mdkyt07l" path="res://00_art/home_screen_backdrop.png" id="2_je6l4"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="3_sso1d"]
-[ext_resource type="Texture2D" uid="uid://bpwphtkeq6rxm" path="res://00_canvas_images/02.png" id="3_t1rf1"]
+[ext_resource type="Texture2D" uid="uid://dglxlguvwund0" path="res://00_canvas_images/02.png" id="3_t1rf1"]
 [ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="4_3xdaj"]
 [ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="5_akn88"]
 [ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="6_uc1ic"]
 [ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="7_lln70"]
-[ext_resource type="Texture2D" uid="uid://dji5fu03n8hgi" path="res://00_canvas_images/03.png" id="10_mj2v2"]
-[ext_resource type="Texture2D" uid="uid://dg6lld4jkh74" path="res://00_canvas_images/04.png" id="11_6juf2"]
-[ext_resource type="Texture2D" uid="uid://2tn0frcacb0w" path="res://00_canvas_images/05.png" id="12_brakc"]
-[ext_resource type="Texture2D" uid="uid://c3tbygx7l67x3" path="res://00_canvas_images/06.png" id="13_7if1e"]
+[ext_resource type="Texture2D" uid="uid://02xst0r8ssoe" path="res://00_art/GUI.png" id="7_x3bux"]
+[ext_resource type="Texture2D" uid="uid://vlgud5x0jj2j" path="res://00_art/empty button.png" id="8_f8bup"]
+[ext_resource type="Texture2D" uid="uid://dnbwr50j1kyqf" path="res://00_art/OrangeBtn.png" id="9_uw8qq"]
+[ext_resource type="Texture2D" uid="uid://b32crq7i44ah" path="res://00_canvas_images/03.png" id="10_mj2v2"]
+[ext_resource type="Texture2D" uid="uid://cdttwxe1eej66" path="res://00_art/Item2.png" id="10_vp6xb"]
+[ext_resource type="Texture2D" uid="uid://bffpwb22ge1nq" path="res://00_canvas_images/04.png" id="11_6juf2"]
+[ext_resource type="Texture2D" uid="uid://3meva7ljk6rk" path="res://00_canvas_images/05.png" id="12_brakc"]
+[ext_resource type="Texture2D" uid="uid://dyro2hbop05by" path="res://00_canvas_images/06.png" id="13_7if1e"]
+[ext_resource type="Texture2D" uid="uid://db01b5w6qpwi4" path="res://00_art/UI_Paper_Button_Large_Release_01a1.png" id="15_v1yas"]
+[ext_resource type="FontFile" uid="uid://iujlrr6ldhou" path="res://00_art/PlaypenSans-VariableFont_wght.ttf" id="16_mv3pa"]
+[ext_resource type="Texture2D" uid="uid://cybki3rvtjjin" path="res://00_canvas_images/07.png" id="20_uf8pt"]
+[ext_resource type="Texture2D" uid="uid://dvuvunpjcgqmu" path="res://00_canvas_images/08.png" id="21_yo8vp"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_amenn"]
 
@@ -36,6 +44,11 @@ region = Rect2(860, 4, 2140, 1088)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wdkal"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_ud5wy"]
+font_names = PackedStringArray("Monospace")
+
+[sub_resource type="Theme" id="Theme_6d60k"]
 
 [node name="Level Selector" type="Node2D"]
 script = ExtResource("1_gcarg")
@@ -228,7 +241,7 @@ offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NinePatchRect3" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+[node name="NinePatchRect_brown" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -247,8 +260,82 @@ patch_margin_bottom = 6
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[node name="NinePatchRect4" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -211.0
+offset_top = -85.0
+offset_right = 220.0
+offset_bottom = 80.0
+grow_horizontal = 2
+texture = ExtResource("7_x3bux")
+region_rect = Rect2(112, 81, 32, 15)
+patch_margin_left = 4
+patch_margin_top = 1
+patch_margin_right = 4
+patch_margin_bottom = 4
+axis_stretch_horizontal = 2
+
+[node name="NinePatchRect5" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -211.0
+offset_top = -85.0
+offset_right = 220.0
+offset_bottom = 80.0
+grow_horizontal = 2
+texture = ExtResource("8_f8bup")
+region_rect = Rect2(2, 2, 536, 133)
+patch_margin_left = 4
+patch_margin_top = 1
+patch_margin_right = 4
+patch_margin_bottom = 4
+axis_stretch_horizontal = 2
+
+[node name="NinePatchRect6" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -383.0
+offset_top = -135.0
+offset_right = 392.0
+offset_bottom = 103.0
+grow_horizontal = 2
+texture = ExtResource("9_uw8qq")
+region_rect = Rect2(-4, -1, 494, 172)
+patch_margin_left = 459
+patch_margin_top = 136
+patch_margin_right = 316
+patch_margin_bottom = 102
+
+[node name="NinePatchRect7" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -383.0
+offset_top = -135.0
+offset_right = 392.0
+offset_bottom = 103.0
+grow_horizontal = 2
+texture = ExtResource("10_vp6xb")
+region_rect = Rect2(-4, -1, 1535, 347)
+patch_margin_left = 459
+patch_margin_top = 136
+patch_margin_right = 316
+patch_margin_bottom = 102
+
 [node name="Play" type="Button" parent="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control"]
-modulate = Color(0.478431, 0.290196, 0.129412, 1)
+modulate = Color(0.521569, 0.180392, 0, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -363,19 +450,77 @@ theme_override_constants/separation = 100
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
-theme_override_constants/separation = 70
+theme_override_constants/separation = 300
 
-[node name="unlock_button" type="Button" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer"]
-unique_name_in_owner = true
+[node name="btn_unlock" type="Control" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer"]
+custom_minimum_size = Vector2(461, 121)
 layout_mode = 2
-theme_override_font_sizes/font_size = 70
-text = "Unlock all 7 levels"
 
-[node name="restore_button" type="Button" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer"]
+[node name="NinePatchRect7" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer/btn_unlock"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_v1yas")
+region_rect = Rect2(0, 0, 96, 32)
+patch_margin_left = 9
+patch_margin_top = 11
+patch_margin_right = 9
+patch_margin_bottom = 8
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="unlock_button" type="Button" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer/btn_unlock"]
 unique_name_in_owner = true
+modulate = Color(0.12549, 0, 0.129412, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_mv3pa")
+theme_override_font_sizes/font_size = 40
+text = "Unlock 7 more levels"
+flat = true
+
+[node name="Control2" type="Control" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer"]
+custom_minimum_size = Vector2(421, 121)
 layout_mode = 2
-theme_override_font_sizes/font_size = 70
-text = "Restore Purchases"
+size_flags_horizontal = 3
+
+[node name="NinePatchRect7" type="NinePatchRect" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("15_v1yas")
+region_rect = Rect2(0, 0, 96, 32)
+patch_margin_left = 9
+patch_margin_top = 11
+patch_margin_right = 9
+patch_margin_bottom = 8
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="restore_button" type="Button" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels/HBoxContainer/Control2"]
+unique_name_in_owner = true
+modulate = Color(0.12549, 0, 0.129412, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_mv3pa")
+theme_override_font_sizes/font_size = 40
+text = "Restore Purchases
+"
+flat = true
 
 [node name="04" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
 clip_contents = true
@@ -404,6 +549,26 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 1
 texture_normal = ExtResource("13_7if1e")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="07" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
+clip_contents = true
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("20_uf8pt")
+ignore_texture_size = true
+stretch_mode = 6
+
+[node name="08" type="TextureButton" parent="ScrollContainer/VBoxContainer/level_container/PaidSectionPanel/MarginContainer2/paid_levels"]
+clip_contents = true
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("21_yo8vp")
 ignore_texture_size = true
 stretch_mode = 6
 
@@ -439,5 +604,206 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 100
 text = "More coming soon"
+
+[node name="PopupPanel" type="PopupPanel" parent="."]
+always_on_top = true
+transparent = true
+
+[node name="level_complete_panel" type="Control" parent="PopupPanel"]
+z_index = 1000
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 96.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PopupPanel/level_complete_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 200
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="PopupPanel/level_complete_panel/MarginContainer"]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 2
+
+[node name="paper_9patch_bg" type="NinePatchRect" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+texture = ExtResource("4_3xdaj")
+region_rect = Rect2(608, 32, 32, 96)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Control" type="Control" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Control" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control"]
+layout_mode = 1
+anchor_top = 0.0675
+anchor_right = 1.0
+anchor_bottom = 1.0675
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+layout_mode = 0
+offset_left = 442.0
+offset_top = 369.0
+offset_right = 1166.0
+offset_bottom = 507.0
+texture = ExtResource("3_sso1d")
+region_rect = Rect2(31, 32, 97, 96)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 1
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 95.0
+offset_top = 15.0
+offset_right = -105.0
+offset_bottom = 148.0
+grow_horizontal = 2
+texture = ExtResource("3_sso1d")
+region_rect = Rect2(431, 69, 66, 22)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+layout_mode = 0
+offset_left = 315.0
+offset_top = 342.0
+offset_right = 1558.0
+offset_bottom = 1239.0
+texture = ExtResource("4_3xdaj")
+region_rect = Rect2(31, 32, 97, 96)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="BG Wood" type="Sprite2D" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+position = Vector2(1041, 347)
+texture = ExtResource("5_akn88")
+
+[node name="Label" type="Label" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -338.0
+offset_top = 50.0
+offset_right = 338.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.878431, 0.32549, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("6_uc1ic")
+theme_override_font_sizes/font_size = 60
+text = "Level complete"
+
+[node name="btn_level_select" type="Button" parent="PopupPanel/level_complete_panel/MarginContainer/PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.883
+anchor_right = 0.5
+anchor_bottom = 0.883
+offset_left = -116.0
+offset_top = -90.2
+offset_right = 152.0
+offset_bottom = 0.799994
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_ud5wy")
+theme_override_font_sizes/font_size = 60
+text = "Next"
+
+[node name="score_label" type="Label" parent="PopupPanel/level_complete_panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 58.0
+offset_right = -78.0
+offset_bottom = 164.0
+grow_horizontal = 0
+theme = SubResource("Theme_6d60k")
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 75
+text = "5/10"
+
+[node name="Popup" type="Popup" parent="."]
+transparent_bg = true
+title = "Would you like to close?"
+initial_position = 2
+size = Vector2i(1000, 500)
+borderless = false
+always_on_top = true
+transparent = true
+extend_to_title = true
+mouse_passthrough = true
+
+[node name="PopupPanel2" type="PopupPanel" parent="."]
+disable_3d = true
+mode = 3
+title = "Ready?"
+initial_position = 2
+size = Vector2i(1000, 500)
+wrap_controls = false
+borderless = false
+always_on_top = true
+transparent = true
+extend_to_title = true
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+initial_position = 2
+size = Vector2i(1000, 500)
+ok_button_text = "Cancel"
+dialog_text = "Loading..."
 
 [connection signal="button_up" from="ScrollContainer/VBoxContainer/PanelContainer/Play button/Control/Play" to="." method="_on_play_button_up"]

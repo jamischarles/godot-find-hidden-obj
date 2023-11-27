@@ -13,9 +13,11 @@ If you update a scene file ensure you do it in the 00_template folder or else yo
 will be overridden next time you generate a level and then nothign works.
 
 ## Adding Level (with new canvas image)
+-> Important sizings... TextureRect in `gen_shape_data.tscn` needs to have minimum size set to the minimum of the viewport for each level.
+
 1. Add new image to 00_canvas_images
 2. Name it with 2 digit number for level it's for
-3. Open 00_tools/create_shape_data.tscn
+3. Open 00_tools/gen_shape_data.tscn
 4. For TextureRect node, create atlas texture for new image, loaded from 00_canvas_images/ folder
 	- set region to exclude the legend & solution
 5. Duplicate the ^ node, then make texture UNIQUE (parent only)
@@ -23,6 +25,8 @@ will be overridden next time you generate a level and then nothign works.
 6. Select root node in tree for create_shape_data.tscn
 	- delete all the children of `click_zone_container` node
 	- delete all the children of `button_image_container` node
+6.4 RESET the layout->transform->size to ensure the texture default size is used (will mess up zones later if you don't)	
+IMPORTANT for the textTureRect. Not for the textureRect_w_legend
 
 6.5. HIDE the legend node so the coords will be accurate (esp if they are on left edge)	
 	
@@ -36,7 +40,7 @@ For each shape... ------------------>
 	- Size and move the new rect node to cover the corresponding legend image the clickzone shape was just added for
 10. Name the clickZone and button_image	node to match (and describes object)
 ------------
-Click "Auto move to center" in right rail, to auto-fix all the positions for each clickZone
+!!!!!lick "Auto move to center" in right rail, to auto-fix all the positions for each clickZone
 
 
 11. When done, enter "selected folder" (2 digit format) like "02" in right rail

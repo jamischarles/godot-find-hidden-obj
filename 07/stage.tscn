@@ -1,0 +1,672 @@
+[gd_scene load_steps=41 format=3 uid="uid://dwviabd4n88xq"]
+
+[ext_resource type="Script" path="res://shared/stage.gd" id="1_4v2rt"]
+[ext_resource type="Theme" uid="uid://c1rj8oj12y7xo" path="res://shared/theme_scrollbar_h.tres" id="2_g6b06"]
+[ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="3_m8jsd"]
+[ext_resource type="Texture2D" uid="uid://bicokcoghxtlc" path="res://00_art/UI_Papernote_Spritesheet.png" id="4_ji22x"]
+[ext_resource type="Texture2D" uid="uid://xgyn0udv54u5" path="res://00_art/Spritesheet_UI_Paper_Animation_Button_01.png" id="5_bj21e"]
+[ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="6_a6dxm"]
+[ext_resource type="Texture2D" uid="uid://c7bqpjxpqds8e" path="res://07/src/img.png" id="7_igr83"]
+[ext_resource type="Script" path="res://shared/TouchFeedback.gd" id="8_i16gx"]
+[ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="9_kw56b"]
+[ext_resource type="Script" path="res://shared/right_rail.gd" id="10_78ntt"]
+[ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="11_b6dds"]
+[ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="12_73igf"]
+[ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="13_4fhm2"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jt6b8"]
+texture = ExtResource("4_ji22x")
+region_rect = Rect2(352, 354, 32, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3dbj"]
+atlas = ExtResource("5_bj21e")
+region = Rect2(35, 35, 25, 27)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_raqh3"]
+texture = SubResource("AtlasTexture_c3dbj")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmfsv"]
+atlas = ExtResource("5_bj21e")
+region = Rect2(36, 69, 24, 25)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a6bil"]
+texture = SubResource("AtlasTexture_tmfsv")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1vswk"]
+atlas = ExtResource("7_igr83")
+region = Rect2(953, 6, 2049, 2720)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w3wpm"]
+radius = 112.4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5yobm"]
+bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 3
+shadow_offset = Vector2(2, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o8ktl"]
+border_width_top = 8
+border_width_bottom = 7
+corner_radius_top_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_252p8"]
+bg_color = Color(0.941176, 0.376471, 0.0901961, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_size = 3
+shadow_offset = Vector2(2, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g0f6t"]
+border_width_left = 4
+border_width_right = 3
+
+[sub_resource type="Theme" id="Theme_exhha"]
+HScrollBar/styles/grabber = SubResource("StyleBoxFlat_5yobm")
+HScrollBar/styles/scroll = SubResource("StyleBoxFlat_o8ktl")
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_252p8")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_g0f6t")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kas6d"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_inwhd"]
+LineEdit/colors/selection_color = Color(0.709804, 0.411765, 0.27451, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8pp1"]
+atlas = ExtResource("7_igr83")
+region = Rect2(112, 809, 176, 359)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqb8q"]
+atlas = ExtResource("7_igr83")
+region = Rect2(287, 903, 135, 293)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jijf"]
+atlas = ExtResource("7_igr83")
+region = Rect2(437, 880, 159, 293)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwxlu"]
+atlas = ExtResource("7_igr83")
+region = Rect2(611, 859, 242, 207)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skyls"]
+atlas = ExtResource("7_igr83")
+region = Rect2(641, 1076, 224, 110)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21pp8"]
+atlas = ExtResource("7_igr83")
+region = Rect2(99, 1201, 205, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5ts0"]
+atlas = ExtResource("7_igr83")
+region = Rect2(220, 1302, 209, 186)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4n6e5"]
+atlas = ExtResource("7_igr83")
+region = Rect2(402, 1180, 181, 305)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0px8"]
+atlas = ExtResource("7_igr83")
+region = Rect2(643, 1317, 203, 178)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2vppl"]
+atlas = ExtResource("7_igr83")
+region = Rect2(581, 1207, 267, 116)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8nuf"]
+atlas = ExtResource("7_igr83")
+region = Rect2(107, 1699, 747, 624)
+
+[sub_resource type="SystemFont" id="SystemFont_10jck"]
+font_names = PackedStringArray("Monospace")
+
+[sub_resource type="Theme" id="Theme_k5e1q"]
+
+[node name="Stage" type="Node"]
+script = ExtResource("1_4v2rt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = -1
+anchor_right = 0.871
+anchor_bottom = 1.0
+offset_right = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_right = 258
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+theme = ExtResource("2_g6b06")
+scroll_horizontal_custom_step = -0.72
+scroll_deadzone = 100
+
+[node name="ScrollContent" type="HBoxContainer" parent="HBoxContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="left_rail_notch_buffer" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent"]
+z_index = 1000
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer"]
+visible = false
+layout_mode = 0
+offset_right = 111.0
+offset_bottom = 971.0
+texture = ExtResource("3_m8jsd")
+region_rect = Rect2(350, 31, 37, 98)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer"]
+layout_mode = 0
+offset_right = 111.0
+offset_bottom = 971.0
+texture = ExtResource("4_ji22x")
+region_rect = Rect2(608, 32, 32, 96)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Home" type="Button" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer"]
+layout_mode = 2
+offset_left = 17.0
+offset_top = 90.0
+offset_right = 89.0
+offset_bottom = 154.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_jt6b8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_raqh3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_a6bil")
+icon = ExtResource("6_a6dxm")
+icon_alignment = 1
+
+[node name="Control" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent"]
+custom_minimum_size = Vector2(2049, 2720)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="ImageContainer" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
+texture_filter = 3
+custom_minimum_size = Vector2(1623, 2.08165e-12)
+layout_mode = 2
+offset_right = 2049.0
+offset_bottom = 2720.0
+texture = SubResource("AtlasTexture_1vswk")
+
+[node name="click_zone_container" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
+layout_mode = 2
+anchors_preset = 0
+offset_right = 989.0
+offset_bottom = 989.0
+mouse_filter = 1
+
+[node name="bottle" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(474, 2178)
+monitoring = false
+
+[node name="@Polygon2D@98347" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bottle"]
+polygon = PackedVector2Array(-31.253, 99.4487, -16.253, 102.449, -2.25293, 91.4487, 19.747, 39.4487, 33.747, -7.55127, 37.747, -28.5513, 32.747, -56.5513, 33.747, -71.5513, 49.747, -105.551, 65.747, -142.551, 42.747, -145.551, 27.747, -103.551, 17.747, -77.5513, 8.74707, -59.5513, -12.253, -49.5513, -26.253, -25.5513, -46.253, 41.4487, -55.253, 75.4487, -47.253, 90.4487)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bottle"]
+polygon = PackedVector2Array(-31.253, 99.4487, -16.253, 102.449, -2.25293, 91.4487, 19.747, 39.4487, 33.747, -7.55127, 37.747, -28.5513, 32.747, -56.5513, 33.747, -71.5513, 49.747, -105.551, 65.747, -142.551, 42.747, -145.551, 27.747, -103.551, 17.747, -77.5513, 8.74707, -59.5513, -12.253, -49.5513, -26.253, -25.5513, -46.253, 41.4487, -55.253, 75.4487, -47.253, 90.4487)
+
+[node name="bonbon" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(287, 1247)
+monitoring = false
+
+[node name="@Polygon2D@98349" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bonbon"]
+polygon = PackedVector2Array(-44.3567, -12.7568, 42.6433, -25.7568, 44.6433, -13.7568, 58.6433, -22.7568, 70.6433, -23.7568, 69.6433, -16.7568, 62.6433, -10.7568, 71.6433, -3.75684, 65.6433, 1.24316, 68.6433, 3.24316, 70.6433, 9.24316, 62.6433, 11.2432, 55.6433, 8.24316, 42.6433, 1.24316, 44.6433, 14.2432, -37.3567, 24.2432, -38.3567, 14.2432, -50.3567, 17.2432, -67.3567, 25.2432, -71.3567, 21.2432, -69.3567, 14.2432, -62.3567, 14.2432, -65.3567, 12.2432, -72.3567, 12.2432, -75.3567, 8.24316, -71.3567, 3.24316, -66.3567, 3.24316, -68.3567, -0.756836, -73.3567, -2.75684, -72.3567, -8.75684, -66.3567, -8.75684, -59.3567, -7.75684, -45.3567, -0.756836)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bonbon"]
+polygon = PackedVector2Array(-44.3567, -12.7568, 42.6433, -25.7568, 44.6433, -13.7568, 58.6433, -22.7568, 70.6433, -23.7568, 69.6433, -16.7568, 62.6433, -10.7568, 71.6433, -3.75684, 65.6433, 1.24316, 68.6433, 3.24316, 70.6433, 9.24316, 62.6433, 11.2432, 55.6433, 8.24316, 42.6433, 1.24316, 44.6433, 14.2432, -37.3567, 24.2432, -38.3567, 14.2432, -50.3567, 17.2432, -67.3567, 25.2432, -71.3567, 21.2432, -69.3567, 14.2432, -62.3567, 14.2432, -65.3567, 12.2432, -72.3567, 12.2432, -75.3567, 8.24316, -71.3567, 3.24316, -66.3567, 3.24316, -68.3567, -0.756836, -73.3567, -2.75684, -72.3567, -8.75684, -66.3567, -8.75684, -59.3567, -7.75684, -45.3567, -0.756836)
+
+[node name="cherry" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(1656, 2247)
+monitoring = false
+
+[node name="@Polygon2D@98351" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/cherry"]
+polygon = PackedVector2Array(-47.4065, 33.5827, -58.4065, 29.5827, -68.4065, 23.5827, -72.4065, 13.5827, -72.4065, 3.58276, -66.4065, -4.41724, -56.4065, -9.41724, -48.4065, -11.4173, -39.4065, -11.4173, -25.4065, -23.4173, -9.40649, -35.4173, -0.406494, -40.4173, 15.5935, -46.4173, 28.5935, -48.4173, 7.59351, -55.4173, -6.40649, -62.4173, -9.40649, -70.4173, -5.40649, -73.4173, -0.406494, -73.4173, 7.59351, -71.4173, 23.5935, -65.4173, 37.5935, -56.4173, 46.5935, -48.4173, 34.5935, -38.4173, 24.5935, -27.4173, 18.5935, -17.4173, 16.5935, -10.4173, 20.5935, -11.4173, 28.5935, -11.4173, 39.5935, -9.41724, 50.5935, -4.41724, 59.5935, 4.58276, 63.5935, 11.5827, 63.5935, 21.5827, 59.5935, 28.5827, 53.5935, 33.5827, 42.5935, 37.5827, 29.5935, 38.5827, 18.5935, 34.5827, 10.5935, 29.5827, 4.59351, 23.5827, 1.59351, 14.5827, 1.59351, 6.58276, 4.59351, -0.417236, 7.59351, -4.41724, 11.5935, -6.41724, 14.5935, -9.41724, 14.5935, -15.4173, 17.5935, -22.4173, 25.5935, -34.4173, 39.5935, -46.4173, 12.5935, -40.4173, -0.406494, -36.4173, -12.4065, -29.4173, -35.4065, -9.41724, -29.4065, -9.41724, -21.4065, -5.41724, -14.4065, 1.58276, -11.4065, 11.5827, -14.4065, 22.5827, -25.4065, 31.5827, -34.4065, 33.5827)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/cherry"]
+polygon = PackedVector2Array(-47.4065, 33.5827, -58.4065, 29.5827, -68.4065, 23.5827, -72.4065, 13.5827, -72.4065, 3.58276, -66.4065, -4.41724, -56.4065, -9.41724, -48.4065, -11.4173, -39.4065, -11.4173, -25.4065, -23.4173, -9.40649, -35.4173, -0.406494, -40.4173, 15.5935, -46.4173, 28.5935, -48.4173, 7.59351, -55.4173, -6.40649, -62.4173, -9.40649, -70.4173, -5.40649, -73.4173, -0.406494, -73.4173, 7.59351, -71.4173, 23.5935, -65.4173, 37.5935, -56.4173, 46.5935, -48.4173, 34.5935, -38.4173, 24.5935, -27.4173, 18.5935, -17.4173, 16.5935, -10.4173, 20.5935, -11.4173, 28.5935, -11.4173, 39.5935, -9.41724, 50.5935, -4.41724, 59.5935, 4.58276, 63.5935, 11.5827, 63.5935, 21.5827, 59.5935, 28.5827, 53.5935, 33.5827, 42.5935, 37.5827, 29.5935, 38.5827, 18.5935, 34.5827, 10.5935, 29.5827, 4.59351, 23.5827, 1.59351, 14.5827, 1.59351, 6.58276, 4.59351, -0.417236, 7.59351, -4.41724, 11.5935, -6.41724, 14.5935, -9.41724, 14.5935, -15.4173, 17.5935, -22.4173, 25.5935, -34.4173, 39.5935, -46.4173, 12.5935, -40.4173, -0.406494, -36.4173, -12.4065, -29.4173, -35.4065, -9.41724, -29.4065, -9.41724, -21.4065, -5.41724, -14.4065, 1.58276, -11.4065, 11.5827, -14.4065, 22.5827, -25.4065, 31.5827, -34.4065, 33.5827)
+
+[node name="turkey_leg" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(1775, 1322)
+monitoring = false
+
+[node name="@Polygon2D@98353" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/turkey_leg"]
+polygon = PackedVector2Array(-68.5198, 27.3419, -63.5198, 29.3419, -50.5198, 26.3419, 15.4802, 11.3419, 72.4802, 8.34192, 78.4802, 16.3419, 82.4802, 23.3419, 88.4802, 24.3419, 91.4802, 18.3419, 90.4802, 10.3419, 87.4802, 4.34192, 83.4802, 0.341919, 88.4802, -7.65808, 85.4802, -17.6581, 76.4802, -18.6581, 71.4802, -11.6581, 67.4802, -5.65808, 32.4802, -2.65808, -24.5198, -34.6581, -38.5198, -26.6581, -54.5198, -8.65808, -62.5198, 9.34192)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/turkey_leg"]
+polygon = PackedVector2Array(-68.5198, 27.3419, -63.5198, 29.3419, -50.5198, 26.3419, 15.4802, 11.3419, 72.4802, 8.34192, 78.4802, 16.3419, 82.4802, 23.3419, 88.4802, 24.3419, 91.4802, 18.3419, 90.4802, 10.3419, 87.4802, 4.34192, 83.4802, 0.341919, 88.4802, -7.65808, 85.4802, -17.6581, 76.4802, -18.6581, 71.4802, -11.6581, 67.4802, -5.65808, 32.4802, -2.65808, -24.5198, -34.6581, -38.5198, -26.6581, -54.5198, -8.65808, -62.5198, 9.34192)
+
+[node name="cheese" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(822, 662)
+monitoring = false
+
+[node name="@Polygon2D@98355" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/cheese"]
+polygon = PackedVector2Array(-72.059, 19.2399, -34.059, -30.7601, 0.94104, -64.7601, 33.941, -47.7601, 64.941, -27.7601, 58.941, 34.2399, -69.059, 51.2399)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/cheese"]
+polygon = PackedVector2Array(-72.059, 19.2399, -34.059, -30.7601, 0.94104, -64.7601, 33.941, -47.7601, 64.941, -27.7601, 58.941, 34.2399, -69.059, 51.2399)
+
+[node name="ice_cream" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(1017, 1857)
+monitoring = false
+
+[node name="@Polygon2D@98357" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/ice_cream"]
+polygon = PackedVector2Array(41.1292, 107.515, -44.8708, -10.4849, -54.8708, -27.4849, -54.8708, -41.4849, -47.8708, -51.4849, -35.8708, -59.4849, -20.8708, -59.4849, -10.8708, -54.4849, -5.87085, -49.4849, 3.12915, -54.4849, 12.1292, -55.4849, 21.1292, -54.4849, 27.1292, -49.4849, 33.1292, -41.4849, 34.1292, -28.4849, 31.1292, -20.4849, 30.1292, -15.4849, 34.1292, -15.4849, 35.1292, 61.5151, 37.1292, 81.5151)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/ice_cream"]
+polygon = PackedVector2Array(41.1292, 107.515, -44.8708, -10.4849, -54.8708, -27.4849, -54.8708, -41.4849, -47.8708, -51.4849, -35.8708, -59.4849, -20.8708, -59.4849, -10.8708, -54.4849, -5.87085, -49.4849, 3.12915, -54.4849, 12.1292, -55.4849, 21.1292, -54.4849, 27.1292, -49.4849, 33.1292, -41.4849, 34.1292, -28.4849, 31.1292, -20.4849, 30.1292, -15.4849, 34.1292, -15.4849, 35.1292, 61.5151, 37.1292, 81.5151)
+
+[node name="onion" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(654, 1193)
+monitoring = false
+
+[node name="@Polygon2D@98359" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/onion"]
+polygon = PackedVector2Array(-19.5588, -7.53821, -25.5588, -4.53821, -30.5588, 1.46179, -34.5588, 6.46179, -37.5588, 19.4618, -36.5588, 26.4618, -33.5588, 34.4618, -27.5588, 43.4618, -19.5588, 50.4618, -11.5588, 56.4618, -3.55884, 62.4618, 2.44116, 74.4618, 2.44116, 83.4618, 7.44116, 79.4618, 7.44116, 72.4618, 4.44116, 65.4618, 4.44116, 57.4618, 10.4412, 52.4618, 19.4412, 48.4618, 32.4412, 36.4618, 38.4412, 27.4618, 41.4412, 15.4618, 40.4412, 3.46179, 36.4412, -6.53821, 27.4412, -14.5382, 21.4412, -18.5382, 14.4412, -19.5382, 15.4412, -26.5382, 23.4412, -33.5382, 28.4412, -39.5382, 33.4412, -51.5382, 25.4412, -44.5382, 18.4412, -40.5382, 18.4412, -52.5382, 12.4412, -61.5382, 2.44116, -71.5382, -1.55884, -79.5382, -3.55884, -76.5382, -3.55884, -72.5382, -3.55884, -67.5382, -2.55884, -62.5382, 0.441162, -57.5382, 2.44116, -49.5382, 1.44116, -42.5382, -0.558838, -44.5382, -2.55884, -49.5382, -6.55884, -55.5382, -11.5588, -63.5382, -12.5588, -75.5382, -10.5588, -78.5382, -11.5588, -81.5382, -14.5588, -73.5382, -15.5588, -66.5382, -20.5588, -71.5382, -20.5588, -65.5382, -24.5588, -57.5382, -29.5588, -47.5382, -28.5588, -38.5382, -24.5588, -32.5382, -17.5588, -25.5382, -16.5588, -21.5382, -20.5588, -23.5382, -29.5588, -28.5382, -36.5588, -33.5382, -36.5588, -29.5382, -33.5588, -22.5382, -29.5588, -17.5382, -19.5588, -11.5382)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/onion"]
+polygon = PackedVector2Array(-19.5588, -7.53821, -25.5588, -4.53821, -30.5588, 1.46179, -34.5588, 6.46179, -37.5588, 19.4618, -36.5588, 26.4618, -33.5588, 34.4618, -27.5588, 43.4618, -19.5588, 50.4618, -11.5588, 56.4618, -3.55884, 62.4618, 2.44116, 74.4618, 2.44116, 83.4618, 7.44116, 79.4618, 7.44116, 72.4618, 4.44116, 65.4618, 4.44116, 57.4618, 10.4412, 52.4618, 19.4412, 48.4618, 32.4412, 36.4618, 38.4412, 27.4618, 41.4412, 15.4618, 40.4412, 3.46179, 36.4412, -6.53821, 27.4412, -14.5382, 21.4412, -18.5382, 14.4412, -19.5382, 15.4412, -26.5382, 23.4412, -33.5382, 28.4412, -39.5382, 33.4412, -51.5382, 25.4412, -44.5382, 18.4412, -40.5382, 18.4412, -52.5382, 12.4412, -61.5382, 2.44116, -71.5382, -1.55884, -79.5382, -3.55884, -76.5382, -3.55884, -72.5382, -3.55884, -67.5382, -2.55884, -62.5382, 0.441162, -57.5382, 2.44116, -49.5382, 1.44116, -42.5382, -0.558838, -44.5382, -2.55884, -49.5382, -6.55884, -55.5382, -11.5588, -63.5382, -12.5588, -75.5382, -10.5588, -78.5382, -11.5588, -81.5382, -14.5588, -73.5382, -15.5588, -66.5382, -20.5588, -71.5382, -20.5588, -65.5382, -24.5588, -57.5382, -29.5588, -47.5382, -28.5588, -38.5382, -24.5588, -32.5382, -17.5588, -25.5382, -16.5588, -21.5382, -20.5588, -23.5382, -29.5588, -28.5382, -36.5588, -33.5382, -36.5588, -29.5382, -33.5588, -22.5382, -29.5588, -17.5382, -19.5588, -11.5382)
+
+[node name="hot_dog" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(1474, 176)
+monitoring = false
+
+[node name="@Polygon2D@98361" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/hot_dog"]
+polygon = PackedVector2Array(-48.1475, -14.8409, -52.1475, -7.8409, -52.1475, 3.1591, -47.1475, 14.1591, -39.1475, 22.1591, -25.1475, 29.1591, -10.1475, 31.1591, 4.85254, 32.1591, 19.8525, 30.1591, 32.8525, 27.1591, 41.8525, 21.1591, 48.8525, 12.1591, 50.8525, 1.1591, 46.8525, -4.8409, 53.8525, -9.8409, 53.8525, -15.8409, 52.8525, -19.8409, 45.8525, -19.8409, 44.8525, -23.8409, 42.8525, -27.8409, 35.8525, -27.8409, 24.8525, -24.8409, 5.85254, -24.8409, -10.1475, -28.8409, -18.1475, -31.8409, -24.1475, -33.8409, -34.1475, -31.8409, -39.1475, -27.8409, -41.1475, -23.8409, -41.1475, -17.8409)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/hot_dog"]
+polygon = PackedVector2Array(-48.1475, -14.8409, -52.1475, -7.8409, -52.1475, 3.1591, -47.1475, 14.1591, -39.1475, 22.1591, -25.1475, 29.1591, -10.1475, 31.1591, 4.85254, 32.1591, 19.8525, 30.1591, 32.8525, 27.1591, 41.8525, 21.1591, 48.8525, 12.1591, 50.8525, 1.1591, 46.8525, -4.8409, 53.8525, -9.8409, 53.8525, -15.8409, 52.8525, -19.8409, 45.8525, -19.8409, 44.8525, -23.8409, 42.8525, -27.8409, 35.8525, -27.8409, 24.8525, -24.8409, 5.85254, -24.8409, -10.1475, -28.8409, -18.1475, -31.8409, -24.1475, -33.8409, -34.1475, -31.8409, -39.1475, -27.8409, -41.1475, -23.8409, -41.1475, -17.8409)
+
+[node name="carrot" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(924, 937)
+monitoring = false
+
+[node name="@Polygon2D@98363" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/carrot"]
+polygon = PackedVector2Array(66.9128, 113.905, 34.9128, 73.905, -6.08716, 35.905, -36.0872, -0.0949707, -42.0872, -21.095, -41.0872, -38.095, -57.0872, -64.095, -64.0872, -76.095, -68.0872, -90.095, -66.0872, -91.095, -60.0872, -87.095, -63.0872, -92.095, -66.0872, -103.095, -67.0872, -112.095, -64.0872, -114.095, -58.0872, -100.095, -53.0872, -90.095, -47.0872, -82.095, -50.0872, -90.095, -56.0872, -110.095, -53.0872, -120.095, -46.0872, -103.095, -29.0872, -51.095, -7.08716, -45.095, 3.91284, -37.095, 17.9128, -24.095, 28.9128, -7.09497, 38.9128, 14.905, 53.9128, 49.905, 61.9128, 80.905)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/carrot"]
+polygon = PackedVector2Array(66.9128, 113.905, 34.9128, 73.905, -6.08716, 35.905, -36.0872, -0.0949707, -42.0872, -21.095, -41.0872, -38.095, -57.0872, -64.095, -64.0872, -76.095, -68.0872, -90.095, -66.0872, -91.095, -60.0872, -87.095, -63.0872, -92.095, -66.0872, -103.095, -67.0872, -112.095, -64.0872, -114.095, -58.0872, -100.095, -53.0872, -90.095, -47.0872, -82.095, -50.0872, -90.095, -56.0872, -110.095, -53.0872, -120.095, -46.0872, -103.095, -29.0872, -51.095, -7.08716, -45.095, 3.91284, -37.095, 17.9128, -24.095, 28.9128, -7.09497, 38.9128, 14.905, 53.9128, 49.905, 61.9128, 80.905)
+
+[node name="burger" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(1789, 964)
+monitoring = false
+
+[node name="@Polygon2D@98365" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/burger"]
+polygon = PackedVector2Array(-2.44189, 40.3142, 12.5581, 38.3142, 28.5581, 31.3142, 36.5581, 23.3142, 40.5581, 11.3142, 41.5581, 3.31421, 49.5581, -3.68579, 48.5581, -6.68579, 44.5581, -5.68579, 40.5581, -3.68579, 40.5581, -12.6858, 34.5581, -25.6858, 29.5581, -32.6858, 21.5581, -37.6858, 10.5581, -40.6858, -2.44189, -39.6858, -10.4419, -38.6858, -20.4419, -35.6858, -33.4419, -27.6858, -39.4419, -18.6858, -41.4419, -7.68579, -40.4419, 9.31421, -40.4419, 22.3142, -33.4419, 30.3142, -28.4419, 34.3142, -20.4419, 37.3142)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/burger"]
+polygon = PackedVector2Array(-2.44189, 40.3142, 12.5581, 38.3142, 28.5581, 31.3142, 36.5581, 23.3142, 40.5581, 11.3142, 41.5581, 3.31421, 49.5581, -3.68579, 48.5581, -6.68579, 44.5581, -5.68579, 40.5581, -3.68579, 40.5581, -12.6858, 34.5581, -25.6858, 29.5581, -32.6858, 21.5581, -37.6858, 10.5581, -40.6858, -2.44189, -39.6858, -10.4419, -38.6858, -20.4419, -35.6858, -33.4419, -27.6858, -39.4419, -18.6858, -41.4419, -7.68579, -40.4419, 9.31421, -40.4419, 22.3142, -33.4419, 30.3142, -28.4419, 34.3142, -20.4419, 37.3142)
+
+[node name="racoon" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container"]
+position = Vector2(1328, 855)
+monitoring = false
+
+[node name="@Polygon2D@98367" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/racoon"]
+polygon = PackedVector2Array(-34.8362, 59.5426, -11.8362, 50.5426, 5.16382, 51.5426, 21.1638, 63.5426, 38.1638, 57.5426, 38.1638, 9.5426, 41.1638, 6.5426, 50.1638, -2.4574, 53.1638, -6.4574, 53.1638, -10.4574, 58.1638, -11.4574, 59.1638, -13.4574, 63.1638, -14.4574, 61.1638, -17.4574, 61.1638, -20.4574, 66.1638, -19.4574, 64.415, -22.7896, 60.1638, -25.4574, 68.1638, -26.4574, 69.1638, -28.4574, 13.1638, -46.4574, -2.83618, -45.4574, -12.8362, -43.4574, -19.8362, -42.4574, -23.8362, -39.4574, -36.8362, -59.4574, -42.8362, -64.4574, -44.8362, -62.4574, -46.8362, -58.4574, -47.8362, -49.4574, -45.8362, -32.4574, -53.8362, -28.4574, -64.8362, -18.4574, -63.8362, -15.4574, -59.8362, -14.4574, -60.8362, -12.4574, -61.8362, -8.4574, -58.0571, -9.06659, -55.8362, -5.4574, -52.8362, -3.4574, -51.8362, 1.5426, -48.8362, -0.457397, -45.8362, 1.5426, -29.8362, 13.5426, -34.8362, 19.5426)
+
+[node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/racoon"]
+polygon = PackedVector2Array(-34.8362, 59.5426, -11.8362, 50.5426, 5.16382, 51.5426, 21.1638, 63.5426, 38.1638, 57.5426, 38.1638, 9.5426, 41.1638, 6.5426, 50.1638, -2.4574, 53.1638, -6.4574, 53.1638, -10.4574, 58.1638, -11.4574, 59.1638, -13.4574, 63.1638, -14.4574, 61.1638, -17.4574, 61.1638, -20.4574, 66.1638, -19.4574, 64.415, -22.7896, 60.1638, -25.4574, 68.1638, -26.4574, 69.1638, -28.4574, 13.1638, -46.4574, -2.83618, -45.4574, -12.8362, -43.4574, -19.8362, -42.4574, -23.8362, -39.4574, -36.8362, -59.4574, -42.8362, -64.4574, -44.8362, -62.4574, -46.8362, -58.4574, -47.8362, -49.4574, -45.8362, -32.4574, -53.8362, -28.4574, -64.8362, -18.4574, -63.8362, -15.4574, -59.8362, -14.4574, -60.8362, -12.4574, -61.8362, -8.4574, -58.0571, -9.06659, -55.8362, -5.4574, -52.8362, -3.4574, -51.8362, 1.5426, -48.8362, -0.457397, -45.8362, 1.5426, -29.8362, 13.5426, -34.8362, 19.5426)
+
+[node name="TouchFeedback" type="Area2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
+position = Vector2(410.306, 258.118)
+scale = Vector2(1.01, 1.01)
+script = ExtResource("8_i16gx")
+
+[node name="CollisionCircle" type="CollisionShape2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback"]
+shape = SubResource("CircleShape2D_w3wpm")
+
+[node name="CircleSprite" type="Sprite2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback"]
+modulate = Color(0.647059, 0.00784314, 0.858824, 0)
+texture = ExtResource("9_kw56b")
+
+[node name="right_rail" type="CanvasLayer" parent="HBoxContainer"]
+editor_description = "Separate and is on it's own canvas layer to be independent of the camera zooming."
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/right_rail"]
+z_index = 100
+custom_minimum_size = Vector2(200, 200)
+layout_direction = 2
+anchors_preset = -1
+anchor_left = 0.871
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -0.000102997
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+theme = SubResource("Theme_exhha")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kas6d")
+horizontal_scroll_mode = 0
+script = ExtResource("10_78ntt")
+
+[node name="legend_for_hidden_objects" type="VBoxContainer" parent="HBoxContainer/right_rail/ScrollContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(250, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_inwhd")
+theme_override_constants/separation = 16
+
+[node name="bottle" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_b8pp1")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="onion" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_kqb8q")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="ice_cream" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_0jijf")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="cheese" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_lwxlu")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="bonbon" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_skyls")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="hot_dog" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_21pp8")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="cherry" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_o5ts0")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="carrot" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_4n6e5")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="burger" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_i0px8")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="turkey_leg" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_2vppl")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="racoon" type="Button" parent="HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects"]
+custom_minimum_size = Vector2(100, 200)
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 2
+theme = ExtResource("11_b6dds")
+icon = SubResource("AtlasTexture_e8nuf")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="level_complete_panel" type="Control" parent="."]
+visible = false
+z_index = 1000
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="level_complete_panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 200
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="level_complete_panel/MarginContainer"]
+custom_minimum_size = Vector2(1000, 400)
+layout_mode = 2
+
+[node name="paper_9patch_bg" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+texture = ExtResource("4_ji22x")
+region_rect = Rect2(608, 32, 32, 96)
+patch_margin_left = 23
+patch_margin_top = 12
+patch_margin_right = 14
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Control" type="Control" parent="level_complete_panel/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Title" type="Control" parent="level_complete_panel/MarginContainer/PanelContainer/Control"]
+layout_mode = 1
+anchor_top = 0.0675
+anchor_right = 1.0
+anchor_bottom = 1.0675
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+layout_mode = 0
+offset_left = 442.0
+offset_top = 369.0
+offset_right = 1166.0
+offset_bottom = 507.0
+texture = ExtResource("3_m8jsd")
+region_rect = Rect2(31, 32, 97, 96)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 1
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 95.0
+offset_top = 15.0
+offset_right = -105.0
+offset_bottom = 148.0
+grow_horizontal = 2
+texture = ExtResource("3_m8jsd")
+region_rect = Rect2(431, 69, 66, 22)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+layout_mode = 0
+offset_left = 315.0
+offset_top = 342.0
+offset_right = 1558.0
+offset_bottom = 1239.0
+texture = ExtResource("4_ji22x")
+region_rect = Rect2(31, 32, 97, 96)
+patch_margin_left = 20
+patch_margin_top = 13
+patch_margin_right = 20
+patch_margin_bottom = 13
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="BG Wood" type="Sprite2D" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+visible = false
+position = Vector2(1041, 347)
+texture = ExtResource("12_73igf")
+
+[node name="Label" type="Label" parent="level_complete_panel/MarginContainer/PanelContainer/Control/Title"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -338.0
+offset_top = 50.0
+offset_right = 338.0
+offset_bottom = 73.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.878431, 0.32549, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("13_4fhm2")
+theme_override_font_sizes/font_size = 60
+text = "Level complete"
+
+[node name="btn_level_select" type="Button" parent="level_complete_panel/MarginContainer/PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.883
+anchor_right = 0.5
+anchor_bottom = 0.883
+offset_left = -116.0
+offset_top = -90.2
+offset_right = 152.0
+offset_bottom = 0.799994
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_10jck")
+theme_override_font_sizes/font_size = 60
+text = "Next"
+
+[node name="score_label" type="Label" parent="level_complete_panel"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -236.0
+offset_top = 58.0
+offset_right = -78.0
+offset_bottom = 164.0
+grow_horizontal = 0
+theme = SubResource("Theme_k5e1q")
+theme_type_variation = &"HeaderLarge"
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 75
+text = "5/10"
+
+[connection signal="gui_input" from="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer" to="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback" method="_on_image_container_gui_input" flags=18]

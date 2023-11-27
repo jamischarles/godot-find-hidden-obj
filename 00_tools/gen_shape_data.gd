@@ -373,7 +373,7 @@ func save_shapes_handler():
 #	buttonImageRegions
 		
 	## TODO: Do the same for subregions for button legend	
-	print('data2', data)
+#	print('data2', data)
 	
 #	var packed = PackedDataContainer.new().pack(data)
 	

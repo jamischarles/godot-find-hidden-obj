@@ -34,41 +34,17 @@ func _ready():
 	get_node("%clear_purchase").connect('button_down', clear_iap_purchase)
 	
 	
-	### IAP CODE. TODO: move to separate function
-	if Engine.has_singleton("InAppStore"):
-		_appstore = Engine.get_singleton('InAppStore')
+
+	
 		
 		
 		# do we even need this? Do we need to store this?
 		
 		
-		## TODO: only do this when we haven't purchased yet?
+	# if all levels haven't been unlocked yet, do an app store product id lookup
+	if !is_all_levels_unlocked:
+		make_iap_product_info_request()
 		
-		var result = _appstore.request_product_info( { "product_ids": ["matchy_match_unlock_001"] } )
-
-
-#		var result = _appstore.purchase({'product_id': "1001"})
-		print('#RESULT product result', result)
-
-		if result == OK:
-			print("Successfully started product info request")
-			# set LOADING state...
-			_appstore.set_auto_finish_transaction(true)
-
-			var timer = Timer.new()
-			timer.wait_time = 1
-			timer.connect("timeout", check_appstore_purchase_events)
-			add_child(timer)
-			timer.start()
-		else:
-			print("failed requesting product info")
-	else:
-		print("no app store plugin")
-		print("##iOS IAP plugin is not available on this platform.")
-	
-	
-	############# END IAP CODE
-	
 	
 	
 #
@@ -226,7 +202,7 @@ func make_iap_purchase_request():
 	
 	
 	if !is_IAP_available(): 
-		print('NO IAP on this platform: Aborting restore request')
+		print('NO IAP on this platform: Aborting purchase request')
 		return
 	
 	print('ATTEMPT PURCHASE')
@@ -263,6 +239,30 @@ func make_iap_restore_request():
 	else:
 		print("failed RESTORE request: ", result)
 
+## Not sure why we have to look up the product info first in order to purchase it...
+func make_iap_product_info_request():
+	if Engine.has_singleton("InAppStore"):
+		_appstore = Engine.get_singleton('InAppStore')
+		var result = _appstore.request_product_info( { "product_ids": ["matchy_match_unlock_001"] } )
+
+	#		var result = _appstore.purchase({'product_id': "1001"})
+		print('#RESULT product result', result)
+
+		if result == OK:
+			print("Successfully started product info request")
+			# set LOADING state...
+			_appstore.set_auto_finish_transaction(true)
+
+			var timer = Timer.new()
+			timer.wait_time = 1
+			timer.connect("timeout", check_appstore_purchase_events)
+			add_child(timer)
+			timer.start()
+		else:
+			print("failed requesting product info")
+	else:
+		print("no app store plugin")
+		print("##iOS IAP plugin is not available on this platform.")
 
 ################# END IAP functions
 
