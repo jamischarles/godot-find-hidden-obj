@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://bje0n2mueera4"]
+[gd_scene load_steps=42 format=3 uid="uid://bje0n2mueera4"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_0piok"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_sh800"]
@@ -8,11 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://c13imm0fxepsf" path="res://00_art/Home.png" id="5_8moym"]
 [ext_resource type="Script" path="res://shared/TouchFeedback.gd" id="7_5alox"]
 [ext_resource type="Texture2D" uid="uid://c6adjm5glqpkr" path="res://05/src/img.png" id="7_8s4l4"]
+[ext_resource type="Texture2D" uid="uid://qx2lio817111" path="res://00_art/HomeBtn.png" id="7_at0uy"]
 [ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="8_7bt8j"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_pc7wy"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="10_pdkhc"]
 [ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="11_k8oex"]
 [ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="12_ja72t"]
+[ext_resource type="Texture2D" uid="uid://c2hdvd3tkiw7l" path="res://00_art/Tick.png" id="13_boa1y"]
+[ext_resource type="FontFile" uid="uid://iujlrr6ldhou" path="res://00_art/PlaypenSans-VariableFont_wght.ttf" id="14_2pfc1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jt6b8"]
 texture = ExtResource("3_f5emm")
@@ -118,9 +121,6 @@ region = Rect2(1751, 1098, 109, 200)
 atlas = ExtResource("7_8s4l4")
 region = Rect2(1861, 1013, 143, 295)
 
-[sub_resource type="SystemFont" id="SystemFont_10jck"]
-font_names = PackedStringArray("Monospace")
-
 [sub_resource type="Theme" id="Theme_k5e1q"]
 
 [node name="Stage" type="Node"]
@@ -188,7 +188,23 @@ patch_margin_bottom = 16
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
+[node name="HomeBtn" type="Button" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_left = 22.0
+offset_top = 88.0
+offset_right = 86.0
+offset_bottom = 154.0
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxTexture_jt6b8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_raqh3")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_a6bil")
+icon = ExtResource("7_at0uy")
+icon_alignment = 1
+expand_icon = true
+
 [node name="Home" type="Button" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer"]
+visible = false
 layout_mode = 2
 offset_left = 17.0
 offset_top = 90.0
@@ -345,6 +361,13 @@ texture = ExtResource("8_7bt8j")
 
 [node name="right_rail" type="CanvasLayer" parent="HBoxContainer"]
 editor_description = "Separate and is on it's own canvas layer to be independent of the camera zooming."
+
+[node name="check_mark" type="Sprite2D" parent="HBoxContainer/right_rail"]
+unique_name_in_owner = true
+self_modulate = Color(0.0823529, 0.611765, 0.266667, 1)
+position = Vector2(1863, 76)
+scale = Vector2(0.30618, 0.30618)
+texture = ExtResource("13_boa1y")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/right_rail"]
 z_index = 100
@@ -622,7 +645,7 @@ offset_right = 152.0
 offset_bottom = 0.799994
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_fonts/font = SubResource("SystemFont_10jck")
+theme_override_fonts/font = ExtResource("14_2pfc1")
 theme_override_font_sizes/font_size = 60
 text = "Next"
 

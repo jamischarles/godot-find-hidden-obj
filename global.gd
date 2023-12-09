@@ -27,7 +27,7 @@ func _ready():
 # not set
 var next_level: String
 # TODO: Calc max levels automagically?
-var highest_level = "06"
+var highest_level = "10"
 
 func set_next_level_str(currentLevelStr: String):
 	var newLevelInt = int(currentLevelStr) + 1

@@ -13,7 +13,7 @@ If you update a scene file ensure you do it in the 00_template folder or else yo
 will be overridden next time you generate a level and then nothign works.
 
 ## Adding Level (with new canvas image)
--> Important sizings... TextureRect in `gen_shape_data.tscn` needs to have minimum size set to the minimum of the viewport for each level.
+-> Important sizings... TextureRect in `gen_shape_data.tscn` needs to have minimum size set to the minimum of the viewport for each level.   
 
 1. Add new image to 00_canvas_images
 2. Name it with 2 digit number for level it's for
@@ -21,7 +21,7 @@ will be overridden next time you generate a level and then nothign works.
 4. For TextureRect node, create atlas texture for new image, loaded from 00_canvas_images/ folder
 	- set region to exclude the legend & solution
 5. Duplicate the ^ node, then make texture UNIQUE (parent only)
-	- set region to entire image
+	- set region to entire image (todo: or just reuse the node, BETTER)
 6. Select root node in tree for create_shape_data.tscn
 	- delete all the children of `click_zone_container` node
 	- delete all the children of `button_image_container` node

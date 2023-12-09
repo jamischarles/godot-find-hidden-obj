@@ -4,7 +4,8 @@ extends Node
 @onready var right_rail_buttons: Array[Node] = $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.get_children()
 
 
-@onready var home_btn = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer/Home
+@onready var home_btn = get_node("%HomeBtn")
+@onready var check_mark = get_node("%check_mark")
 @onready var lvl_done = $level_complete_panel/MarginContainer/PanelContainer/Control/btn_level_select
 
 
@@ -73,8 +74,8 @@ func panImage():
 	
 	# then animate coming back to top left corner
 	var tween = get_tree().create_tween()
-	tween.parallel().tween_property(scrollContainer, "scroll_horizontal", 0, 2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.05)
-	tween.parallel().tween_property(scrollContainer, "scroll_vertical", 0, 2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(0.05)
+	tween.parallel().tween_property(scrollContainer, "scroll_horizontal", 0, 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)#.set_delay(0.05)
+	tween.parallel().tween_property(scrollContainer, "scroll_vertical", 0, 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)#.set_delay(0.05)
 	tween.tween_callback(onPanDone)
 	
 # fad in 
@@ -168,6 +169,13 @@ func mark_right_rail_btn_as_done(shape_name: String):
 	var btn = find_matching_right_rail_button(shape_name)
 #	var rr_btn = find_matching_right_rail_button(shape.get_name())
 	
+	
+	# add checkmark
+	var check = check_mark.duplicate()
+	btn.add_child(check)
+	check.position = Vector2(0,0)
+	check.offset = Vector2(425, 300)
+	
 	# values to restore at the end
 	var btn_min_size = btn.custom_minimum_size
 	
@@ -193,28 +201,33 @@ func mark_right_rail_btn_as_done(shape_name: String):
 #	get veiwport height so we can move just beyond it	
 	var viewport_height = get_viewport().get_visible_rect().size.y
 	
-	
-	var tween = get_tree().create_tween().set_parallel(false)
-#	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
-#	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(btn, "position", Vector2(btn_global_pos.x, viewport_height), 3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT).set_delay(.01)
-	tween.parallel().tween_property(btn, "scale", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.1)
-	tween.parallel().tween_property(btn, "custom_minimum_size", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.1)
-#	tween.parallel().tween_property(btn, "modulate", Color(1, 1, 1, .5), 3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
-#	tween.tween_property(btn, "scale", Vector2(1.5,1.5), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-#	tween.tween_property(btn, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	# can we animate this?
+	# move to bottom of list
 	var on_tween_done = func():
 		btn.top_level = false # put the positioning back in the parent container
 		btn.custom_minimum_size = btn_min_size # restore size
 		btn.get_parent().move_child(btn, btn.get_parent().get_child_count()) # move to end
 		btn.disabled = true # set disabled style
 		check_should_end_level(true) # doesn't hurt to run it multiple times
+	
+	
+	var tween = get_tree().create_tween().set_parallel(false)
+#	tween.tween_property(self, "modulate", Color.RED, 3).set_trans(Tween.TRANS_BOUNCE)
+#	tween.tween_property(self, "modulate", Color(0.11,1,1,.5), .2).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(btn, "position", Vector2(btn_global_pos.x, viewport_height), 1.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT).set_delay(.01)
+	tween.parallel().tween_property(btn, "scale", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.1)
+	tween.parallel().tween_property(btn, "custom_minimum_size", Vector2(0,0), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.1)
+	tween.tween_callback(on_tween_done)
+#	tween.parallel().tween_property(btn, "modulate", Color(1, 1, 1, .5), 3).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+#	tween.tween_property(btn, "scale", Vector2(1.5,1.5), .15).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+#	tween.tween_property(btn, "scale", Vector2(1,1), .1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	# can we animate this?
+	
 
 
 	# scroll right rail to top?
 	
-	tween.tween_callback(on_tween_done)
+	#tween.parallel().tween_callback(on_tween_done).set_delay(3)
+	
 #	tween.finished(btn.set.bind("top_level", false))
 
 	
