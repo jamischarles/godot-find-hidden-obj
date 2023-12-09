@@ -88,7 +88,9 @@ func transition_state(state, event):
 			if event.type == "api_result" && (event.result == "purchase_failure" || event.result == "restore_failure"):
 				print('FAILED')
 				state.status = "purchase_LOCKED"
+				showModal({type = "failure" })
 				# then wait x seconds before refreshing...
+				await get_tree().create_timer(5).timeout
 				
 				## refresh
 				get_tree().reload_current_scene()
@@ -258,6 +260,12 @@ func notify_user(data):
 func check_appstore_purchase_events():
 	while _appstore.get_pending_event_count() > 0:
 		var event = _appstore.pop_pending_event()
+		
+		
+		if event.result == "error" || event.result == "unhandled":
+			print("####IAP PROBLEM:", event)
+			transition_state(local_state, {type="api_result", result = "purchase_failure"})
+		
 		if event.result=="ok": # other possible values are "progress", "error", "unhandled", "completed"
 			print("####EVENT", event)
 			

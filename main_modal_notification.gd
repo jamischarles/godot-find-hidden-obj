@@ -24,6 +24,10 @@ func _on_modal_notification_confirmed():
 	get_tree().reload_current_scene()
 	#pass # Replace with function body.
 	
+## usually because we've now unlocked something...	
+func reload_home_screen():
+	get_tree().reload_current_scene()
+	
 	
 	
 func close_modal():
