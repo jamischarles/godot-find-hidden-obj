@@ -886,7 +886,6 @@ axis_stretch_horizontal = 2
 axis_stretch_vertical = 2
 
 [node name="loading" type="Control" parent="modal_notification/PanelContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Title" type="Control" parent="modal_notification/PanelContainer/loading"]
@@ -974,6 +973,18 @@ theme_override_fonts/font = ExtResource("16_mv3pa")
 theme_override_font_sizes/font_size = 60
 text = "OK"
 
+[node name="close_btn" type="Button" parent="modal_notification/PanelContainer/loading"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_bottom = 69.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("16_mv3pa")
+theme_override_font_sizes/font_size = 40
+text = "X"
+
 [node name="success" type="Control" parent="modal_notification/PanelContainer"]
 visible = false
 layout_mode = 2
@@ -1047,6 +1058,18 @@ theme_override_fonts/font = ExtResource("16_mv3pa")
 theme_override_font_sizes/font_size = 40
 text = "OK"
 
+[node name="close_btn" type="Button" parent="modal_notification/PanelContainer/success"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_bottom = 69.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("16_mv3pa")
+theme_override_font_sizes/font_size = 40
+text = "X"
+
 [node name="failure" type="Control" parent="modal_notification/PanelContainer"]
 visible = false
 layout_mode = 2
@@ -1119,6 +1142,20 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("16_mv3pa")
 theme_override_font_sizes/font_size = 40
 text = "OK"
+
+[node name="close_btn" type="Button" parent="modal_notification/PanelContainer/failure"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 92.0
+offset_top = -90.2
+offset_right = 152.0
+offset_bottom = -21.2
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("16_mv3pa")
+theme_override_font_sizes/font_size = 40
+text = "X"
 
 [node name="PanelContainer2" type="PanelContainer" parent="modal_notification"]
 visible = false
