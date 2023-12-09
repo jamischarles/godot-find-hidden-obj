@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://d4k8eyst13hus"]
+[gd_scene load_steps=51 format=3 uid="uid://d4k8eyst13hus"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_gcarg"]
 [ext_resource type="Texture2D" uid="uid://db1opd12pdk51" path="res://00_canvas_images/01.png" id="2_b7eht"]
@@ -32,6 +32,8 @@
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cvrrn"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2t27i"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_obe8l"]
 atlas = ExtResource("7_lln70")
 region = Rect2(5, 196, 86, 25)
@@ -59,6 +61,10 @@ margin = Rect2(2.08165e-12, 2.08165e-12, 2.08165e-12, 50)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wdkal"]
 bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_57hbj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_588i7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bembv"]
 atlas = ExtResource("11_6juf2")
@@ -421,6 +427,7 @@ mouse_filter = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("6_uc1ic")
 theme_override_font_sizes/font_size = 80
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2t27i")
 text = "Play"
 flat = true
 
@@ -580,6 +587,7 @@ theme_override_constants/h_separation = 20
 theme_override_constants/icon_max_width = 32
 theme_override_fonts/font = ExtResource("16_mv3pa")
 theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_57hbj")
 text = "Unlock 7 more levels"
 icon = ExtResource("18_rdqfs")
 flat = true
@@ -642,6 +650,7 @@ theme_override_constants/h_separation = 6
 theme_override_constants/icon_max_width = 32
 theme_override_fonts/font = ExtResource("16_mv3pa")
 theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxEmpty_588i7")
 text = "Restore Purchases
 "
 icon = ExtResource("18_2qnh5")

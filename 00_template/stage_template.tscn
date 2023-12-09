@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://bje0n2mueera4"]
+[gd_scene load_steps=43 format=3 uid="uid://bje0n2mueera4"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_0piok"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_sh800"]
@@ -34,6 +34,8 @@ region = Rect2(36, 69, 24, 25)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a6bil"]
 texture = SubResource("AtlasTexture_tmfsv")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8mapl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4ny3j"]
 atlas = ExtResource("7_8s4l4")
@@ -199,6 +201,7 @@ theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxTexture_jt6b8")
 theme_override_styles/hover = SubResource("StyleBoxTexture_raqh3")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_a6bil")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8mapl")
 icon = ExtResource("7_at0uy")
 icon_alignment = 1
 expand_icon = true
