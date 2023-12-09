@@ -11,6 +11,10 @@ func _ready():
 	$PanelContainer/success/close_btn.connect("button_up", close_modal)
 	$PanelContainer/failure/close_btn.connect("button_up", close_modal)
 	
+	$PanelContainer/loading/ok_btn.connect("button_up", reload_home_screen)
+	$PanelContainer/success/ok_btn.connect("button_up", reload_home_screen)
+	$PanelContainer/failure/ok_btn.connect("button_up", reload_home_screen)
+	
 func _physics_process(delta):
 	$PanelContainer/loading/spinner_container/spinner_img.rotate(7 * delta)
 
