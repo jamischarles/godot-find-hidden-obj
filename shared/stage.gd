@@ -10,8 +10,13 @@ extends Node
 
 
 @onready var imageSize = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image.size
+
+# default zoom level for the current stage
 @onready var zoomLevel = 1
 ## TODO: Figure out max zoom
+
+
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -43,7 +48,7 @@ func _ready():
 	
 	
 	var clickZones = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container.get_children()
-	print("#clickZones", clickZones)
+	#print("#clickZones", clickZones)
 	# set alpha to 0 so click zones are invisible to user but still active
 	# FIXME: Should I just set this in a shared style?!?
 	for clickZone in clickZones:
@@ -279,32 +284,34 @@ func _on_btn_level_select_button_up():
 
 
 # is gated...
-func _on_should_zoom(zoomPosition):
+func _on_should_zoom(zoomPosition: Vector2, zoom_factor_change: float): # this will be % changes. like .2, or -.3
 	# what if we handle the debounce here?
 	
-	print('\n\n###zoomIn')
+	#print('\n\n###zoomIn')
 	var imageContainerParent: Control = get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control")
 	var imageContainer = imageContainerParent.get_node("ImageContainer")
-	print("node", imageContainerParent)
+	#print("node", imageContainerParent)
 #	print("IMAGE RISZE TO ZOOM", canvas_img.size) #does it make more sense to upscale the image?
 	# double scale?
 #	$HBoxContainer/ScrollContainer.scale = Vector2(2,2)
 	# change scrollcontainer child scale and size
 	
-
-	# toggle zoomLevel
-	if zoomLevel == 1:
-		zoomLevel = 2
-	else:
-		zoomLevel = 1
+	# target zoomLevel
+	zoomLevel = zoomLevel + zoom_factor_change # because zoom_factor_change can be negative, it'll end up subtracting it (what we want)
+	if zoom_factor_change > 0: # ZOOM_IN (pos)
+		print("zoom in by: ", zoom_factor_change, " | new zoomLevel: ", zoomLevel)
+	else: # ZOOM_OUT
+		#zoomLevel = zoomLevel + zoomLevel * zoom_factor_change
+		print("zoom out: ", zoom_factor_change, " | zoomLevel: ", zoomLevel)
+		
 		
 		
 #	imageContainerParent.scale = Vector2(zoomLevel,zoomLevel)
 	
-	print("##size", imageContainerParent.get_node("ImageContainer"))
+	#print("##size", imageContainerParent.get_node("ImageContainer"))
 	# double the canvas size for scrolling accuracy
 	var scrollContent = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent
-	print("####size", scrollContent.custom_minimum_size)
+	#print("####size", scrollContent.custom_minimum_size)
 	
 	scrollContent.set_custom_minimum_size(imageSize * zoomLevel)
 	
@@ -312,11 +319,12 @@ func _on_should_zoom(zoomPosition):
 #	imageContainerParent.set_scale(Vector2(zoomLevel,zoomLevel))	
 	imageContainer.set_scale(Vector2(zoomLevel,zoomLevel))	
 	
+	
 	# move AFTER we zoom
-	print("zoomLevel", zoomLevel)
+	#print("zoomLevel", zoomLevel)
 #	scroll to where we double tapped
 # maybe half  distance? not whole distance?
-	print("scroll to:", zoomPosition)
+	#print("scroll to:", zoomPosition)
 	
 	await get_tree().process_frame #again?
 	
