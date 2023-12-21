@@ -6,7 +6,7 @@ extends EditorScript
 
 
 ## Folder where we read the ./src folder and generate the stage.tscn file for that folder in ../
-var SELECTED_FOLDER = "*" # res://${num}/src
+var SELECTED_FOLDER = "02" # res://${num}/src
 var ALL_FOLDERS = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10"]
 
 # Used to (re-)generate a level

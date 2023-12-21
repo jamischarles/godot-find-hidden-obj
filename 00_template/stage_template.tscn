@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://bje0n2mueera4"]
+[gd_scene load_steps=44 format=3 uid="uid://bje0n2mueera4"]
 
 [ext_resource type="Script" path="res://shared/stage.gd" id="1_0piok"]
 [ext_resource type="Texture2D" uid="uid://bhetge0qs4s67" path="res://00_art/Spritesheet_UI_Paper.png" id="2_sh800"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://c1l6kdfiyw1n6" path="res://00_art/touch_circle.png" id="8_7bt8j"]
 [ext_resource type="Script" path="res://shared/right_rail.gd" id="9_pc7wy"]
 [ext_resource type="Theme" uid="uid://bytdxgpfarvl0" path="res://shared/right_rail_button.tres" id="10_pdkhc"]
+[ext_resource type="Script" path="res://Camera.gd" id="11_gryep"]
 [ext_resource type="Texture2D" uid="uid://quw1aamwf7u2" path="res://00_art/empty small panel.png" id="11_k8oex"]
 [ext_resource type="FontFile" uid="uid://cbbwfxltcche3" path="res://00_art/Kaph-Regular.otf" id="12_ja72t"]
 [ext_resource type="Texture2D" uid="uid://c2hdvd3tkiw7l" path="res://00_art/Tick.png" id="13_boa1y"]
@@ -220,21 +221,16 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_a6bil")
 icon = ExtResource("5_8moym")
 icon_alignment = 1
 
-[node name="Control" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent"]
-custom_minimum_size = Vector2(3000, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 1
+[node name="Control" type="Node" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent"]
 
 [node name="ImageContainer" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
 
 [node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 texture_filter = 3
@@ -362,6 +358,20 @@ shape = SubResource("CircleShape2D_w3wpm")
 [node name="CircleSprite" type="Sprite2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback"]
 modulate = Color(0.647059, 0.00784314, 0.858824, 0)
 texture = ExtResource("8_7bt8j")
+
+[node name="Camera" type="Camera2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control"]
+unique_name_in_owner = true
+top_level = true
+z_index = 20
+anchor_mode = 0
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 10000
+limit_bottom = 10000
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+script = ExtResource("11_gryep")
 
 [node name="right_rail" type="CanvasLayer" parent="HBoxContainer"]
 editor_description = "Separate and is on it's own canvas layer to be independent of the camera zooming."
@@ -671,4 +681,4 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 75
 text = "5/10"
 
-[connection signal="gui_input" from="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer" to="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback" method="_on_image_container_gui_input"]
+[connection signal="gui_input" from="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer" to="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/Camera" method="_on_image_container_gui_input"]

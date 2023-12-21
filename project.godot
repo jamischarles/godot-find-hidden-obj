@@ -24,6 +24,7 @@ window/size/viewport_width=2000
 window/size/viewport_height=1000
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
+window/stretch/scale_mode="integer"
 window/handheld/orientation=4
 
 [editor]

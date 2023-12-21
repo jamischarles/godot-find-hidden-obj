@@ -51,6 +51,8 @@ var finite_states = {
 ## https://docs.godotengine.org/en/stable/tutorials/inputs/inputevent.html
 func handle_touch_events(state, event: InputEvent):
 	
+	return
+	
 	# COMPLETELY ignore mouse events (on desktop we emulate touch events)
 	if event is InputEventMouse:
 		return
@@ -239,7 +241,7 @@ func switch_state(newStateName: String, payload):
 
 
 #@onready var scrollContainer = get_node("/root").get_tree()
-@onready var scrollContainer = get_tree().current_scene.get_node('HBoxContainer/MarginContainer/ScrollContainer')
+#@onready var scrollContainer = get_tree().current_scene.get_node('HBoxContainer/MarginContainer/ScrollContainer')
 
 
 
@@ -271,7 +273,7 @@ func _on_image_container_gui_input(event):
 			simulateMultiTouchZoom({center_of_touch = event.position, direction = "ZOOM_IN"})
 			return
 
-	handle_touch_events(event_state, event)
+	#handle_touch_events(event_state, event)
 
 
 #var locked = false
@@ -484,8 +486,8 @@ func on_tween_done(tween):
 
 ## alt + shift click zoom out. Just where you click
 
-func getScrollVectorPos():
-	return Vector2(scrollContainer.scroll_horizontal, scrollContainer.scroll_vertical)
+#func getScrollVectorPos():
+	#return Vector2(scrollContainer.scroll_horizontal, scrollContainer.scroll_vertical)
 
 # if scrollPos has changed
 # scroll pos with 

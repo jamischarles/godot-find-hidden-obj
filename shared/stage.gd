@@ -1,15 +1,15 @@
 extends Node
 
-@onready var touch_feedback_node = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/TouchFeedback
+@onready var touch_feedback_node = $HBoxContainer/ImageContainer/TouchFeedback
 @onready var right_rail_buttons: Array[Node] = $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.get_children()
 
 
 @onready var home_btn = get_node("%HomeBtn")
 @onready var check_mark = get_node("%check_mark")
-@onready var lvl_done = $level_complete_panel/MarginContainer/PanelContainer/Control/btn_level_select
+@onready var lvl_done = $level_complete_panel/PanelContainer/Control/btn_level_select
 
 
-@onready var imageSize = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image.size
+@onready var imageSize = $HBoxContainer/ImageContainer/hidden_objects_image.size
 
 # default zoom level for the current stage
 @onready var zoomLevel = 1
@@ -25,7 +25,28 @@ func _ready():
 #	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
 	$HBoxContainer/right_rail.visible = false
 	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
+	
+	
+	
+	# Set camera limits on image width & height
+	#get_node("%Camera").limit_right =   scrollContentSize.size.x
+	#get_node("%Camera").limit_bottom =  scrollContentSize.size.y
+	var img_size = get_node("%hidden_objects_image").size
+	
+	# todo set initial camera limits
+	# TODO: We need to adjust those when we zoom because the right rail doesn't zoom
+	#get_node("%Camera").limit_right = img_size.x + 258 # is right rail width at zoom 1
+	#get_node("%Camera").limit_bottom = img_size.y
+	
+	# set up the custom scrollbars
+	# TODO: we'll need to set page value via zoom
+	$HBoxContainer/right_rail/HScrollBar.max_value = img_size.x
+	$HBoxContainer/right_rail/HScrollBar.page = 20
+	$HBoxContainer/right_rail/HScrollBar.value = 200
+	
 	# pan the image when we load to show the whole map
+	
+	## FIXME: use the camera for this...
 	panImage()
 
 	
@@ -38,8 +59,8 @@ func _ready():
 	touch_feedback_node.connect("should_zoom", _on_should_zoom)
 	
 	# connect home btn to menu select
-	home_btn.connect("button_up", _on_home_button_up)
-	lvl_done.connect("button_up", _on_home_button_up)
+	#home_btn.connect("button_up", _on_home_button_up)
+	#lvl_done.connect("button_up", _on_home_button_up)
 	
 	
 	
@@ -47,7 +68,7 @@ func _ready():
 	
 	
 	
-	var clickZones = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container.get_children()
+	var clickZones = $HBoxContainer/ImageContainer/click_zone_container.get_children()
 	#print("#clickZones", clickZones)
 	# set alpha to 0 so click zones are invisible to user but still active
 	# FIXME: Should I just set this in a shared style?!?
@@ -63,6 +84,8 @@ func _process(delta):
 
 # we pan the image at the start of the level
 func panImage():
+	onPanDone()
+	return
 	
 	var scrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
 	# the end of it
