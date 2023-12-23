@@ -11,6 +11,10 @@ extends Node
 
 @onready var imageSize = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/hidden_objects_image.size
 
+@onready var imageContainerParent: Control = get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control")
+@onready var imageContainer: Control = imageContainerParent.get_node("ImageContainer")
+@onready var scrollContent: HBoxContainer = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent
+
 # default zoom level for the current stage
 @onready var zoomLevel = 1
 ## TODO: Figure out max zoom
@@ -25,9 +29,15 @@ func _ready():
 #	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
 	$HBoxContainer/right_rail.visible = false
 	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
+	
+	# set the scrollbars to the right size so we can pan
+	scrollContent.set_custom_minimum_size(imageSize * 1)
+	await get_tree().process_frame
+	
 	# pan the image when we load to show the whole map
 	panImage()
 
+	
 	
 	
 	
@@ -90,6 +100,7 @@ func onPanDone():
 	var right_rail_faded =  $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects
 	tween.tween_property(right_rail_faded, "modulate", Color(1,1,1,1), 1.5).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
 #	tween.tween_callback(onPanDone)
+	
 
 #whenever overlapping shapes are found in canvas pass array of overlapping shapes
 #func on_canvas_shapes_found(shapes: Array[Area2D]):
@@ -284,12 +295,12 @@ func _on_btn_level_select_button_up():
 
 
 # is gated...
-func _on_should_zoom(zoomPosition: Vector2, zoom_factor_change: float): # this will be % changes. like .2, or -.3
+func _on_should_zoom(zoom_level: float): 
 	# what if we handle the debounce here?
 	
 	#print('\n\n###zoomIn')
 	var imageContainerParent: Control = get_node("HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control")
-	var imageContainer = imageContainerParent.get_node("ImageContainer")
+	
 	#print("node", imageContainerParent)
 #	print("IMAGE RISZE TO ZOOM", canvas_img.size) #does it make more sense to upscale the image?
 	# double scale?
@@ -297,12 +308,12 @@ func _on_should_zoom(zoomPosition: Vector2, zoom_factor_change: float): # this w
 	# change scrollcontainer child scale and size
 	
 	# target zoomLevel
-	zoomLevel = zoomLevel + zoom_factor_change # because zoom_factor_change can be negative, it'll end up subtracting it (what we want)
-	if zoom_factor_change > 0: # ZOOM_IN (pos)
-		print("zoom in by: ", zoom_factor_change, " | new zoomLevel: ", zoomLevel)
-	else: # ZOOM_OUT
+	#zoomLevel = zoomLevel + zoom_factor_change # because zoom_factor_change can be negative, it'll end up subtracting it (what we want)
+	#if zoom_factor_change > 0: # ZOOM_IN (pos)
+		#print("zoom in by: ", zoom_factor_change, " | new zoomLevel: ", zoomLevel)
+	#else: # ZOOM_OUT
 		#zoomLevel = zoomLevel + zoomLevel * zoom_factor_change
-		print("zoom out: ", zoom_factor_change, " | zoomLevel: ", zoomLevel)
+		#print("zoom out: ", zoom_factor_change, " | zoomLevel: ", zoomLevel)
 		
 		
 		
@@ -310,14 +321,36 @@ func _on_should_zoom(zoomPosition: Vector2, zoom_factor_change: float): # this w
 	
 	#print("##size", imageContainerParent.get_node("ImageContainer"))
 	# double the canvas size for scrolling accuracy
-	var scrollContent = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent
+	
+	var scrollContainer: ScrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
 	#print("####size", scrollContent.custom_minimum_size)
 	
-	scrollContent.set_custom_minimum_size(imageSize * zoomLevel)
+	
+	#####################
+	# calculate what the minimum size should be
+	# then enforce that...
+
+	
+	# new target size after zoom
+	var new_target_size = imageSize * zoom_level
+	
+	# if the new targeted size would make BOTH scrollbars disappear, then we stop the zoom there
+	# we always want at least one zoom bar to stay
+	if new_target_size.x < scrollContainer.size.x && new_target_size.y < scrollContainer.size.y:
+		return
+	
+	## Can I just see if the scrollbar disappears, then undo the zoom?
+	## scrollContainer.x 1742 (2000 - 258) 258 is right rail
+	## scrollContainer.y 1000
+	## 1742 is the magical cutoff!!!!!!
+	## So we just check once both are below, then we disallow it!!!
+	
+	scrollContent.set_custom_minimum_size(imageSize * zoom_level)
 	
 	await get_tree().process_frame # needed in this case for changing scale. See docs https://docs.godotengine.org/en/stable/classes/class_control.html
 #	imageContainerParent.set_scale(Vector2(zoomLevel,zoomLevel))	
-	imageContainer.set_scale(Vector2(zoomLevel,zoomLevel))	
+	#print('new_scale', zoom_level)
+	imageContainer.set_scale(Vector2(zoom_level,zoom_level))	
 	
 	
 	# move AFTER we zoom
@@ -328,20 +361,20 @@ func _on_should_zoom(zoomPosition: Vector2, zoom_factor_change: float): # this w
 	
 	await get_tree().process_frame #again?
 	
-	var scrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
+	
 	# scroll to new place, and take zoomLevel into account
 	
 	var viewPortWidth = get_viewport().get_visible_rect().size.x
 	var viewPortHeight = get_viewport().get_visible_rect().size.y
 	
+	print('viewPortWidth ', viewPortWidth)
+
+	
 	# try to center that and take current zoom level into account
-	scrollContainer.scroll_horizontal = zoomPosition.x * zoomLevel - viewPortWidth / 2 # add buffer so it's center of viewport
-	scrollContainer.scroll_vertical = zoomPosition.y * zoomLevel - viewPortHeight / 2
+	#scrollContainer.scroll_horizontal = zoomPosition.x * zoomLevel - viewPortWidth / 2 # add buffer so it's center of viewport
+	#scrollContainer.scroll_vertical = zoomPosition.y * zoomLevel - viewPortHeight / 2
 	
 	
-#	scrollContainer.scroll_horizontal = 200
-#	scrollContainer.set_deferred("scroll_horizontal", 2000)
-#	scrollContainer.set_deferred("scroll_horizontal", 600)
 
 
 
