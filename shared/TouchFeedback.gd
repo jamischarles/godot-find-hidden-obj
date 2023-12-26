@@ -22,8 +22,7 @@ var zoom_speed = 0.05
 
 # keep track of event clicks
 var events = {}
-var is_dragging = false
-var drag_start_pos: Vector2
+var scroll_start_pos: Vector2
 
 
 # Dict for an event state map, to keep track of what events are in progress, and how many...
@@ -108,28 +107,47 @@ func get_min_zoom_from_image_size():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
-
+	
+	
 
 func _on_image_container_gui_input(event):
 	# I bet it's relative to THAT node now...
 	# So if we want to keep it in _unhandled, we have to get the x,y of that and offset it manually
 	#print('event.pos gui_input', event.position)
 	if event is InputEventScreenDrag:
-		var drag_dist = event.position.distance_to(drag_start_pos)
-		if drag_dist > 100:
-			is_dragging = true
+		if event.index < 2: # save 0 and 1 only
+			events[event.index] = event
+			
 	
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			drag_start_pos = event.position
+			scroll_start_pos = getScrollVectorPos()
+			#drag_start_pos = event.position
+			
+			# ignore any touch past the first 2 fingers...
+			if event.index < 2: # save 0 and 1 only
+				events[event.index] = event
+				
+			get_viewport().set_input_as_handled()
 		
 		else:
-			
+			#print('touch-release', event)
 			## Reading...
 			# https://forum.godotengine.org/t/godot-3-0-2-get-global-position-from-touchscreen/27397
-			if !is_dragging: # TODO: Use the drag deadzone that we use on the scrollContainer...
+			## Avoid showing touch feedback after pinch-zoom. 
+			
+			# TODO: Could I just use a scrollEvent? That I can reset?
+			var scroll_end_pos = getScrollVectorPos()
+			var hasScrolled = hasScrollPosChanged(scroll_start_pos, scroll_end_pos) # this uses the built in deadzone in the scrollcontainer
+			
+			if !hasScrolled: 
 				draw_tap_feedback_circle(event.position)
-			events.erase(event.index)
+			
+			# agressively release. Assume if one finger is releasing, they all are...
+			#events.erase(event.index)
+			events.erase(0)
+			events.erase(1)
+			
 			
 			# mark this event as handled so it doesn't get processed by unhandled_input...
 			#https://www.nightquestgames.com/handling-user-input-in-godot-4-learn-how-to-do-it-properly/
@@ -137,9 +155,10 @@ func _on_image_container_gui_input(event):
 			
 			## Avoid showing touch feedback after pinch-zoom. 
 			## TODO: Consider erasing ALL events after one finger releases...
-			if events.is_empty():
-				is_dragging = false
-			drag_start_pos = event.position # FIXME
+			#if events.is_empty():
+				#print('dragging=false')
+				#is_dragging = false
+			#drag_start_pos = event.position # FIXME
 			
 			
 
@@ -163,7 +182,8 @@ func _unhandled_input(event):
 
 	handle_touch_events(event)
 
-
+# single touch drag (need to capture this separately, because of coord system). 
+var unhandled_start_pos: Vector2
 func handle_touch_events(event: InputEvent):
 	
 	# COMPLETELY ignore mouse events (on desktop we emulate touch events)
@@ -198,23 +218,20 @@ func handle_touch_events(event: InputEvent):
 		#zoom = lerp(zoom, Vector2.ONE * new_zoom, 0.4)
 
 	
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			# ignore any touch past the first 2 fingers...
-			if event.index < 2: # save 0 and 1 only
-				events[event.index] = event
-		else:
-			pass
+	# we need to handle both of these in gui_input_event because bubbling order will mess things up
+	
 			
 			## handle this from the other gui_input_event so it calcs the top left
 			## offset properly
 			
 	if event is InputEventScreenDrag:
-		if event.index < 2: # save 0 and 1 only
-			events[event.index] = event
+		print('event-drag ', event)
+		#if event.index < 2: # save 0 and 1 only
+			#events[event.index] = event
 			
 		if events.size() == 1:
-			# this is just handled by the native scrollContainer (BONUS)
+			
+			
 			#var relative_dist: Vector2 = event.relative.rotated(rotation)
 			#var dist = relative_dist.distance_to(relative_dist)
 			#print('dist', relative_dist)
@@ -229,7 +246,6 @@ func handle_touch_events(event: InputEvent):
 			#posChangeBufferX += event.relative.rotated(rotation).x * zoom.x # Does this even help?
 			#posChangeBufferY += event.relative.rotated(rotation).y
 		elif events.size() == 2:
-			is_dragging = true # avoids showing touchfeedback after zooming
 			
 			# distance between finger and thumb
 			var drag_distance = events[0].position.distance_to(events[1].position)
@@ -466,10 +482,14 @@ func getScrollVectorPos():
 # if scrollPos has changed
 # scroll pos with 
 func hasScrollPosChanged(startScrollPos: Vector2, endScrollPos: Vector2):
-	if isEventDrag(startScrollPos, endScrollPos):
-		return true
-	else:
+	if startScrollPos == endScrollPos:
 		return false
+	else:
+		return true
+	#if isEventDrag(startScrollPos, endScrollPos):
+		#return true
+	#else:
+		#return false
 		
 # if within deadzone, then consider it a touch (with a little movement) vs a drag
 func isEventDrag(startPos: Vector2, endPos: Vector2):
