@@ -144,7 +144,8 @@ size_flags_horizontal = 3
 theme_override_constants/margin_right = 258
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(500, 500)
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1742, 1000)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -221,7 +222,6 @@ icon = ExtResource("5_8moym")
 icon_alignment = 1
 
 [node name="Control" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent"]
-custom_minimum_size = Vector2(3000, 2.08165e-12)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 1
@@ -237,6 +237,7 @@ grow_vertical = 2
 mouse_filter = 1
 
 [node name="hidden_objects_image" type="TextureRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
+unique_name_in_owner = true
 texture_filter = 3
 custom_minimum_size = Vector2(1623, 2.08165e-12)
 layout_mode = 2

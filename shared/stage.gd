@@ -15,10 +15,6 @@ extends Node
 @onready var imageContainer: Control = imageContainerParent.get_node("ImageContainer")
 @onready var scrollContent: HBoxContainer = $HBoxContainer/MarginContainer/ScrollContainer/ScrollContent
 
-# default zoom level for the current stage
-@onready var zoomLevel = 1
-## TODO: Figure out max zoom
-
 
 
 
@@ -34,12 +30,10 @@ func _ready():
 	scrollContent.set_custom_minimum_size(imageSize * 1)
 	await get_tree().process_frame
 	
-	# pan the image when we load to show the whole map
-	panImage()
+	# pan the image when we load to show the whole map. Then zoom out to min_zoom
+	var min_zoom = get_min_zoom_from_image_size()
+	panImage(min_zoom)
 
-	
-	
-	
 	
 	
 	# when TouchFeedback sends us "shape found" we handle that here
@@ -72,7 +66,7 @@ func _process(delta):
 	pass
 
 # we pan the image at the start of the level
-func panImage():
+func panImage(minZoom: float):
 	
 	var scrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
 	# the end of it
@@ -91,14 +85,21 @@ func panImage():
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(scrollContainer, "scroll_horizontal", 0, 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)#.set_delay(0.05)
 	tween.parallel().tween_property(scrollContainer, "scroll_vertical", 0, 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)#.set_delay(0.05)
-	tween.tween_callback(onPanDone)
+	
+	
+	tween.tween_callback(onPanDone.bind(minZoom))
 	
 # fad in 
-func onPanDone():	
+func onPanDone(minZoom:float):	
 	$HBoxContainer/right_rail.visible = true #make visible so we can fade it in
-	var tween = get_tree().create_tween()
+	var tween = get_tree().create_tween().set_parallel(true)
 	var right_rail_faded =  $HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects
 	tween.tween_property(right_rail_faded, "modulate", Color(1,1,1,1), 1.5).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
+	
+	# zoom out to minimum size
+	scrollContent.set_custom_minimum_size(imageSize * minZoom)
+	#await get_tree().process_frame
+	tween.tween_property(imageContainer, "scale", Vector2(minZoom, minZoom), 1.5)
 #	tween.tween_callback(onPanDone)
 	
 
@@ -292,7 +293,24 @@ func _on_home_button_up():
 func _on_btn_level_select_button_up():
 	Global.send_to_next_level()
 
+# copied from TouchFeedback. FIXME: Maybe just use that one...?
+func get_min_zoom_from_image_size():
+	var imageSize = get_node('%hidden_objects_image').size
+	var scrollContainer: ScrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
+	
+	# based on screenSize (pretty fixed)
+	var min_width_allowed = scrollContainer.size.x - 15  # 1742 (2000 - 258) 258 is right rail
+	var min_height_allowed = scrollContainer.size.y - 15 # 1000 (since viewport is 2000x1000
+	
+	#print('imageSize', imageSize)
+	#print("Vector2(min_width_allowed, min_height_allowed)", Vector2(min_width_allowed, min_height_allowed))
+	
+	# FIXME: Can I simplify this math?	
+	var min_zoom_allowed_vector = (Vector2(min_width_allowed, min_height_allowed) / imageSize)
+	#print("min_zoom_allowed_vector", min_zoom_allowed_vector)
+	var min_zoom_allowed = max(min_zoom_allowed_vector.x, min_zoom_allowed_vector.y)
 
+	return min_zoom_allowed
 
 # is gated...
 func _on_should_zoom(zoom_level: float): 
@@ -333,19 +351,62 @@ func _on_should_zoom(zoom_level: float):
 	
 	# new target size after zoom
 	var new_target_size = imageSize * zoom_level
+	## (3250,500) = (2000, 1000) * .95
+	# just below scrollbar disappear
+	# get the max of these?
+	#var min_width_allowed = scrollContainer.size.x - 15  # 1742 (2000 - 258) 258 is right rail
+	#var min_height_allowed = scrollContainer.size.y - 15 # 1000 (since viewport is 2000x1000
+	#
+	#var min_zoom_allowed_vector = (Vector2(min_width_allowed, min_height_allowed) / imageSize)
+	#var min_zoom_allowed = max(min_zoom_allowed_vector.x, min_zoom_allowed_vector.y)
+	#print("min_zoom_allowed", min_zoom_allowed)
+	#
+	#var clamped_zoom_level = max(min_zoom_allowed, zoom_level)
+	
+	# calc min_zoom_level allowed given the min_width and min_height allowed so only one scrollbar
+	# disappears and it doesn't get any smaller...
 	
 	# if the new targeted size would make BOTH scrollbars disappear, then we stop the zoom there
 	# we always want at least one zoom bar to stay
-	if new_target_size.x < scrollContainer.size.x && new_target_size.y < scrollContainer.size.y:
-		return
+	#if new_target_size.x < scrollContainer.size.x && new_target_size.y < scrollContainer.size.y:
+	
+	# once ONE scrollbar disappears, that's small enough. Don't allow zooming out more
+	#var h = scrollContainer.get_h_scroll_bar()
+	#var v = scrollContainer.get_v_scroll_bar()
+	#print('h.visibl ', h.visible, "/", v.visible)
+	#
+	## maybe we allow zooming in ONE direction
+	#var current_zoom_level  = imageContainer.scale.x
+	# IF we're trying to zoom OUT, AND one scrollbar is already gone...
+	# disallow zooming out
+	
+	#if new_target_size.x < min_width_allowed || new_target_size.y < min_height_allowed:
+		
+		#return
+		
+	# FIXME: Just clamp the minimal zoom level...
+	# TODO: Figure out the minimal target size that would make the scrollbar disappear
+	# then clamp it at that...
 	
 	## Can I just see if the scrollbar disappears, then undo the zoom?
 	## scrollContainer.x 1742 (2000 - 258) 258 is right rail
 	## scrollContainer.y 1000
 	## 1742 is the magical cutoff!!!!!!
 	## So we just check once both are below, then we disallow it!!!
+	#var new_image_dimensions: Vector2 = imageSize * zoom_level
+	#var clamped_new_image_dim = new_image_dimensions.clamp(Vector2(min_width_allowed, min_height_allowed), Vector2.INF) # no upper limit, since we limit that in touchFeedback at 2x
 	
-	scrollContent.set_custom_minimum_size(imageSize * zoom_level)
+	#print('clamped_dim', clamped_new_image_dim)
+	# calc min allowed zoom based on "clamped_new_image_dim"
+	#var min_allowed_zoom = 
+	
+	## FIXME: THIS is where we need to ensure the right rail is accounted for!!!!!
+	#scrollContent.set_custom_minimum_size(imageSize * zoom_level)
+	scrollContent.custom_minimum_size.x = imageSize.x * zoom_level
+	scrollContent.custom_minimum_size.y = imageSize.y * zoom_level
+	## HOW DO WE FIX THIS?!?!?!?!?
+	## maybe 500 on left, 500 on right, and zoom?
+	## Q: Maybe we just remove the left rail. And set it flush. Does that fix things?
 	
 	await get_tree().process_frame # needed in this case for changing scale. See docs https://docs.godotengine.org/en/stable/classes/class_control.html
 #	imageContainerParent.set_scale(Vector2(zoomLevel,zoomLevel))	

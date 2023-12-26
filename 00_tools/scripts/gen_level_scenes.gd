@@ -118,7 +118,7 @@ func generate_scene_file_for_level(target_folder):
 	# get the size of the imgNode container from the region
 	
 	# need to use the imageContainer's parent (control) to set the minimum size to affect proper full scroll
-	canvasContainer.custom_minimum_size = atlasTexture.region.size
+	#canvasContainer.custom_minimum_size = atlasTexture.region.size
 	imgNode.size = atlasTexture.region.size
 	
 

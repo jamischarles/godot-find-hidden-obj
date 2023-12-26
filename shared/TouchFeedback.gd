@@ -10,7 +10,7 @@ signal should_zoom
 # FIXNE: should we be scaling the parent area2d instead?
 var MAX_CIRCLE_SIZE = .5 #scale prop
 
-var min_zoom = 0.5
+var min_zoom = 0
 var max_zoom = 2
 
 
@@ -345,7 +345,7 @@ func handle_touch_events(event: InputEvent):
 
 
 #@onready var scrollContainer = get_node("/root").get_tree()
-@onready var scrollContainer = get_tree().current_scene.get_node('HBoxContainer/MarginContainer/ScrollContainer')
+@onready var scrollContainer = get_node('%ScrollContainer')
 
 
 
@@ -353,6 +353,29 @@ func handle_touch_events(event: InputEvent):
 func _ready():
 	# scale the collision shape down to max_size to match circle size
 	$CollisionCircle.scale = Vector2(MAX_CIRCLE_SIZE, MAX_CIRCLE_SIZE)
+	
+	min_zoom = get_min_zoom_from_image_size()
+	
+	## start at minimum zoom allowed
+	print('min_zoom', min_zoom)
+	
+func get_min_zoom_from_image_size():
+	var imageSize = get_node('%hidden_objects_image').size
+	
+	# based on screenSize (pretty fixed)
+	var min_width_allowed = scrollContainer.size.x - 15  # 1742 (2000 - 258) 258 is right rail
+	var min_height_allowed = scrollContainer.size.y - 15 # 1000 (since viewport is 2000x1000
+	
+	#print('imageSize', imageSize)
+	#print("Vector2(min_width_allowed, min_height_allowed)", Vector2(min_width_allowed, min_height_allowed))
+	
+	# FIXME: Can I simplify this math?	
+	var min_zoom_allowed_vector = (Vector2(min_width_allowed, min_height_allowed) / imageSize)
+	#print("min_zoom_allowed_vector", min_zoom_allowed_vector)
+	var min_zoom_allowed = max(min_zoom_allowed_vector.x, min_zoom_allowed_vector.y)
+
+	return min_zoom_allowed
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -384,7 +407,11 @@ func _on_image_container_gui_input(event):
 			# mark this event as handled so it doesn't get processed by unhandled_input...
 			#https://www.nightquestgames.com/handling-user-input-in-godot-4-learn-how-to-do-it-properly/
 			get_viewport().set_input_as_handled()
-			is_dragging = false
+			
+			## Avoid showing touch feedback after pinch-zoom. 
+			## TODO: Consider erasing ALL events after one finger releases...
+			if events.is_empty():
+				is_dragging = false
 			drag_start_pos = event.position # FIXME
 			
 			
