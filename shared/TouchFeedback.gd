@@ -65,280 +65,6 @@ var drag_start_pos: Vector2
 ## TODO: Verify then add dragging and pinch & zoom
 ## Like redux i need to fire every time state is updated
 ## https://docs.godotengine.org/en/stable/tutorials/inputs/inputevent.html
-func handle_touch_events(event: InputEvent):
-	
-	# COMPLETELY ignore mouse events (on desktop we emulate touch events)
-	if event is InputEventMouse:
-		#print('event', event.position)
-		#print('event', event.global_position)
-		return
-	
-		#if event is InputEventMouseButton && event.is_alt_pressed() && event.is_shift_pressed():
-			#zoom_level *= 0.95
-			##zoom -= Vector2(.05, .05)
-		#
-		#elif event is InputEventMouseButton && event.is_alt_pressed():
-			#zoom_level *= 1.05
-			#zoom += Vector2(.5, .5)
-			#limit_right = img_size.x + 258 * zoom.x
-			#print('limit_right', limit_right)
-			#set_physics_process(true)
-		
-	# zoom via smartpad on mac
-	# nice way to emulate some of the same functionaolity on desktop
-	if event is InputEventMagnifyGesture:
-		var new_zoom = clamp(zoom_level * event.factor, min_zoom, max_zoom)
-		print('new_zoom:after', new_zoom)
-		#print("new_zoom", new_zoom)
-		zoom_level = new_zoom
-		emit_should_zoom(event.position, zoom_level)
-		#zoom_level = clamp(zoom.x * new_zoom, min_zoom, max_zoom)
-		#print("new_zoom from mac pad", new_zoom)
-		#zoom = Vector2.ONE * new_zoom
-		#zoom = lerp(zoom, Vector2.ONE * new_zoom, 0.4)
-
-	
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			events[event.index] = event
-		else:
-			pass
-			
-			## handle this from the other gui_input_event so it calcs the top left
-			## offset properly
-			#print('event.pos ', event.position)
-			##print('event.global_pos ', event.global_position)
-			#print('1 ', event.position * zoom_level)
-			#var world_position = get_canvas_transform().affine_inverse().translated(event.position).origin
-			#print ('2', world_position)
-			##print('2 ', event.global_position * zoom_level)
-			### Reading...
-			## https://forum.godotengine.org/t/godot-3-0-2-get-global-position-from-touchscreen/27397
-			#draw_tap_feedback_circle(world_position)
-			#events.erase(event.index)
-			#print('RELEASE')
-			# TODO: Tween the end? or lerp it?
-			# This will add the slowdown effect....?
-			#position.x += 50
-			
-	if event is InputEventScreenDrag:
-		events[event.index] = event
-		if events.size() == 1:
-			# this is just handled by the native scrollContainer (BONUS)
-			#var relative_dist: Vector2 = event.relative.rotated(rotation)
-			#var dist = relative_dist.distance_to(relative_dist)
-			#print('dist', relative_dist)
-			#is_dragging = true
-			pass
-			# Q: Can we just let this pass through to the scrollcontainer?
-			
-			
-			#var screenSize = get_viewport().get_visible_rect().size
-			
-			
-			#posChangeBufferX += event.relative.rotated(rotation).x * zoom.x # Does this even help?
-			#posChangeBufferY += event.relative.rotated(rotation).y
-		elif events.size() == 2:
-			is_dragging = true # avoids showing touchfeedback after zooming
-			
-			# distance between finger and thumb
-			var drag_distance = events[0].position.distance_to(events[1].position)
-			print('drag_dist: ', drag_distance)
-			
-			# dead zone for when to start zoom
-			# this logic seems to work pretty well
-			if abs(drag_distance - last_drag_distance) > zoom_sensitivity:
-				# zoom in or zoom out? (flip it. Not sure why that's needed)
-				var new_zoom = (1 + zoom_speed) if drag_distance > last_drag_distance else (1 - zoom_speed)
-				print('new_zoom:before', new_zoom)
-				new_zoom = clamp(zoom_level * new_zoom, min_zoom, max_zoom)
-				print('new_zoom:after', new_zoom)
-				#print("new_zoom", new_zoom)
-				zoom_level = new_zoom
-				print('zoom_level', zoom_level)
-				last_drag_distance = drag_distance
-				emit_should_zoom(event.position, zoom_level)
-
-	
-	
-	## TODO: Try it w/o this complex logic first...
-	#match state.status:
-		#"no_touch": # nothing pressed yet, proceed
-			#match event.get_class():
-				#"InputEventScreenTouch":
-					#print('no_touch+touch', event)
-					#if event.is_pressed():
-						#switch_state("one_touch_press", {pos = event.position})
-					#
-		#"one_touch_press": # if one is already pressed
-			#match event.get_class():
-				#"InputEventScreenTouch":
-					#if event.is_pressed(): # PRESS
-						#print("one_press+screenTouch", event)
-						#
-						#if event.index == 0:
-							#switch_state("one_touch_press", {pos = event.position})
-							#return
-						#
-						## ONLY register as multi-touch if we have finger index > 0
-						#switch_state("multi_touch_press", {
-							#touch_points = {
-								#0: {
-									#pos = event_state.pos
-								#},
-								#1: {
-									#pos = event.position
-								#}
-							#}
-						#}) # TODO: Capture for EACH item, including the currently saved one
-					#else: # RELEASE
-						#draw_tap_feedback_circle(event_state.pos)
-						#switch_state("no_touch", {})
-				#"InputEventScreenDrag": #FIXME: check for the deadzone here before we switch to drag event
-					##print('InputEventScreenDrag: ', event.index, event_state)
-					#print("one_press+screenDrag", event, event_state)
-					#switch_state("one_touch_drag_scroll", {start_pos = event.position})
-					##get_viewport().set_input_as_handled()
-						#
-						#
-		## TODO: Handle ONE TOUCH DRAG == scroll
-		#
-		## FIXME: this one isn't exiting properly... let's step through it...
-		#"one_touch_drag_scroll": # 
-			##print('\none-touch-drag-scroll: ', event.as_text())
-			#match event.get_class():
-				#"InputEventScreenTouch":
-					#if event.is_pressed(): # PRESS
-						#switch_state("one_touch_press", {pos = event.position})
-					#else:
-						#switch_state("no_touch", {}) # releasing during drag means we're just done. Don't draw circle feedback
-					## switch to one_touch_press / release
-						#
-						## then re-run this 'release' evt? through the `one_touch_press` path (so it'll release back down)
-#
-					##if event.is_pressed(): # PRESS
-						### if we are scrolling and add another finger, assume that we didn't quite catch the release of the other finger.
-						### instead of assuming we're adding a finger...
-						##switch_state("one_touch_press", {pos = event.position})
-					##else:
-				#"InputEventScreenDrag":
-					#print(event.index)
-						#
-		#"multi_touch_press":
-			#match event.get_class():
-				#"InputEventScreenTouch":
-					#if event.is_pressed(): # PRESS
-						## stay in this status, but add more fingers
-						### Todo capture finger index
-						#update_multi_touch_pos(event.index, event.position)
-					#else: # RELEASE ONE finger
-						## FIXME: This logic is buggy
-						#event_state.touch_points.erase(event.index)
-						## if down to one finder switch state
-						#if event_state.touch_points.size() == 1:
-							##switch_state("one_touch_press", event_state.touch_points.values()[0])
-							### We'll assume that multi touch to 1 touch is actually taking all fingers off
-							#switch_state("no_touch", {})
-							#
-				#"InputEventScreenDrag":
-					#print('## DRAG:START ', event)
-					### do we use a debounce for this or what?
-					## capture the new distance
-					## TODO: Extract this into a save() function
-					## update the distance
-					#update_multi_touch_pos(event.index, event.position)
-					#
-					#
-					#var distance_between_points = event_state.touch_points[0].pos.distance_to(event_state.touch_points[1].pos)
-					#switch_state("multi_touch_drag_zoom", {touch_points = event_state.touch_points, distance = distance_between_points})
-					#
-					### change the zoom level based on zoom_rate_change from the pinching action
-					#
-		#"multi_touch_drag_zoom": # pinch_zoom operation in progress
-			#match event.get_class():
-				#"InputEventScreenDrag":
-					#var direction
-					#print('## DRAG:DRAG ', event)
-#
-					#var zoomLevel = get_tree().current_scene.zoomLevel
-#
-					#
-					### TODO: capture prior distance? So we can get a sense of which way it's moving?
-					#update_multi_touch_pos(event.index, event.position)
-					#
-					#
-#
-					### TODO: Normalize distance regardless of zoom
-					#
-					## get new distance
-					#var distance_between_points = event_state.touch_points[0].pos.distance_to(event_state.touch_points[1].pos)
-										#
-					## calc the distance at the CURRENT zoom level, vs the old distance at the old zoom level (should be apples to apples)
-					#print('---------------------------------------->')
-					#print("zoomLevel", zoomLevel)
-					#print("distance_between_points", distance_between_points)
-					#print("distance_between_points / zoomLevel", distance_between_points / zoomLevel)					
-					#if (distance_between_points / zoomLevel - event_state.distance) > 0:
-						## positive (getting bigger) == zoom IN
-						#direction = "ZOOM_IN"
-					#else:
-						## negative (getting smaller) == zoom OUT
-						#direction = "ZOOM_OUT"
-									#
-					## what should the new zoom quotient be?
-					#print("distance: old, new: ", event_state.distance, "  |  ", distance_between_points / zoomLevel)
-					#print('zoom:direction: ', direction)
-					#
-					#
-					#
-					#var center_point = (event_state.touch_points[0].pos + event_state.touch_points[1].pos) / 2
-					#
-					### FIXME: we need velocity to determine zoom factor change...
-					#var zoom_factor_change = .1 ## TODO: Reduce this by 10 since we have way more events firing.
-					#if direction == "ZOOM_OUT":
-						#zoom_factor_change *= -1 # change sign
-						#
-					## if the distance hasn't changed, make zoom change zero
-					##if	event_state.distance == distance_between_points:
-						##zoom_factor_change = 0
-					#
-					#
-					## save the distance (normalized for zoom level)
-					#event_state.distance = distance_between_points	/ zoomLevel
-					#emit_should_zoom(center_point, zoom_factor_change)
-#
-				#"InputEventScreenTouch":
-					## switch to multi_touch_press / release
-					#switch_state("multi_touch_press", {touch_points = event_state.touch_points})
-					## then re-run this 'release' evt? through the `multi_touch_press` path
-					#handle_touch_events(event_state, event)
-					#
-				### TODO: check for drag distance? If it's below X then just ignore it? Is that a hacky way to debounce it?
-			
-			
-#func update_multi_touch_pos(fingerIndex: int, newPos: Vector2):
-	#event_state.touch_points[fingerIndex] = {
-		#pos = newPos
-	#}
-	
-		
-					
-## Generate the new state 'status' and other props
-#func switch_state(newStateName: String, payload):
-	##print('handle_touch_events->state|event: payload ', newStateName, payload)
-	##print('handle_touch_events->state|event: BEFORE ', event_state, newStateName)
-	#if !finite_states[newStateName]:
-		#print("not a valid state. Aborting: ", newStateName)
-		#return
-		#
-		#
-	#event_state = {}
-	#
-	#event_state.merge(finite_states[newStateName])
-	#event_state.merge(payload, true) # will overwrite existing keys.
-	#print(event_state)#, 'handle_touch_events->state|event: AFTER ', event_state)#, payload)
-
-
 
 
 
@@ -437,6 +163,90 @@ func _unhandled_input(event):
 	handle_touch_events(event)
 
 
+func handle_touch_events(event: InputEvent):
+	
+	# COMPLETELY ignore mouse events (on desktop we emulate touch events)
+	if event is InputEventMouse:
+		#print('event', event.position)
+		#print('event', event.global_position)
+		return
+	
+		#if event is InputEventMouseButton && event.is_alt_pressed() && event.is_shift_pressed():
+			#zoom_level *= 0.95
+			##zoom -= Vector2(.05, .05)
+		#
+		#elif event is InputEventMouseButton && event.is_alt_pressed():
+			#zoom_level *= 1.05
+			#zoom += Vector2(.5, .5)
+			#limit_right = img_size.x + 258 * zoom.x
+			#print('limit_right', limit_right)
+			#set_physics_process(true)
+		
+	# zoom via smartpad on mac
+	# nice way to emulate some of the same functionaolity on desktop
+	if event is InputEventMagnifyGesture:
+		var new_zoom = clamp(zoom_level * event.factor, min_zoom, max_zoom)
+		print('new_zoom:after', new_zoom)
+		#print("new_zoom", new_zoom)
+		zoom_level = new_zoom
+		emit_should_zoom(event.position, zoom_level)
+		#zoom_level = clamp(zoom.x * new_zoom, min_zoom, max_zoom)
+		#print("new_zoom from mac pad", new_zoom)
+		#zoom = Vector2.ONE * new_zoom
+		#zoom = lerp(zoom, Vector2.ONE * new_zoom, 0.4)
+
+	
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			# ignore any touch past the first 2 fingers...
+			if event.index < 2: # save 0 and 1 only
+				events[event.index] = event
+		else:
+			pass
+			
+			## handle this from the other gui_input_event so it calcs the top left
+			## offset properly
+			
+	if event is InputEventScreenDrag:
+		if event.index < 2: # save 0 and 1 only
+			events[event.index] = event
+			
+		if events.size() == 1:
+			# this is just handled by the native scrollContainer (BONUS)
+			#var relative_dist: Vector2 = event.relative.rotated(rotation)
+			#var dist = relative_dist.distance_to(relative_dist)
+			#print('dist', relative_dist)
+			#is_dragging = true
+			pass
+			# Q: Can we just let this pass through to the scrollcontainer?
+			
+			
+			#var screenSize = get_viewport().get_visible_rect().size
+			
+			
+			#posChangeBufferX += event.relative.rotated(rotation).x * zoom.x # Does this even help?
+			#posChangeBufferY += event.relative.rotated(rotation).y
+		elif events.size() == 2:
+			is_dragging = true # avoids showing touchfeedback after zooming
+			
+			# distance between finger and thumb
+			var drag_distance = events[0].position.distance_to(events[1].position)
+			print('drag_dist: ', drag_distance)
+			
+			# dead zone for when to start zoom
+			# this logic seems to work pretty well
+			if abs(drag_distance - last_drag_distance) > zoom_sensitivity:
+				# zoom in or zoom out? (flip it. Not sure why that's needed)
+				var new_zoom = (1 + zoom_speed) if drag_distance > last_drag_distance else (1 - zoom_speed)
+				print('new_zoom:before', new_zoom)
+				new_zoom = clamp(zoom_level * new_zoom, min_zoom, max_zoom)
+				print('new_zoom:after', new_zoom)
+				#print("new_zoom", new_zoom)
+				zoom_level = new_zoom
+				print('zoom_level', zoom_level)
+				last_drag_distance = drag_distance
+				emit_should_zoom(event.position, zoom_level)
+
 #var locked = false
 #func eventCooldown():
 #	locked = true
@@ -478,110 +288,110 @@ func _unhandled_input(event):
 ## TODO: 1. debounce 2. normalize it for zoom level so the distance is stagnant. 3. reduce the amount of zoom factor por px moved. 4. Add min/max zoom 
 
 ## Simulates pinch & zoom
-func simulateMultiTouchZoom(props): # for ZOOM
-	var centerPos = props.center_of_touch
-	var direction = props.direction # ZOOM_IN | ZOOM_OUT
-	
-	
-	
-	#print('## SIMULATING multi touch PINCH')
-	# INDEX is needed to say which finger / which touch it is (great simple way to 
-	# represent that
-	var finger1Press = InputEventScreenTouch.new()
-	var finger2Press = InputEventScreenTouch.new()
-	
-	# flip it. Q: Do we even need this? 
-	#is_pressed = !is_pressed
-	
-	
-	finger1Press.set_index(0)
-	finger2Press.set_index(1)
-	finger1Press.pressed = true
-	finger2Press.pressed = true
-	
-	# drag goes from 20 -> 200 -> 400 and opposite
-	
-	# distance...                   100, 200 (add?) = 300
-	if direction == "ZOOM_IN":
-		# start close together, then end far apart
-		finger1Press.position = Vector2(centerPos.x + 300,centerPos.y + 300)
-		finger2Press.position = Vector2(centerPos.x + 300,centerPos.y + 400)
-	else:
-		# start far apart, then end close together
-		finger1Press.position = Vector2(centerPos.x + 300,centerPos.y + 100)
-		finger2Press.position = Vector2(centerPos.x + 300,centerPos.y + 600)
-	
-	
-	## FIRST DRAG
-	var finger1Drag = InputEventScreenDrag.new()
-	var finger2Drag = InputEventScreenDrag.new()
-	
-	# distance...                     300, 400 (add?) = 700 - Zoom IN
-	var finger1posAfterDrag : Vector2
-	var finger2posAfterDrag : Vector2
-	
-
-	# first drag is center 
-	finger1posAfterDrag = Vector2(centerPos.x + 300,centerPos.y + 200)
-	finger2posAfterDrag = Vector2(centerPos.x + 300,centerPos.y + 500)
-	
-	finger1Drag.set_index(0)
-	finger1Drag.set_position(finger1posAfterDrag)
-	finger1Drag.relative = finger1posAfterDrag - finger1Press.position
-	
-	finger2Drag.set_index(1)
-	finger2Drag.set_position(finger2posAfterDrag)
-	finger2Drag.relative = finger2posAfterDrag - finger2Press.position
-	
-	## SECOND DRAG
-	var finger1SecondDrag = InputEventScreenDrag.new()
-	var finger2SecondDrag = InputEventScreenDrag.new()
-	
-	var finger1posAfterSecondDrag : Vector2
-	var finger2posAfterSecondDrag : Vector2
-	
-	if direction == "ZOOM_IN":
-		# start close together, then end far apart
-		finger1posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 100)
-		finger2posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 600)
-	else:
-		# start far apart, then end close together
-		finger1posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 300)
-		finger2posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 400)
-	
-	finger1SecondDrag.set_index(0)
-	finger1SecondDrag.set_position(finger1posAfterSecondDrag)
-	finger1SecondDrag.relative = finger1posAfterSecondDrag - finger1Drag.position
-	
-	finger2SecondDrag.set_index(1)
-	finger2SecondDrag.set_position(finger2posAfterSecondDrag)
-	finger2SecondDrag.relative = finger2posAfterSecondDrag - finger2Drag.position
-	
-	## release
-	var finger1Release = InputEventScreenTouch.new()
-	var finger2Release = InputEventScreenTouch.new()
-	
-	finger1Release.set_index(0)
-	finger1Release.set_position(finger1posAfterDrag)
-	
-	finger1Release.set_index(1)
-	finger2Release.set_position(finger2posAfterDrag) 
-	
-	# set position?
-#	evt.action = 
-	
-	# emit the 2 simulated events
-	Input.parse_input_event(finger1Press)
-	Input.parse_input_event(finger2Press)
-	
-	Input.parse_input_event(finger1Drag)
-	Input.parse_input_event(finger2Drag)
-	
-	Input.parse_input_event(finger1SecondDrag)
-	Input.parse_input_event(finger2SecondDrag)
-	
-	Input.parse_input_event(finger1Release)
-	Input.parse_input_event(finger2Release)
+#func simulateMultiTouchZoom(props): # for ZOOM
+	#var centerPos = props.center_of_touch
+	#var direction = props.direction # ZOOM_IN | ZOOM_OUT
+	#
+	#
+	#
+	##print('## SIMULATING multi touch PINCH')
+	## INDEX is needed to say which finger / which touch it is (great simple way to 
+	## represent that
+	#var finger1Press = InputEventScreenTouch.new()
+	#var finger2Press = InputEventScreenTouch.new()
+	#
+	## flip it. Q: Do we even need this? 
+	##is_pressed = !is_pressed
+	#
+	#
+	#finger1Press.set_index(0)
+	#finger2Press.set_index(1)
+	#finger1Press.pressed = true
+	#finger2Press.pressed = true
+	#
+	## drag goes from 20 -> 200 -> 400 and opposite
+	#
+	## distance...                   100, 200 (add?) = 300
+	#if direction == "ZOOM_IN":
+		## start close together, then end far apart
+		#finger1Press.position = Vector2(centerPos.x + 300,centerPos.y + 300)
+		#finger2Press.position = Vector2(centerPos.x + 300,centerPos.y + 400)
+	#else:
+		## start far apart, then end close together
+		#finger1Press.position = Vector2(centerPos.x + 300,centerPos.y + 100)
+		#finger2Press.position = Vector2(centerPos.x + 300,centerPos.y + 600)
+	#
+	#
+	### FIRST DRAG
+	#var finger1Drag = InputEventScreenDrag.new()
+	#var finger2Drag = InputEventScreenDrag.new()
+	#
+	## distance...                     300, 400 (add?) = 700 - Zoom IN
+	#var finger1posAfterDrag : Vector2
+	#var finger2posAfterDrag : Vector2
+	#
+#
+	## first drag is center 
+	#finger1posAfterDrag = Vector2(centerPos.x + 300,centerPos.y + 200)
+	#finger2posAfterDrag = Vector2(centerPos.x + 300,centerPos.y + 500)
+	#
+	#finger1Drag.set_index(0)
+	#finger1Drag.set_position(finger1posAfterDrag)
+	#finger1Drag.relative = finger1posAfterDrag - finger1Press.position
+	#
+	#finger2Drag.set_index(1)
+	#finger2Drag.set_position(finger2posAfterDrag)
+	#finger2Drag.relative = finger2posAfterDrag - finger2Press.position
+	#
+	### SECOND DRAG
+	#var finger1SecondDrag = InputEventScreenDrag.new()
+	#var finger2SecondDrag = InputEventScreenDrag.new()
+	#
+	#var finger1posAfterSecondDrag : Vector2
+	#var finger2posAfterSecondDrag : Vector2
+	#
+	#if direction == "ZOOM_IN":
+		## start close together, then end far apart
+		#finger1posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 100)
+		#finger2posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 600)
+	#else:
+		## start far apart, then end close together
+		#finger1posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 300)
+		#finger2posAfterSecondDrag = Vector2(centerPos.x + 300,centerPos.y + 400)
+	#
+	#finger1SecondDrag.set_index(0)
+	#finger1SecondDrag.set_position(finger1posAfterSecondDrag)
+	#finger1SecondDrag.relative = finger1posAfterSecondDrag - finger1Drag.position
+	#
+	#finger2SecondDrag.set_index(1)
+	#finger2SecondDrag.set_position(finger2posAfterSecondDrag)
+	#finger2SecondDrag.relative = finger2posAfterSecondDrag - finger2Drag.position
+	#
+	### release
+	#var finger1Release = InputEventScreenTouch.new()
+	#var finger2Release = InputEventScreenTouch.new()
+	#
+	#finger1Release.set_index(0)
+	#finger1Release.set_position(finger1posAfterDrag)
+	#
+	#finger1Release.set_index(1)
+	#finger2Release.set_position(finger2posAfterDrag) 
+	#
+	## set position?
+##	evt.action = 
+	#
+	## emit the 2 simulated events
+	#Input.parse_input_event(finger1Press)
+	#Input.parse_input_event(finger2Press)
+	#
+	#Input.parse_input_event(finger1Drag)
+	#Input.parse_input_event(finger2Drag)
+	#
+	#Input.parse_input_event(finger1SecondDrag)
+	#Input.parse_input_event(finger2SecondDrag)
+	#
+	#Input.parse_input_event(finger1Release)
+	#Input.parse_input_event(finger2Release)
 #	 a.set_button_index(1)
 #     a.set_pressed(true)
 #     Input.parse_input_event(a)

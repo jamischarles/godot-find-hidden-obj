@@ -386,6 +386,7 @@ offset_left = -0.000102997
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 8
+mouse_filter = 0
 theme = SubResource("Theme_exhha")
 theme_override_styles/panel = SubResource("StyleBoxFlat_kas6d")
 horizontal_scroll_mode = 0
