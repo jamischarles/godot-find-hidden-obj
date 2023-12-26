@@ -181,7 +181,7 @@ axis_stretch_vertical = 2
 [node name="NinePatchRect2" type="NinePatchRect" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/left_rail_notch_buffer"]
 layout_mode = 0
 offset_right = 111.0
-offset_bottom = 971.0
+offset_bottom = 1000.0
 texture = ExtResource("3_f5emm")
 region_rect = Rect2(608, 32, 32, 96)
 patch_margin_left = 23
