@@ -26,12 +26,15 @@ func _ready():
 	$HBoxContainer/right_rail.visible = false
 	$HBoxContainer/right_rail/ScrollContainer/legend_for_hidden_objects.modulate.a = .1
 	
+	var min_zoom = get_min_zoom_from_image_size()
+	
 	# set the scrollbars to the right size so we can pan
-	scrollContent.set_custom_minimum_size(imageSize * 1)
+	scrollContent.custom_minimum_size.x = imageSize.x * min_zoom + 111 - 30#( 111 = size of left home button notch)# + 258
+	scrollContent.custom_minimum_size.y = imageSize.y * min_zoom
 	await get_tree().process_frame
 	
 	# pan the image when we load to show the whole map. Then zoom out to min_zoom
-	var min_zoom = get_min_zoom_from_image_size()
+	
 	panImage(min_zoom)
 
 	
@@ -97,7 +100,9 @@ func onPanDone(minZoom:float):
 	tween.tween_property(right_rail_faded, "modulate", Color(1,1,1,1), 1.5).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN)
 	
 	# zoom out to minimum size
-	scrollContent.set_custom_minimum_size(imageSize * minZoom)
+	scrollContent.custom_minimum_size.x = imageSize.x * minZoom + 111 - 30 # 111 - 30 accounts for right rail cutoff issues
+	scrollContent.custom_minimum_size.y = imageSize.y * minZoom
+
 	#await get_tree().process_frame
 	tween.tween_property(imageContainer, "scale", Vector2(minZoom, minZoom), 1.5)
 #	tween.tween_callback(onPanDone)
@@ -303,6 +308,7 @@ func _on_btn_level_select_button_up():
 # copied from TouchFeedback. FIXME: Maybe just use that one...?
 func get_min_zoom_from_image_size():
 	var imageSize = get_node('%hidden_objects_image').size
+	imageSize.x += 111 # account for home button left notch
 	var scrollContainer: ScrollContainer = $HBoxContainer/MarginContainer/ScrollContainer
 	
 	# based on screenSize (pretty fixed)
@@ -409,7 +415,9 @@ func _on_should_zoom(zoom_level: float):
 	
 	## FIXME: THIS is where we need to ensure the right rail is accounted for!!!!!
 	#scrollContent.set_custom_minimum_size(imageSize * zoom_level)
-	scrollContent.custom_minimum_size.x = imageSize.x * zoom_level
+	print("min size x ", imageSize.x * zoom_level)
+	print('scrollContainer.size.x ', scrollContainer.size.x)
+	scrollContent.custom_minimum_size.x = imageSize.x * zoom_level + 111 - 30#( 111 = size of left home button notch)# + 258
 	scrollContent.custom_minimum_size.y = imageSize.y * zoom_level
 	## HOW DO WE FIX THIS?!?!?!?!?
 	## maybe 500 on left, 500 on right, and zoom?

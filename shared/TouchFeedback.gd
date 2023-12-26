@@ -87,6 +87,7 @@ func _ready():
 	
 func get_min_zoom_from_image_size():
 	var imageSize = get_node('%hidden_objects_image').size
+	imageSize.x += 111 # account for home button left notch
 	
 	# based on screenSize (pretty fixed)
 	var min_width_allowed = scrollContainer.size.x - 15  # 1742 (2000 - 258) 258 is right rail
