@@ -37,7 +37,7 @@ texture = SubResource("AtlasTexture_tmfsv")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8mapl"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mcgjq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_cg7sj"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(1, -3, 2999, 1505)
 
@@ -83,43 +83,43 @@ bg_color = Color(1, 1, 1, 1)
 [sub_resource type="Theme" id="Theme_inwhd"]
 LineEdit/colors/selection_color = Color(0.709804, 0.411765, 0.27451, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r2l8c"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdcvb"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(104, 1638, 212, 181)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1uuo8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1cf6"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(365, 1663, 212, 163)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1fs84"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ona8"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(577, 1657, 340, 283)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_db568"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_buyq7"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(905, 1669, 161, 164)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_avywg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygfk8"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(1093, 1618, 337, 209)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_seduk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k6ye"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(1456, 1620, 192, 206)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_d1ojp"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5r2wl"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(1682, 1681, 257, 154)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6j7vg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxxwk"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(1961, 1553, 288, 285)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_4r723"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_dly0e"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(2268, 1567, 335, 270)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qtck3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8bhx"]
 atlas = ExtResource("8_cl2lm")
 region = Rect2(2611, 1656, 311, 164)
 
@@ -243,7 +243,7 @@ custom_minimum_size = Vector2(1623, 2.08165e-12)
 layout_mode = 2
 offset_right = 2999.0
 offset_bottom = 1505.0
-texture = SubResource("AtlasTexture_mcgjq")
+texture = SubResource("AtlasTexture_cg7sj")
 
 [node name="click_zone_container" type="Control" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer"]
 layout_mode = 2
@@ -256,7 +256,7 @@ mouse_filter = 1
 position = Vector2(863, 972)
 monitoring = false
 
-[node name="@Polygon2D@30843" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/shovel"]
+[node name="@Polygon2D@33657" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/shovel"]
 polygon = PackedVector2Array(-29.7237, 1.53375, -21.7237, -1.46625, -10.7237, 3.53375, 3.27631, -24.4662, -2.72369, -32.4662, -6.72369, -40.4662, -5.72369, -48.4662, -1.72369, -56.4662, 41.2763, -37.4662, 42.2763, -32.4662, 34.2763, -26.4662, 26.2763, -22.4662, 19.2763, -22.4662, 13.2763, -22.4662, 0.276306, 8.53375, 21.2763, 19.5338, 18.2763, 32.5338, 12.2763, 42.5338, 5.27631, 51.5338, -0.723694, 54.5338, -1.72369, 40.5338, -6.72369, 31.5338, -15.7237, 30.5338, -20.7237, 33.5338, -24.7237, 40.5338, -29.7237, 37.5338, -35.7237, 37.5338, -36.7237, 27.5338, -35.7237, 18.5338, -32.7237, 9.53375)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/shovel"]
@@ -266,7 +266,7 @@ polygon = PackedVector2Array(-29.7237, 1.53375, -21.7237, -1.46625, -10.7237, 3.
 position = Vector2(618, 1385)
 monitoring = false
 
-[node name="@Polygon2D@30845" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/goggles"]
+[node name="@Polygon2D@33659" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/goggles"]
 polygon = PackedVector2Array(-65.2259, -22.0095, -69.2259, -44.0095, -53.2259, -64.0095, -21.2259, -69.0095, 15.7741, -68.0095, 54.7741, -57.0095, 79.7741, -42.0095, 99.7741, -23.0095, 107.774, -5.00952, 110.774, 11.9905, 106.774, 20.9905, 102.774, 25.9905, 94.7741, 28.9905, 89.7741, 29.9905, 85.7741, 29.9905, 74.7741, 42.9905, 55.7741, 50.9905, 34.7741, 47.9905, -5.22589, 71.9905, -93.2259, 79.9905, -118.226, 84.9905, -139.226, 77.9905, -152.226, 41.9905, -137.226, 16.9905, -114.226, 8.99048, -116.226, 23.9905, -105.226, 26.9905, -108.226, 32.9905, -121.226, 28.9905, -134.226, 40.9905, -130.226, 58.9905, -114.226, 70.9905, -82.2259, 65.9905, -6.22589, 54.9905, -3.22589, 61.9905, -4.22589, 68.9905, 33.7741, 45.9905, 16.7741, 31.9905, 1.77411, 28.9905, -18.2259, 34.9905, -37.2259, 29.9905, -56.2259, 14.9905, -57.2259, -6.00952, -64.2259, -9.00952)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/goggles"]
@@ -276,7 +276,7 @@ polygon = PackedVector2Array(-65.2259, -22.0095, -69.2259, -44.0095, -53.2259, -
 position = Vector2(1346, 186)
 monitoring = false
 
-[node name="@Polygon2D@30847" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/kite"]
+[node name="@Polygon2D@33661" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/kite"]
 polygon = PackedVector2Array(-91.3416, -74.3654, 4.65845, -67.3654, 48.6584, 7.63455, 86.6584, 63.6346, 95.6584, 70.6346, 104.658, 81.6346, 116.658, 87.6346, 133.658, 92.6346, 148.658, 96.6346, 164.658, 104.635, 174.658, 120.635, 175.658, 142.635, 174.658, 153.635, 163.658, 138.635, 160.658, 122.635, 153.658, 114.635, 139.658, 108.635, 126.658, 104.635, 108.658, 99.6346, 94.6584, 89.6346, 84.6584, 74.6346, 78.6584, 62.6346, -44.3416, 18.6346, -95.3416, -4.36545)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/kite"]
@@ -286,7 +286,7 @@ polygon = PackedVector2Array(-91.3416, -74.3654, 4.65845, -67.3654, 48.6584, 7.6
 position = Vector2(1843, 333)
 monitoring = false
 
-[node name="@Polygon2D@30849" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/ball"]
+[node name="@Polygon2D@33663" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/ball"]
 polygon = PackedVector2Array(4.08704, -81.4582, 24.087, -78.4582, 39.087, -72.4582, 56.087, -61.4582, 73.087, -37.4582, 83.087, -4.45816, 76.087, 32.5418, 60.087, 58.5418, 26.087, 79.5418, -10.913, 80.5418, -42.913, 70.5418, -67.913, 50.5418, -82.913, 8.54184, -78.913, -28.4582, -54.913, -60.4582, -33.913, -75.4582, -12.913, -81.4582)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/ball"]
@@ -296,7 +296,7 @@ polygon = PackedVector2Array(4.08704, -81.4582, 24.087, -78.4582, 39.087, -72.45
 position = Vector2(2330, 896)
 monitoring = false
 
-[node name="@Polygon2D@30851" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/floaty"]
+[node name="@Polygon2D@33665" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/floaty"]
 polygon = PackedVector2Array(-167.252, -77.1562, -154.782, -85.3098, -141.252, -94.1562, -125.252, -100.156, -126.252, -110.156, -125.252, -121.156, -121.252, -129.156, -114.252, -130.156, -109.252, -128.156, -105.252, -122.156, -103.252, -114.156, -103.252, -103.156, -97.2522, -102.156, -89.2522, -100.156, -80.2522, -95.1562, -74.2522, -107.156, -69.2522, -112.156, -62.2522, -114.156, -56.2522, -112.156, -52.2522, -106.156, -53.2522, -98.1562, -55.2522, -90.1562, -60.2522, -80.1562, -51.2522, -65.1562, -38.2522, -70.1562, -4.2522, -78.1562, 40.7478, -82.1562, 78.7478, -81.1562, 95.7478, -79.1562, 107.748, -59.1562, 125.748, -42.1562, 153.748, -19.1562, 173.748, -9.15619, 188.748, -3.15619, 188.748, 5.84381, 185.748, 23.8438, 176.748, 44.8438, 162.748, 62.8438, 136.748, 82.8438, 105.748, 95.8438, 65.7478, 106.844, 16.7478, 110.844, -35.2522, 106.844, -69.2522, 94.8438, -94.2522, 81.8438, -117.252, 59.8438, -125.252, 42.8438, -129.252, 28.8438, -128.252, 14.8438, -126.252, 4.84381, -126.252, -1.15619, -132.252, 0.843811, -141.252, 1.84381, -152.252, 0.843811, -164.252, -1.15619, -176.252, -8.15619, -184.252, -15.1562, -189.252, -25.1562, -192.252, -36.1562, -191.252, -47.1562, -184.252, -62.1562, -176.252, -71.1562)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/floaty"]
@@ -306,7 +306,7 @@ polygon = PackedVector2Array(-167.252, -77.1562, -154.782, -85.3098, -141.252, -
 position = Vector2(2829, 1241)
 monitoring = false
 
-[node name="@Polygon2D@30853" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bag"]
+[node name="@Polygon2D@33667" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bag"]
 polygon = PackedVector2Array(-74.0933, 78.8724, -86.0933, 20.8724, -91.0933, -36.1276, -90.0933, -46.1276, -67.0933, -54.1276, -49.0933, -56.1276, -47.0933, -86.1276, -41.0933, -107.128, -29.0933, -117.128, -16.0933, -117.128, -5.09326, -113.128, 6.90674, -111.128, 17.9067, -108.128, 27.9067, -99.1276, 35.9067, -84.1276, 39.9067, -72.1276, 41.9067, -56.1276, 72.9067, -52.1276, 94.9067, -47.1276, 99.9067, -39.1276, 98.9067, -32.1276, 98.9067, -27.1276, 94.9067, -8.12756, 87.9067, 18.8724, 79.9067, 47.8724, 75.9067, 62.8724, 70.9067, 76.8724, 65.9067, 82.8724, 45.9067, 89.8724, 16.9067, 95.8724, -10.0933, 96.8724, -43.0933, 92.8724, -63.0933, 86.8724, -70.0933, 81.8724)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/bag"]
@@ -316,7 +316,7 @@ polygon = PackedVector2Array(-74.0933, 78.8724, -86.0933, 20.8724, -91.0933, -36
 position = Vector2(960, 1328)
 monitoring = false
 
-[node name="@Polygon2D@30855" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/tennis"]
+[node name="@Polygon2D@33669" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/tennis"]
 polygon = PackedVector2Array(-11.2034, -61.3545, 8.79657, -54.3545, 25.7966, -44.3545, 38.7966, -32.3545, 46.7966, -21.3545, 53.7966, -12.3545, 66.7966, 2.64551, 78.7966, 16.6455, 82.7966, 19.6455, 154.797, 46.6455, 157.797, 50.6455, 155.797, 54.6455, 152.797, 57.6455, 142.797, 55.6455, 100.797, 40.6455, 81.7966, 33.6455, 78.7966, 32.6455, 42.7966, 35.6455, 31.7966, 37.6455, 11.7966, 43.6455, -14.2034, 44.6455, -33.2034, 40.6455, -37.2034, 37.6455, -38.2034, 41.6455, -42.2034, 46.6455, -50.2034, 51.6455, -59.2034, 51.6455, -66.2034, 49.6455, -72.2034, 42.6455, -73.2034, 35.6455, -73.2034, 28.6455, -69.2034, 22.6455, -65.2034, 19.6455, -69.2034, 13.6455, -72.105, 7.84229, -74.2034, 3.64551, -77.2034, -4.35449, -78.2034, -14.3545, -77.2034, -25.3545, -74.2034, -33.3545, -69.2034, -43.3545, -62.2034, -49.3545, -46.2034, -60.3545, -29.2034, -63.3545)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/tennis"]
@@ -326,7 +326,7 @@ polygon = PackedVector2Array(-11.2034, -61.3545, 8.79657, -54.3545, 25.7966, -44
 position = Vector2(1730, 831)
 monitoring = false
 
-[node name="@Polygon2D@30857" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/sand_castle"]
+[node name="@Polygon2D@33671" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/sand_castle"]
 polygon = PackedVector2Array(-11.1653, -113.01, -13.1653, -148.01, -0.165283, -174.01, 19.8347, -200.01, 19.8347, -207.01, 30.8347, -207.01, 35.8347, -193.01, 39.8347, -185.01, 51.8347, -175.01, 57.8347, -136.01, 57.8347, -91.0102, 65.8347, -92.0102, 70.8347, -107.01, 80.8347, -114.01, 89.8347, -112.01, 87.8347, -100.01, 88.8347, -92.0102, 96.8347, -88.0102, 104.835, -89.0102, 108.835, -104.01, 117.835, -110.01, 124.835, -107.01, 126.835, -94.0102, 119.835, -72.0102, 115.835, -45.0102, 114.835, -11.0102, 114.835, 9.98981, 114.835, 32.9898, 115.835, 44.9898, 112.835, 63.9898, 132.835, 70.9898, 120.835, 82.9898, 120.835, 91.9898, 103.835, 104.99, 98.8347, 128.99, 70.8347, 132.99, 63.8347, 101.99, 50.8347, 101.99, 45.8347, 118.99, 46.8347, 145.99, 41.8347, 145.99, 33.8347, 123.99, 7.83472, 115.99, -12.1653, 118.99, -10.1653, 129.99, -51.1653, 129.99, -96.1653, 138.99, -122.165, 138.99, -134.165, 133.99, -168.165, 131.99, -159.165, 114.99, -137.165, 106.99, -140.165, 94.9898, -129.165, 92.9898, -129.165, 79.9898, -119.165, 77.9898, -118.165, 65.9898, -113.165, 58.9898, -106.165, 57.9898, -107.165, -44.0102, -102.165, -54.0102, -94.1653, -54.0102, -97.1653, -95.0102, -88.1653, -116.01, -76.1653, -132.01, -68.1653, -141.01, -61.1653, -135.01, -57.1653, -123.01, -52.1653, -110.01, -48.1653, -100.01, -46.1653, -88.0102, -35.1653, -82.0102, -27.1653, -85.0102, -27.1653, -97.0102, -20.1653, -106.01)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/sand_castle"]
@@ -336,7 +336,7 @@ polygon = PackedVector2Array(-11.1653, -113.01, -13.1653, -148.01, -0.165283, -1
 position = Vector2(2665, 1133)
 monitoring = false
 
-[node name="@Polygon2D@30859" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/chair"]
+[node name="@Polygon2D@33673" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/chair"]
 polygon = PackedVector2Array(-236.889, 104.104, -183.889, 56.1036, -266.889, 2.10364, -266.889, -3.89636, -259.889, -13.8964, -246.889, -1.89636, -209.889, 16.1036, -207.889, 28.1036, -202.889, 34.1036, -184.889, 41.1036, -142.889, 45.1036, -98.8892, 44.1036, -50.8892, 31.1036, -8.88916, 9.10364, 30.1108, -25.8964, 54.1108, -63.8964, 62.1108, -93.8964, 62.1108, -111.896, 55.1108, -133.896, 39.1108, -144.896, 96.1108, -198.896, 103.111, -197.896, 109.111, -189.896, 141.111, -175.896, 206.111, -149.896, 215.111, -152.896, 224.111, -147.896, 225.111, -140.896, 221.111, -132.896, 136.111, -62.8964, 133.111, -10.8964, 119.111, 0.103638, 111.111, 38.1036, 113.111, -39.8964, 53.1108, 11.1036, 52.1108, 56.1036, 68.1108, 59.1036, 69.1108, 75.1036, 52.1108, 73.1036, 52.1108, 84.1036, 48.1108, 88.1036, 37.1108, 87.1036, 35.1108, 68.1036, -3.88916, 61.1036, -27.8892, 81.1036, 72.1108, 106.104, 76.1108, 129.104, -47.8892, 98.1036, -147.889, 181.104, -159.889, 180.104, -160.889, 168.104, -149.889, 155.104, -213.889, 109.104, -230.889, 122.104, -240.889, 116.104)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/chair"]
@@ -346,7 +346,7 @@ polygon = PackedVector2Array(-236.889, 104.104, -183.889, 56.1036, -266.889, 2.1
 position = Vector2(1657, 1224)
 monitoring = false
 
-[node name="@Polygon2D@30861" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/watermelon"]
+[node name="@Polygon2D@33675" type="Polygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/watermelon"]
 polygon = PackedVector2Array(-154.551, -74.2264, -153.551, -62.2264, -148.551, -40.2264, -139.551, -17.2264, -125.551, 4.77356, -112.551, 18.7736, -102.551, 27.7736, -71.5514, 50.7736, -50.5514, 57.7736, -20.5514, 65.7736, 9.44861, 68.7736, 40.4486, 67.7736, 60.4486, 60.7736, 83.4486, 50.7736, 95.4486, 42.7736, 120.449, 23.7736, 143.449, 4.77356, 159.449, -19.2264, 167.449, -35.2264, 172.449, -53.2264, 109.449, -57.2264, 112.449, -51.2264, 112.449, -44.2264, 106.449, -38.2264, 94.4486, -38.2264, 87.4486, -44.2264, 84.4486, -39.2264, 79.4486, -36.2264, 70.4486, -36.2264, 65.4486, -39.2264, 62.4486, -31.2264, 58.4486, -22.2264, 49.4486, -14.2264, 37.4486, -9.22644, 30.4486, -9.22644, 25.4486, -4.22644, 13.4486, 0.77356, -1.55139, 0.77356, -10.5514, -7.22644, -13.5514, -16.2264, -13.5514, -23.2264, -22.5514, -13.2264, -31.5514, -6.22644, -39.5514, -6.22644, -44.5514, -17.2264, -42.5514, -28.2264, -35.5514, -39.2264, -43.5514, -36.2264, -57.5514, -38.2264, -65.5514, -49.2264, -67.5514, -61.2264, -71.5514, -59.2264, -75.5514, -65.2264, -73.5514, -71.2264, -97.5514, -73.2264, -133.551, -74.2264)
 
 [node name="collisionPolygon" type="CollisionPolygon2D" parent="HBoxContainer/MarginContainer/ScrollContainer/ScrollContent/Control/ImageContainer/click_zone_container/watermelon"]
@@ -406,7 +406,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_r2l8c")
+icon = SubResource("AtlasTexture_fdcvb")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -417,7 +417,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_1uuo8")
+icon = SubResource("AtlasTexture_y1cf6")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -428,7 +428,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_1fs84")
+icon = SubResource("AtlasTexture_8ona8")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -439,7 +439,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_db568")
+icon = SubResource("AtlasTexture_buyq7")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -450,7 +450,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_avywg")
+icon = SubResource("AtlasTexture_ygfk8")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -461,7 +461,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_seduk")
+icon = SubResource("AtlasTexture_1k6ye")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -472,7 +472,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_d1ojp")
+icon = SubResource("AtlasTexture_5r2wl")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -483,7 +483,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_6j7vg")
+icon = SubResource("AtlasTexture_jxxwk")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -494,7 +494,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_4r723")
+icon = SubResource("AtlasTexture_dly0e")
 flat = true
 icon_alignment = 1
 expand_icon = true
@@ -505,7 +505,7 @@ layout_mode = 2
 focus_mode = 0
 mouse_filter = 2
 theme = ExtResource("13_6gdya")
-icon = SubResource("AtlasTexture_qtck3")
+icon = SubResource("AtlasTexture_p8bhx")
 flat = true
 icon_alignment = 1
 expand_icon = true

@@ -120,6 +120,7 @@ func on_shape_found(clickZoneNode: Area2D):
 	
 	
 func check_should_end_level(isTweenDone: bool):
+	print('is level done? ', isTweenDone)
 	
 	var count = 0
 	# Is the level done?	
@@ -132,9 +133,11 @@ func check_should_end_level(isTweenDone: bool):
 #	print('###count', count)	
 #	if isTweenDone:
 	if count == 0:	
+		#print('end_lvel: count 0')
 		end_level()
 	# if have one left that we are closing out, then mark as done (faster to show completion screen)		
 	elif count == 1 && !isTweenDone: 
+		#print('end_lvel: count 1 will end soon')
 		end_level()
 	
 	
@@ -271,8 +274,12 @@ func find_matching_right_rail_button(shape_name:String)->Button:
 	
 func end_level():
 	# fade out screen
-	$level_complete_panel.modulate.a = 0 # set alpha to 0
-	$level_complete_panel.visible = true # show the 
+	
+	# this gets called twice, so verify if we need to run this animation again
+	if $level_complete_panel.visible == false:
+		$level_complete_panel.modulate.a = 0 # set alpha to 0
+		$level_complete_panel.visible = true # show the 
+		
 	var tween = get_tree().create_tween().set_parallel(true)
 	tween.tween_property($level_complete_panel, "modulate", Color(1, 1, 1, 1), 1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)
 	tween.tween_property($HBoxContainer, "modulate", Color(1, 1, 1, .3), .7).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN).set_delay(.01)

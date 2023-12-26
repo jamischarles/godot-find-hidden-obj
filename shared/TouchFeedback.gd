@@ -190,6 +190,7 @@ func handle_touch_events(event: InputEvent):
 		#print("new_zoom", new_zoom)
 		zoom_level = new_zoom
 		emit_should_zoom(event.position, zoom_level)
+		return
 		#zoom_level = clamp(zoom.x * new_zoom, min_zoom, max_zoom)
 		#print("new_zoom from mac pad", new_zoom)
 		#zoom = Vector2.ONE * new_zoom
