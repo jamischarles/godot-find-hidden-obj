@@ -1,7 +1,9 @@
-# Godot - Hidden Objects iOS App project...
+# Godot - Match-y Match - iOS Game to find Objects...
 
-## Current UI
-![Screenshot of app](./screenshot.png?raw=true "Title")
+## Demo
+https://github.com/user-attachments/assets/b7be6109-daf1-4fc4-a22c-f899da419cc0
+
+
 
 ## Known Bugs
 When generating new scene / overwriting old one, delete first, and close tabs with those files.
